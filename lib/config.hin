@@ -1620,6 +1620,9 @@
 /* Define to 1 if you have the `os' library (-los). */
 #undef HAVE_LIBOS
 
+/* Define to 1 if you have the `pcre' library (-lpcre). */
+#undef HAVE_LIBPCRE
+
 /* Define to 1 if you have the `perfstat' library (-lperfstat). */
 #undef HAVE_LIBPERFSTAT
 
