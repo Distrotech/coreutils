@@ -21260,9 +21260,9 @@ _ACEOF
 
 fi
 
-    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for sepol_check_contex in -lsepol" >&5
-$as_echo_n "checking for sepol_check_contex in -lsepol... " >&6; }
-if ${ac_cv_lib_sepol_sepol_check_contex+:} false; then :
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for sepol_load_policy in -lsepol" >&5
+$as_echo_n "checking for sepol_load_policy in -lsepol... " >&6; }
+if ${ac_cv_lib_sepol_sepol_load_policy+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
@@ -21276,32 +21276,77 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 #ifdef __cplusplus
 extern "C"
 #endif
-char sepol_check_contex ();
+char sepol_load_policy ();
 int
 main ()
 {
-return sepol_check_contex ();
+return sepol_load_policy ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_sepol_sepol_check_contex=yes
+  ac_cv_lib_sepol_sepol_load_policy=yes
 else
-  ac_cv_lib_sepol_sepol_check_contex=no
+  ac_cv_lib_sepol_sepol_load_policy=no
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_sepol_sepol_check_contex" >&5
-$as_echo "$ac_cv_lib_sepol_sepol_check_contex" >&6; }
-if test "x$ac_cv_lib_sepol_sepol_check_contex" = xyes; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_sepol_sepol_load_policy" >&5
+$as_echo "$ac_cv_lib_sepol_sepol_load_policy" >&6; }
+if test "x$ac_cv_lib_sepol_sepol_load_policy" = xyes; then :
   cat >>confdefs.h <<_ACEOF
 #define HAVE_LIBSEPOL 1
 _ACEOF
 
   LIBS="-lsepol $LIBS"
+
+fi
+
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for pcre_version in -lpcre" >&5
+$as_echo_n "checking for pcre_version in -lpcre... " >&6; }
+if ${ac_cv_lib_pcre_pcre_version+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lpcre  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char pcre_version ();
+int
+main ()
+{
+return pcre_version ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_pcre_pcre_version=yes
+else
+  ac_cv_lib_pcre_pcre_version=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_pcre_pcre_version" >&5
+$as_echo "$ac_cv_lib_pcre_pcre_version" >&6; }
+if test "x$ac_cv_lib_pcre_pcre_version" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBPCRE 1
+_ACEOF
+
+  LIBS="-lpcre $LIBS"
 
 fi
 
