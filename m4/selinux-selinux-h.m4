@@ -52,8 +52,9 @@ AC_DEFUN([gl_LIBSELINUX],
 
   LIB_SELINUX=
   if test "$with_selinux" != no; then
-    gl_save_LIBS=$LIBSe
+    gl_save_LIBS=$LIBS
     AC_CHECK_LIB([pthread], [pthread_create])
+    AC_CHECK_LIB([sepol], [sepol_load_policy])
     AC_SEARCH_LIBS([setfilecon], [selinux],
                    [test "$ac_cv_search_setfilecon" = "none required" ||
                     LIB_SELINUX="$ac_cv_search_setfilecon ${LIBS}"])

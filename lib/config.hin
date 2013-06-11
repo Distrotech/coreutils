@@ -1623,6 +1623,12 @@
 /* Define to 1 if you have the `perfstat' library (-lperfstat). */
 #undef HAVE_LIBPERFSTAT
 
+/* Define to 1 if you have the `pthread' library (-lpthread). */
+#undef HAVE_LIBPTHREAD
+
+/* Define to 1 if you have the `sepol' library (-lsepol). */
+#undef HAVE_LIBSEPOL
+
 /* Define to 1 if you have the `link' function. */
 #undef HAVE_LINK
 
