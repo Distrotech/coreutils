@@ -113,7 +113,7 @@ START-INFO-DIR-ENTRY
 * yes: (coreutils)yes invocation.               Print a string indefinitely.
 END-INFO-DIR-ENTRY
 
-   This manual documents version 8.21-dirty of the GNU core utilities,
+   This manual documents version 8.21 of the GNU core utilities,
 including the standard programs for text and file manipulation.
 
    Copyright (C) 1994-2013 Free Software Foundation, Inc.
@@ -131,8 +131,8 @@ File: coreutils.info,  Node: Top,  Next: Introduction,  Up: (dir)
 GNU Coreutils
 *************
 
-This manual documents version 8.21-dirty of the GNU core utilities,
-including the standard programs for text and file manipulation.
+This manual documents version 8.21 of the GNU core utilities, including
+the standard programs for text and file manipulation.
 
    Copyright (C) 1994-2013 Free Software Foundation, Inc.
 
@@ -18402,226 +18402,226 @@ Index
 
 
 Tag Table:
-Node: Top8406
-Node: Introduction22385
-Node: Common options23944
-Node: Exit status27220
-Node: Backup options27975
-Node: Block size29899
-Node: Floating point34753
-Node: Signal specifications36163
-Node: Disambiguating names and IDs38218
-Ref: Disambiguating names and IDs-Footnote-139787
-Node: Random sources39857
-Node: Target directory41474
-Node: Trailing slashes44959
-Node: Traversing symlinks45980
-Node: Treating / specially47053
-Node: Special built-in utilities48605
-Node: Standards conformance49740
-Node: Output of entire files51296
-Node: cat invocation51897
-Node: tac invocation53704
-Node: nl invocation54972
-Node: od invocation58851
-Node: base64 invocation65726
-Node: Formatting file contents67105
-Node: fmt invocation67606
-Node: numfmt invocation70486
-Node: pr invocation80491
-Node: fold invocation91990
-Node: Output of parts of files93450
-Node: head invocation93947
-Node: tail invocation96132
-Node: split invocation105432
-Node: csplit invocation112353
-Node: Summarizing files117158
-Node: wc invocation117806
-Node: sum invocation120880
-Node: cksum invocation122285
-Node: md5sum invocation123425
-Node: sha1sum invocation129044
-Node: sha2 utilities129824
-Node: Operating on sorted files130448
-Node: sort invocation131035
-Ref: sort invocation-Footnote-1154964
-Node: shuf invocation155516
-Node: uniq invocation158096
-Node: comm invocation162789
-Node: ptx invocation165210
-Node: General options in ptx168010
-Node: Charset selection in ptx168591
-Node: Input processing in ptx169493
-Node: Output formatting in ptx174909
-Node: Compatibility in ptx181475
-Node: tsort invocation184709
-Node: tsort background187868
-Node: Operating on fields189516
-Node: cut invocation189878
-Node: paste invocation193835
-Node: join invocation195149
-Node: Operating on characters201502
-Node: tr invocation201924
-Node: Character sets203642
-Node: Translating208160
-Node: Squeezing210251
-Node: expand invocation213318
-Node: unexpand invocation214800
-Node: Directory listing216618
-Node: ls invocation217104
-Ref: ls invocation-Footnote-1219200
-Node: Which files are listed219422
-Node: What information is listed223162
-Node: Sorting the output232409
-Node: Details about version sort234719
-Node: General output formatting236487
-Node: Formatting file timestamps241477
-Node: Formatting the file names246803
-Node: dir invocation249719
-Node: vdir invocation250130
-Node: dircolors invocation250508
-Node: Basic operations252207
-Node: cp invocation252827
-Node: dd invocation269148
-Node: install invocation282862
-Node: mv invocation288137
-Node: rm invocation292699
-Node: shred invocation297093
-Node: Special file types305129
-Node: link invocation306635
-Node: ln invocation307854
-Node: mkdir invocation315909
-Node: mkfifo invocation318280
-Node: mknod invocation319400
-Node: readlink invocation321532
-Node: rmdir invocation323654
-Node: unlink invocation324928
-Node: Changing file attributes325887
-Node: chown invocation326701
-Node: chgrp invocation332862
-Node: chmod invocation335937
-Node: touch invocation338692
-Node: Disk usage346096
-Node: df invocation346757
-Node: du invocation355414
-Node: stat invocation364960
-Node: sync invocation370473
-Node: truncate invocation371428
-Node: Printing text373199
-Node: echo invocation373573
-Node: printf invocation376159
-Node: yes invocation381630
-Node: Conditions382242
-Node: false invocation382833
-Node: true invocation383868
-Node: test invocation385147
-Node: File type tests387192
-Node: Access permission tests388074
-Node: File characteristic tests388959
-Node: String tests389724
-Node: Numeric tests390463
-Node: Connectives for test391269
-Node: expr invocation391622
-Node: String expressions394063
-Node: Numeric expressions396647
-Node: Relations for expr397344
-Node: Examples of expr398538
-Node: Redirection399263
-Node: tee invocation399721
-Node: File name manipulation404508
-Node: basename invocation405083
-Node: dirname invocation407061
-Node: pathchk invocation408656
-Node: mktemp invocation410420
-Node: realpath invocation416068
-Node: Working context418873
-Node: pwd invocation419517
-Node: stty invocation420863
-Node: Control423623
-Node: Input424456
-Node: Output426130
-Node: Local427451
-Node: Combination429033
-Node: Characters431254
-Node: Special432808
-Node: printenv invocation434465
-Node: tty invocation435476
-Node: User information436182
-Node: id invocation436817
-Node: logname invocation438740
-Node: whoami invocation439367
-Node: groups invocation439854
-Node: users invocation441059
-Node: who invocation442006
-Node: System context444942
-Node: date invocation445607
-Node: Time conversion specifiers447324
-Node: Date conversion specifiers449747
-Node: Literal conversion specifiers452783
-Node: Padding and other flags453141
-Node: Setting the time455332
-Node: Options for date456453
-Node: Examples of date460752
-Ref: %s-examples462170
-Node: arch invocation465334
-Node: nproc invocation465783
-Node: uname invocation466893
-Node: hostname invocation469470
-Node: hostid invocation470083
-Node: uptime invocation470794
-Node: SELinux context471917
-Node: chcon invocation472292
-Node: runcon invocation474568
-Node: Modified command invocation476034
-Node: chroot invocation476726
-Ref: chroot invocation-Footnote-1479294
-Node: env invocation479596
-Node: nice invocation483841
-Node: nohup invocation487694
-Node: stdbuf invocation489977
-Node: timeout invocation492504
-Node: Process control495001
-Node: kill invocation495224
-Node: Delaying498294
-Node: sleep invocation498491
-Node: Numeric operations499592
-Node: factor invocation499924
-Node: seq invocation501682
-Node: File permissions505462
-Node: Mode Structure506154
-Node: Symbolic Modes509849
-Node: Setting Permissions510947
-Node: Copying Permissions513560
-Node: Changing Special Mode Bits514379
-Node: Conditional Executability516201
-Node: Multiple Changes516745
-Node: Umask and Protection518412
-Node: Numeric Modes519517
-Node: Operator Numeric Modes521643
-Node: Directory Setuid and Setgid522659
-Node: Date input formats525486
-Node: General date syntax527921
-Node: Calendar date items530912
-Node: Time of day items532917
-Node: Time zone items535121
-Node: Combined date and time of day items536381
-Node: Day of week items537241
-Node: Relative items in date strings538258
-Node: Pure numbers in date strings541068
-Node: Seconds since the Epoch542057
-Node: Specifying time zone rules543686
-Node: Authors of parse_datetime546066
-Ref: Authors of get_date546253
-Node: Opening the software toolbox547216
-Node: Toolbox introduction547983
-Node: I/O redirection550706
-Node: The who command553540
-Node: The cut command554437
-Node: The sort command555500
-Node: The uniq command556204
-Node: Putting the tools together556894
-Ref: Putting the tools together-Footnote-1568846
-Node: GNU Free Documentation License568920
-Node: Concept index594113
+Node: Top8400
+Node: Introduction22373
+Node: Common options23932
+Node: Exit status27208
+Node: Backup options27963
+Node: Block size29887
+Node: Floating point34741
+Node: Signal specifications36151
+Node: Disambiguating names and IDs38206
+Ref: Disambiguating names and IDs-Footnote-139775
+Node: Random sources39845
+Node: Target directory41462
+Node: Trailing slashes44947
+Node: Traversing symlinks45968
+Node: Treating / specially47041
+Node: Special built-in utilities48593
+Node: Standards conformance49728
+Node: Output of entire files51284
+Node: cat invocation51885
+Node: tac invocation53692
+Node: nl invocation54960
+Node: od invocation58839
+Node: base64 invocation65714
+Node: Formatting file contents67093
+Node: fmt invocation67594
+Node: numfmt invocation70474
+Node: pr invocation80479
+Node: fold invocation91978
+Node: Output of parts of files93438
+Node: head invocation93935
+Node: tail invocation96120
+Node: split invocation105420
+Node: csplit invocation112341
+Node: Summarizing files117146
+Node: wc invocation117794
+Node: sum invocation120868
+Node: cksum invocation122273
+Node: md5sum invocation123413
+Node: sha1sum invocation129032
+Node: sha2 utilities129812
+Node: Operating on sorted files130436
+Node: sort invocation131023
+Ref: sort invocation-Footnote-1154952
+Node: shuf invocation155504
+Node: uniq invocation158084
+Node: comm invocation162777
+Node: ptx invocation165198
+Node: General options in ptx167998
+Node: Charset selection in ptx168579
+Node: Input processing in ptx169481
+Node: Output formatting in ptx174897
+Node: Compatibility in ptx181463
+Node: tsort invocation184697
+Node: tsort background187856
+Node: Operating on fields189504
+Node: cut invocation189866
+Node: paste invocation193823
+Node: join invocation195137
+Node: Operating on characters201490
+Node: tr invocation201912
+Node: Character sets203630
+Node: Translating208148
+Node: Squeezing210239
+Node: expand invocation213306
+Node: unexpand invocation214788
+Node: Directory listing216606
+Node: ls invocation217092
+Ref: ls invocation-Footnote-1219188
+Node: Which files are listed219410
+Node: What information is listed223150
+Node: Sorting the output232397
+Node: Details about version sort234707
+Node: General output formatting236475
+Node: Formatting file timestamps241465
+Node: Formatting the file names246791
+Node: dir invocation249707
+Node: vdir invocation250118
+Node: dircolors invocation250496
+Node: Basic operations252195
+Node: cp invocation252815
+Node: dd invocation269136
+Node: install invocation282850
+Node: mv invocation288125
+Node: rm invocation292687
+Node: shred invocation297081
+Node: Special file types305117
+Node: link invocation306623
+Node: ln invocation307842
+Node: mkdir invocation315897
+Node: mkfifo invocation318268
+Node: mknod invocation319388
+Node: readlink invocation321520
+Node: rmdir invocation323642
+Node: unlink invocation324916
+Node: Changing file attributes325875
+Node: chown invocation326689
+Node: chgrp invocation332850
+Node: chmod invocation335925
+Node: touch invocation338680
+Node: Disk usage346084
+Node: df invocation346745
+Node: du invocation355402
+Node: stat invocation364948
+Node: sync invocation370461
+Node: truncate invocation371416
+Node: Printing text373187
+Node: echo invocation373561
+Node: printf invocation376147
+Node: yes invocation381618
+Node: Conditions382230
+Node: false invocation382821
+Node: true invocation383856
+Node: test invocation385135
+Node: File type tests387180
+Node: Access permission tests388062
+Node: File characteristic tests388947
+Node: String tests389712
+Node: Numeric tests390451
+Node: Connectives for test391257
+Node: expr invocation391610
+Node: String expressions394051
+Node: Numeric expressions396635
+Node: Relations for expr397332
+Node: Examples of expr398526
+Node: Redirection399251
+Node: tee invocation399709
+Node: File name manipulation404496
+Node: basename invocation405071
+Node: dirname invocation407049
+Node: pathchk invocation408644
+Node: mktemp invocation410408
+Node: realpath invocation416056
+Node: Working context418861
+Node: pwd invocation419505
+Node: stty invocation420851
+Node: Control423611
+Node: Input424444
+Node: Output426118
+Node: Local427439
+Node: Combination429021
+Node: Characters431242
+Node: Special432796
+Node: printenv invocation434453
+Node: tty invocation435464
+Node: User information436170
+Node: id invocation436805
+Node: logname invocation438728
+Node: whoami invocation439355
+Node: groups invocation439842
+Node: users invocation441047
+Node: who invocation441994
+Node: System context444930
+Node: date invocation445595
+Node: Time conversion specifiers447312
+Node: Date conversion specifiers449735
+Node: Literal conversion specifiers452771
+Node: Padding and other flags453129
+Node: Setting the time455320
+Node: Options for date456441
+Node: Examples of date460740
+Ref: %s-examples462158
+Node: arch invocation465322
+Node: nproc invocation465771
+Node: uname invocation466881
+Node: hostname invocation469458
+Node: hostid invocation470071
+Node: uptime invocation470782
+Node: SELinux context471905
+Node: chcon invocation472280
+Node: runcon invocation474556
+Node: Modified command invocation476022
+Node: chroot invocation476714
+Ref: chroot invocation-Footnote-1479282
+Node: env invocation479584
+Node: nice invocation483829
+Node: nohup invocation487682
+Node: stdbuf invocation489965
+Node: timeout invocation492492
+Node: Process control494989
+Node: kill invocation495212
+Node: Delaying498282
+Node: sleep invocation498479
+Node: Numeric operations499580
+Node: factor invocation499912
+Node: seq invocation501670
+Node: File permissions505450
+Node: Mode Structure506142
+Node: Symbolic Modes509837
+Node: Setting Permissions510935
+Node: Copying Permissions513548
+Node: Changing Special Mode Bits514367
+Node: Conditional Executability516189
+Node: Multiple Changes516733
+Node: Umask and Protection518400
+Node: Numeric Modes519505
+Node: Operator Numeric Modes521631
+Node: Directory Setuid and Setgid522647
+Node: Date input formats525474
+Node: General date syntax527909
+Node: Calendar date items530900
+Node: Time of day items532905
+Node: Time zone items535109
+Node: Combined date and time of day items536369
+Node: Day of week items537229
+Node: Relative items in date strings538246
+Node: Pure numbers in date strings541056
+Node: Seconds since the Epoch542045
+Node: Specifying time zone rules543674
+Node: Authors of parse_datetime546054
+Ref: Authors of get_date546241
+Node: Opening the software toolbox547204
+Node: Toolbox introduction547971
+Node: I/O redirection550694
+Node: The who command553528
+Node: The cut command554425
+Node: The sort command555488
+Node: The uniq command556192
+Node: Putting the tools together556882
+Ref: Putting the tools together-Footnote-1568834
+Node: GNU Free Documentation License568908
+Node: Concept index594101
 
 End Tag Table
