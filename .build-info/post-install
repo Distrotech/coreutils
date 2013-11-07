@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ ! -d ${3}/usr/bin ];then
+  mkdir -p ${3}/usr/bin
+fi;
+
+if [ ! -d ${3}/usr/sbin ];then
+  mkdir -p ${3}/usr/sbin
+fi;
+
+for lnbin in `ls ${3}/bin`;do
+  ln -s /bin/$lnbin ${3}/usr/bin
+done;
+
+for lnsbin in `ls ${3}/sbin`;do
+  ln -s /sbin/$lnsbin ${3}/usr/sbin
+done;
+
