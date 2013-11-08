@@ -11,6 +11,7 @@ fi;
 for lnbin in `ls ${3}/bin`;do
   ln -s /bin/$lnbin ${3}/usr/bin
 done;
+ln -s /bin/install ${3}/usr/bin/ginstall
 
 for lnsbin in `ls ${3}/sbin`;do
   ln -s /sbin/$lnsbin ${3}/usr/sbin
