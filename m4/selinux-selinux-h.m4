@@ -1,5 +1,5 @@
 # serial 5   -*- Autoconf -*-
-# Copyright (C) 2006-2007, 2009-2012 Free Software Foundation, Inc.
+# Copyright (C) 2006-2007, 2009-2013 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -53,20 +53,19 @@ AC_DEFUN([gl_LIBSELINUX],
   LIB_SELINUX=
   if test "$with_selinux" != no; then
     gl_save_LIBS=$LIBS
-    AC_CHECK_LIB([pthread], [pthread_create])
-    AC_CHECK_LIB([sepol], [sepol_check_contex])
-    AC_CHECK_LIB([pcre], [pcre_version])
     AC_SEARCH_LIBS([setfilecon], [selinux],
                    [test "$ac_cv_search_setfilecon" = "none required" ||
-                    LIB_SELINUX="$ac_cv_search_setfilecon ${LIBS}"])
+                    LIB_SELINUX=$ac_cv_search_setfilecon])
     LIBS=$gl_save_LIBS
   fi
   AC_SUBST([LIB_SELINUX])
 
   # Warn if SELinux is found but libselinux is absent;
-  if test "$ac_cv_search_setfilecon" = no &&
-     test "$host" = "$build" && test -d /selinux; then
-    AC_MSG_WARN([This system supports SELinux but libselinux is missing.])
-    AC_MSG_WARN([AC_PACKAGE_NAME will be compiled without SELinux support.])
+  if test "$ac_cv_search_setfilecon" = no; then
+    if test "$host" = "$build" && test -d /selinux; then
+      AC_MSG_WARN([This system supports SELinux but libselinux is missing.])
+      AC_MSG_WARN([AC_PACKAGE_NAME will be compiled without SELinux support.])
+    fi
+    with_selinux=no
   fi
 ])

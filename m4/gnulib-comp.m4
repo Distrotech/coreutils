@@ -39,6 +39,7 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([gl_PROG_AR_RANLIB])
   AC_REQUIRE([AM_PROG_CC_C_O])
+  # Code from module absolute-header:
   # Code from module accept:
   # Code from module accept-tests:
   # Code from module acl:
@@ -511,6 +512,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module propername:
   # Code from module pthread:
   # Code from module putenv:
+  # Code from module qacl:
   # Code from module quote:
   # Code from module quotearg:
   # Code from module quotearg-simple:
@@ -560,6 +562,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module savewd:
   # Code from module sched:
   # Code from module sched-tests:
+  # Code from module secure_getenv:
   # Code from module select:
   # Code from module select-tests:
   # Code from module selinux-at:
@@ -584,6 +587,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module size_max:
   # Code from module sleep:
   # Code from module sleep-tests:
+  # Code from module smack:
   # Code from module snippet/_Noreturn:
   # Code from module snippet/arg-nonnull:
   # Code from module snippet/c++defs:
@@ -741,8 +745,6 @@ AC_DEFUN([gl_EARLY],
   # Code from module useless-if-before-free:
   # Code from module userspec:
   # Code from module userspec-tests:
-  # Code from module usleep:
-  # Code from module usleep-tests:
   # Code from module utimecmp:
   # Code from module utimens:
   # Code from module utimens-tests:
@@ -834,7 +836,6 @@ AC_DEFUN([gl_INIT],
   m4_pushdef([gl_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='lib'
-  gl_FUNC_ACL
   gl_FUNC_ALLOCA
   gl_MODULE_INDICATOR([areadlinkat])
   gl_HEADER_ARPA_INET
@@ -1048,7 +1049,7 @@ AC_DEFUN([gl_INIT],
   gl_STDIO_MODULE_INDICATOR([fopen])
   gl_MODULE_INDICATOR([fopen-safer])
   gl_FUNC_FPENDING
-  if test $ac_cv_func___fpending = no; then
+  if test $gl_cv_func___fpending = no; then
     AC_LIBOBJ([fpending])
     gl_PREREQ_FPENDING
   fi
@@ -1176,7 +1177,7 @@ AC_DEFUN([gl_INIT],
   fi
   gl_STDIO_MODULE_INDICATOR([getdelim])
   gl_FUNC_GETDTABLESIZE
-  if test $HAVE_GETDTABLESIZE = 0; then
+  if test $HAVE_GETDTABLESIZE = 0 || test $REPLACE_GETDTABLESIZE = 1; then
     AC_LIBOBJ([getdtablesize])
     gl_PREREQ_GETDTABLESIZE
   fi
@@ -1376,6 +1377,7 @@ AC_DEFUN([gl_INIT],
   fi
   gl_LOCALE_MODULE_INDICATOR([localeconv])
   gl_LOCK
+  gl_MODULE_INDICATOR([lock])
   gl_FUNC_LSEEK
   if test $REPLACE_LSEEK = 1; then
     AC_LIBOBJ([lseek])
@@ -1619,11 +1621,14 @@ AC_DEFUN([gl_INIT],
     [AM_][XGETTEXT_OPTION([--keyword='proper_name:1,\"This is a proper name. See the gettext manual, section Names.\"'])
      AM_][XGETTEXT_OPTION([--keyword='proper_name_utf8:1,\"This is a proper name. See the gettext manual, section Names.\"'])])
   gl_PTHREAD_CHECK
+  gl_MODULE_INDICATOR([pthread])
   gl_FUNC_PUTENV
   if test $REPLACE_PUTENV = 1; then
     AC_LIBOBJ([putenv])
+    gl_PREREQ_PUTENV
   fi
   gl_STDLIB_MODULE_INDICATOR([putenv])
+  gl_FUNC_ACL
   gl_QUOTE
   gl_QUOTEARG
   gl_FUNC_RAISE
@@ -1714,6 +1719,12 @@ AC_DEFUN([gl_INIT],
   gl_SAVEDIR
   gl_SAVEWD
   gl_SCHED_H
+  gl_FUNC_SECURE_GETENV
+  if test $HAVE_SECURE_GETENV = 0; then
+    AC_LIBOBJ([secure_getenv])
+    gl_PREREQ_SECURE_GETENV
+  fi
+  gl_STDLIB_MODULE_INDICATOR([secure_getenv])
   gl_FUNC_SELECT
   if test $REPLACE_SELECT = 1; then
     AC_LIBOBJ([select])
@@ -1759,6 +1770,26 @@ AC_DEFUN([gl_INIT],
   fi
   gl_SIGNAL_MODULE_INDICATOR([sigprocmask])
   gl_SIZE_MAX
+  # Check whether libsmack is available
+  LIB_SMACK=
+  AC_ARG_ENABLE([libsmack],
+    AC_HELP_STRING([--disable-libsmack], [disable libsmack support]))
+  if test "X$enable_libsmack" != "Xno"; then
+    AC_CHECK_LIB([smack], [smack_new_label_from_self],
+      [AC_CHECK_LIB([smack], [smack_new_label_from_path],
+        [AC_CHECK_HEADER([sys/smack.h],
+          [LIB_SMACK=-lsmack
+           AC_DEFINE([HAVE_SMACK], [1], [libsmack usability])]
+        )])])
+    if test "X$LIB_SMACK" = "X"; then
+      if test "X$enable_libsmack" = "Xyes"; then
+        AC_MSG_ERROR([libsmack library was not found or not usable])
+      fi
+    fi
+  else
+    AC_MSG_WARN([libsmack support disabled by user])
+  fi
+  AC_SUBST([LIB_SMACK])
   gl_FUNC_SNPRINTF
   gl_STDIO_MODULE_INDICATOR([snprintf])
   gl_MODULE_INDICATOR([snprintf])
@@ -1868,7 +1899,7 @@ AC_DEFUN([gl_INIT],
   fi
   gl_STDLIB_MODULE_INDICATOR([strtod])
   gl_FUNC_STRTOIMAX
-  if test $HAVE_STRTOIMAX = 0 || test $REPLACE_STRTOIMAX = 1; then
+  if test $HAVE_DECL_STRTOIMAX = 0 || test $REPLACE_STRTOIMAX = 1; then
     AC_LIBOBJ([strtoimax])
     gl_PREREQ_STRTOIMAX
   fi
@@ -1886,7 +1917,7 @@ AC_DEFUN([gl_INIT],
   fi
   gl_STDLIB_MODULE_INDICATOR([strtoull])
   gl_FUNC_STRTOUMAX
-  if test $ac_cv_func_strtoumax = no; then
+  if test $HAVE_DECL_STRTOUMAX = 0 || test $REPLACE_STRTOUMAX = 1; then
     AC_LIBOBJ([strtoumax])
     gl_PREREQ_STRTOUMAX
   fi
@@ -2188,6 +2219,11 @@ changequote([, ])dnl
     [posix_spawn_ported=yes])
   AM_CONDITIONAL([POSIX_SPAWN_PORTED], [test $posix_spawn_ported = yes])
   dnl Check for prerequisites for memory fence checks.
+  dnl FIXME: zerosize-ptr.h requires these: make a module for it
+  gl_FUNC_MMAP_ANON
+  AC_CHECK_HEADERS_ONCE([sys/mman.h])
+  AC_CHECK_FUNCS_ONCE([mprotect])
+  dnl Check for prerequisites for memory fence checks.
   gl_FUNC_MMAP_ANON
   AC_CHECK_HEADERS_ONCE([sys/mman.h])
   AC_CHECK_FUNCS_ONCE([mprotect])
@@ -2255,11 +2291,6 @@ changequote([, ])dnl
   gl_UNLINKDIR
   abs_aux_dir=`cd "$ac_aux_dir"; pwd`
   AC_SUBST([abs_aux_dir])
-  gl_FUNC_USLEEP
-  if test $HAVE_USLEEP = 0 || test $REPLACE_USLEEP = 1; then
-    AC_LIBOBJ([usleep])
-  fi
-  gl_UNISTD_MODULE_INDICATOR([usleep])
   AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
   abs_aux_dir=`cd "$ac_aux_dir"; pwd`
   AC_SUBST([abs_aux_dir])
@@ -2396,6 +2427,7 @@ AC_DEFUN([gl_FILE_LIST], [
   doc/fdl.texi
   doc/gendocs_template
   doc/parse-datetime.texi
+  lib/acl-errno-valid.c
   lib/acl-internal.h
   lib/acl.h
   lib/acl_entries.c
@@ -2614,6 +2646,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/getugroups.c
   lib/getugroups.h
   lib/getusershell.c
+  lib/gl_openssl.h
   lib/glthread/lock.c
   lib/glthread/lock.h
   lib/glthread/threadlib.c
@@ -2796,6 +2829,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/pthread.c
   lib/pthread.in.h
   lib/putenv.c
+  lib/qcopy-acl.c
+  lib/qset-acl.c
   lib/quote.h
   lib/quotearg.c
   lib/quotearg.h
@@ -2857,10 +2892,11 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/se-context.in.h
   lib/se-selinux.c
   lib/se-selinux.in.h
+  lib/secure_getenv.c
   lib/select.c
   lib/selinux-at.c
   lib/selinux-at.h
-  lib/set-mode-acl.c
+  lib/set-acl.c
   lib/setenv.c
   lib/settime.c
   lib/sha1.c
@@ -2881,6 +2917,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/signbitl.c
   lib/sigprocmask.c
   lib/size_max.h
+  lib/smack.h
   lib/snprintf.c
   lib/sockets.c
   lib/sockets.h
@@ -3074,6 +3111,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/yesno.c
   lib/yesno.h
   m4/00gnulib.m4
+  m4/absolute-header.m4
   m4/acl.m4
   m4/alloca.m4
   m4/arpa_inet_h.m4
@@ -3184,6 +3222,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/gettimeofday.m4
   m4/getugroups.m4
   m4/getusershell.m4
+  m4/gl-openssl.m4
   m4/glibc2.m4
   m4/glibc21.m4
   m4/gnu-make.m4
@@ -3343,6 +3382,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/savedir.m4
   m4/savewd.m4
   m4/sched_h.m4
+  m4/secure_getenv.m4
   m4/select.m4
   m4/selinux-context-h.m4
   m4/selinux-selinux-h.m4
@@ -3436,7 +3476,6 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/unlocked-io.m4
   m4/uptime.m4
   m4/userspec.m4
-  m4/usleep.m4
   m4/utimbuf.m4
   m4/utimecmp.m4
   m4/utimens.m4
@@ -3839,7 +3878,6 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-unsetenv.c
   tests/test-update-copyright.sh
   tests/test-userspec.c
-  tests/test-usleep.c
   tests/test-utimens-common.h
   tests/test-utimens.c
   tests/test-utimens.h
@@ -3913,7 +3951,6 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/symlinkat.c
   tests=lib/unlinkdir.c
   tests=lib/unlinkdir.h
-  tests=lib/usleep.c
   tests=lib/w32sock.h
   tests=lib/wctob.c
   tests=lib/wctomb-impl.h

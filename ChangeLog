@@ -1,4 +1,2353 @@
+2014-03-17  Greg Nietsky  <gregory@distrotech.co.za>
+
+	Symlink ginstall to install
+
+	Link /usr/[s]bin/ to /[s]bin
+
+	Check for pcre
+
+	Check for pthread/sepol with selinux
+
+	Check for pthread with selinux
+
+	Release 8.21
+
+	Autotools /Local gnulib
+
+2013-12-13  Pádraig Brady  <P@draigBrady.com>
+
+	version 8.22
+	* NEWS: Record release date.
+
+2013-12-13  Pádraig Brady  <P@draigBrady.com>
+
+	stat,tail: improve support for hostfs and smackfs
+	hostfs is provided by the Linux UML subsystem.
+	smackfs is provided by the Linux Smack security module.
+
+	* src/stat.c (human_fstype): Add new file system ID definitions.
+	* NEWS: Mention the improvement, and adjust for the fact that
+	SNFS is a remote file system.
+
+2013-12-13  Pádraig Brady  <P@draigBrady.com>
+
+	tests: avoid unlikely deadlock in dd/no-allocate on some shells
+	* test/dd/no-allocate.sh: Use 'wait' to ensure we don't have
+	multiple writers to the fifo, which was seen to trigger
+	a very hard to reproduce deadlock with make -j20 on solaris.
+	Also avoid writing to the fifo with the shell; instead using dd.
+	(check_dd_seek_alloc): A new function refactored from the various
+	cases, which are now constructed from function parameters.
+
+	tests: restrict cp --link inode comparisons to compatible systems
+	* tests/cp/link-deref.sh: On systems were cp can't determine if
+	gnulib linkat() emulation might create a symlink instead of a hardlink
+	to a symlink, copy.c will create a symlink to the symlink so that
+	it has more control over its metadata.  Also even if the system
+	supports this operation, the particular file system under test may not.
+	So avoid the hardlinked symlink verification in these cases.
+	This fixes a false failure on aix, solaris and freebsd.
+
+	build: default to avoiding openssl system libraries
+	* configure.ac: Don't change the gnulib default of 'no' for
+	whether to link with openssl system libraries if available.
+	Distributions can explicitly enable this as their policy allows.
+	* NEWS: Adjust accordingly.
+
+2013-12-12  Tiger Lee  <i@tigerlee.me>
+
+	doc: fix typo in numfmt invocation
+	* doc/coreutils.texi (numfmt invocation): s/nun/num/.
+	Fixes http://bugs.gnu.org/16122
+
+2013-12-11  Pádraig Brady  <P@draigBrady.com>
+
+	tests: df/total-unprocessed: fix false failure with lofs
+	* tests/df/total-unprocessed.sh: Skip the test when we can't
+	determine the file system type as the exclusion filter is not
+	applied in that case.  "lofs" being ignored is effectively
+	an unknown file system type.
+
+	tests: avoid warnings due to new filefrag -v format
+	* tests/cp/sparse-fiemap.sh: Newer versions of filefrag output
+	more fields, in different orders, so handle that to avoid warnings.
+
+2013-12-09  Pádraig Brady  <P@draigBrady.com>
+
+	build: update gnulib to fix a tests build failure
+	* gnulib: Update to incorporate a fix for building tests
+	with -Werror=old-style-declaration
+
+	tests: fix false failure due to xargs usage
+	* tests/readlink/multi.sh: Ensure there is a trailing delimeter
+	or xargs may (on AIX 7 at least) suppress the last argument.
+
+	tests: fix false failure on systems without /dev/stdin
+	* tests/rm/interactive-once.sh: Ensure the expected output
+	matches with the output on systems without /dev/stdin (like AIX 7).
+	Also change some fail=1 to a more appropriate framework_failure_.
+
+	build: update gnulib and improve --with-openssl configure help
+	* configure.ac: Use gl_SET_CRYPTO_CHECK_DEFAULT() to set the
+	coreutils default for --with-openssl early, so that the
+	help text can be provided in a standard and complete form.
+	* gnulib: Update to incorporate a build fix on platforms
+	with only some of md5 and sha* implemented by libcrypto.
+
+2013-12-09  Pádraig Brady  <P@draigBrady.com>
+
+	tests: fix false failure due to gdb inline function handling
+	Inline functions are awkward to breakpoint as mentioned at:
+	https://sourceware.org/bugzilla/show_bug.cgi?id=10738
+	The normal case here was for the breakpoint on the inline function
+	to fail, resulting in a 10s delay before skipping the test.
+	However on GCC 4.7.2 on ppc64 at least it was seen that
+	the test failed erroneously due to the breakpoint being successfully
+	set on an "out of line" function, but an inline function was
+	actually being called.
+
+	* tests/tail-2/inotify-race.sh: Switch to a line based breakpoint,
+	rather than a symbol base one, which avoids issues with breakpoints
+	on inline functions.  Also skip_ on the initial breakpoint check
+	in case the breakpoint is not traversed which would be the case
+	on remote file systems for example.
+
+2013-12-09  Pádraig Brady  <P@draigBrady.com>
+
+	tail: use consistent diagnostics with and without inotify
+	* src/tail.c: With inotify, when a file is initially absent,
+	we fstat(-1) for that file spec, thus recording an errnum of EBADF,
+	which caused the "has become accessible" diagnostic to be issued,
+	when the file first appears.  Instead we avoid the fstat(-1) and
+	thus emit the more natural and consistent "has appeared" diagnostic.
+	* tests/tail-2/retry.sh: Use the new diagnostic which also causes
+	this test to pass on systems without inotify.
+
+2013-12-09  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	tests: avoid false df failure with nfs and lofs
+	* tests/df/total-unprocessed.sh: -t nfs and --local are
+	_not_ mutually exclusive on solaris, with lofs mounts.
+
+2013-12-07  Pádraig Brady  <P@draigBrady.com>
+
+	tests: avoid problematic $(< file) shell construct
+	* tests/cp/link-deref.sh: This was seen to cause an issue
+	with dash v0.5.6 at least, so change to a simpler expression.
+
+	tests: fix false failure on platforms using newfstatat
+	* tests/ls/stat-free-color.sh: Add newfstatat to the list
+	of syscalls to trace.  Also add all "stat" syscalls to the
+	list of syscalls that we verify that strace supports.
+	Also only create a single dangling symlink to check, since
+	we already only check for a single "stat" call.
+	Fixes http://bugs.gnu.org/16075 seen on AArch64
+
+	tests: avoid a false memory leak test failure
+	* tests/misc/shuf-reservoir.sh: Restrict the valgrind
+	"exit on leak" behavior to developer environments where
+	specific "lint" code is enabled to avoid inconsequential leaks.
+
+2013-12-06  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	tests: fix shuf test verifying that -i and -e can not be combined
+	Previously, the test triggered another error diagnostic:
+	  shuf: invalid input range ‘-e’
+	and therefore eclipsed the expected one:
+	  shuf: cannot combine -e and -i options
+
+	While at it, reindent a line with more than 80 characters, present
+	since the previous commit to silence sc_long_lines.
+
+	* tests/misc/shuf.sh: Pass a valid range to the -i option.
+
+2013-12-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	shuf: --repeat, not --repetitions; default --head-count is infinity
+	Original problem reported by Philipp Thomas in
+	<http://bugs.gnu.org/16061>.
+	* NEWS: shuf --repeat, not shuf --repetitions.
+	* doc/coreutils.texi (shuf invocation):
+	* src/shuf.c (usage, long_opts, main):
+	* tests/misc/shuf.sh:
+	Likewise.  Also, the default head-count is infinity.
+
+2013-12-06  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	doc: clarify that df now generally processes special files correctly
+	Since v8.21-172-g33660b4, df not only treats symbolic link arguments
+	differently, as stated there, but now generally processes special file
+	arguments in a non-canonicalized form correctly:
+
+	  $ cd /dev && df-old sdb
+	  Filesystem     1K-blocks  Used Available Use% Mounted on
+	  devtmpfs         1014572    48   1014524   1% /dev
+
+	  $ cd /dev && df-new sdb
+	  Filesystem     1K-blocks    Used Available Use% Mounted on
+	  /dev/sdb        10190136 6039532   3609932  63% /home
+
+	Document df's new behavior.
+
+	* doc/coreutils.texi (df invocation): In the paragraph describing
+	df's behavior regarding special file arguments, relax the condition
+	for such special files from "... is an absolute name of ..." to
+	"... resolves to ...".
+	* NEWS (Bug fixes): Mention the new behavior also here.
+
+2013-12-05  Pádraig Brady  <P@draigBrady.com>
+
+	tests: fix false failure with disabled SELinux support
+	This could trigger on SELinux systems where we build --qithout-selinux
+	or where the SELinux development libraries are not installed.
+
+	* init.cfg (require_selinux_enforcing_): Call require_selinux_()
+	to determine if the current build supports SELinux.  This avoids
+	a false failure in tests/mkdir/selinux.sh where only mkdir would
+	determine that SELinux was disabled and thus ignore invalid contexts.
+	(require_selinux_): Refactor a little to distinguish whether it's
+	the build or the (file) system that doesn't support SELinux.
+
+2013-12-05  Pádraig Brady  <P@draigBrady.com>
+
+	selinux: fix --context=CTX for cp and diagnose defaultcon() errors
+	* src/selinux.h (ignorable_ctx_err): A new function used
+	to determine if a warning should be given after a call
+	to defaultcon() or restorecon().
+	* src/cp.c (main): Fix the setfscreatecon() call to use
+	the argument passed by the user.
+	* src/mkdir.c (make_ancestor): Show all but "ignoreable" errors
+	from defaultcon() and restorecon().
+	* tests/misc/selinux.sh: Add a test run as root in selinux enforcing
+	mode, to ensure cp --context=invalid is honored and fails immediately.
+
+2013-12-04  Pádraig Brady  <P@draigBrady.com>
+
+	md5sum, sha*sum: use libcrypto where available
+	libcrypto is generally available and has well optimized
+	crypto hash routines particular to various systems.
+	For example, testing sha1sum with openssl-1.0.0j
+	on an i3-2310M, gives a performance boost of about 40%:
+
+	$ time sha1sum.old --tag ~/test.iso
+	SHA1 (/home/padraig/test.iso) = 3c27f7ed01965fd2b89e22128fd62dc51a3bef30
+	real    0m4.692s
+	user    0m4.499s
+	sys     0m0.162s
+
+	$ time sha1sum.new --tag ~/test.iso
+	SHA1 (/home/padraig/test.iso) = 3c27f7ed01965fd2b89e22128fd62dc51a3bef30
+	real    0m2.685s
+	user    0m2.512s
+	sys     0m0.170s
+
+	* configure.ac: By default, enable use of libcrypto if available.
+	* src/local.mk: Link with libcrypto.
+	* NEWS: Mention the md5sum and sha*sum improvements.
+
+2013-12-04  Pádraig Brady  <P@draigBrady.com>
+
+	df: handle bind mounts when processing device nodes
+	* src/df.c (get_disk): Use the same heuristic used in
+	get_point() to select the shortest file system mount point,
+	in an attempt to show the base mounted file system.
+	* NEWS: Mention the bug fix.
+
+2013-12-04  Pádraig Brady  <P@draigBrady.com>
+
+	df: dereference symlinks to disk device nodes
+	This is so the matching for the device is done on the canonical name
+	of the disk node, rather than on the path of the symlink.
+	In any case the user will generally want to use the symlink target.
+
+	* src/df.c (get_disk): Canonicalize the passed file,
+	before matching against the list of mounted file system devices.
+	Note we pass the original symlink name to the "file" output field,
+	as the symlink target is usually available through the "source" field.
+	* tests/df/df-symlink.sh: Test the dereferencing operation.
+	* tests/local.mk: Mention the new test.
+	* NEWS: Mention the fix.
+	Reported by Ondrej Oprala
+
+2013-12-04  Pádraig Brady  <P@draigBrady.com>
+
+	build: update gnulib submodule to latest
+	Note tests/init.sh and bootstrap are still in sync with gnulib.
+
+	* gnulib: Sync two configure check fixes.
+	- Avoid generating core dumps from regex configure check
+	- Fix compile error in getcwd configure check
+
+2013-12-04  Pádraig Brady  <P@draigBrady.com>
+
+	build: update gnulib submodule to latest
+	Note tests/init.sh and bootstrap are still in sync with gnulib.
+
+	* gnulib: Sync many fixes/changes, including the base64
+	encoding speedup mentioned in commit v8.21-145-g9120845
+	Also included is support for enabling use of libcrypto hash routines
+	which are generally well optimized for particular systems.
+
+2013-12-03  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	maint: avoid '%s' quoting notation in diagnostic messages
+	Add a new rule to ensure the use of quote() instead of '%s' or `%s'
+	in format strings of diagnostics messages.
+
+	* cfg.mk (sc_prohibit_quotes_notation): Add rule.
+	* TODO: Remove the entry regarding the '%s' notation.
+	* src/mkfifo.c (main): Remove the offending and in this case even
+	duplicate quoting in the format string of the error diagnostic.
+	* src/mknod.c (main): Likewise.
+	* src/df.c (decode_output_arg): Change two invocations of error()
+	according to the above new rule.
+	* src/numfmt.c: Fix numerous wrong quote notations to fit the above
+	new rule, mostly in internal debugging diagnostic messages.
+
+2013-12-03  Pádraig Brady  <P@draigBrady.com>
+
+	doc: remove obsolete info on terminal alignment bugs
+	* doc/coreutils.texi (ls invocation): Remove the note about
+	OSX terminals not aligning properly as this is no longer the case.
+	Tested by: Philipp Thomas
+
+2013-11-29  Pádraig Brady  <P@draigBrady.com>
+
+	build: fix potential factor build failure on arm and powerpc
+	* src/longlong.h: Sync with the latest longlong.h from libgmp to:
+	- avoid arm asm when being compiled for the thumb instruction [sub]set
+	- avoid old powerpc assembly that is incompatible with newer GCC
+	- add arm64 optimized count_trailing_zeros()
+	- add sparc64 optimized add_ssaaaa() and umul_ppmm()
+
+2013-11-29  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	tests: add a test for rm -r "/"
+	* tests/rm/r-root.sh: Add a non-root test.
+	* tests/local.mk (all_tests): Mention the test.
+
+2013-11-29  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	maint: remove various FIXME comments
+	* src/extent-scan.c (extent_need_sync): Remove the FIXME comment about
+	removing the work around.  As discussed in [1], the needed FIEMAP fix
+	never made it into the Linux kernel.
+
+	* src/realpath.c (longopts): Remove the FIXME comment about deprecating
+	the --strip option as it's a valid alias for --no-symlinks option.
+	Also discussed in [1].
+
+	[1] http://lists.gnu.org/archive/html/coreutils/2013-11/msg00103.html
+
+2013-11-29  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	df: remove long-obsolescent --megabytes option
+	This option has been undocumented for 12 years [1], and warned
+	about for a year [2].
+
+	[1] commit FILEUTILS-4_1_4-23-gd177203
+	[2] commit v8.17-43-g453ce92
+
+	* src/df.c (MEGABYTES_OPTION): Remove.
+	(long_options): Remove "megabytes" element.
+	(main): In the option parsing loop, remove the MEGABYTES_OPTION case.
+	* NEWS: Mention the change.
+
+2013-11-28  Pádraig Brady  <P@draigBrady.com>
+
+	build: fix selinux.c build failure on 32 bit
+	* src/selinux.c: Don't include the system "fts.h" as
+	that disallows _FILE_OFFSET_BITS=64 which gnulib auto enables
+	to support large files on 32 bit systems.  Instead include
+	our "xfts.h" which includes the less limited gnulib replacement,
+	and also a checked version of xfts_open().
+	(restorecon): Use the checked xfts_open() rather than the standard
+	fts_open().
+	Prompted by the continuous integration build failure at:
+	http://hydra.nixos.org/build/6934169
+
+2013-11-27  Pádraig Brady  <P@draigBrady.com>
+
+	build: avoid more selinux build failures
+	Handle both newer selinux libraries with mode_to_security_class(),
+	and systems without selinux at all.  We could easily adjust
+	gnulib to provide the necessary stubs for use by this module,
+	but it's more efficient to just stub out the module completely,
+	when not using selinux.
+
+	* src/selinux.h: Define stubs for the two module functions,
+	when SELinux is not available.
+	* src/selinux.c: Exclude all logic in preference for the stubs
+	when selinux isn't used.  Also when newer selinux libs are used,
+	don't use our conflicting static version of mode_to_security_class().
+	m4/jm-macros.m4: Check for the system mode_to_security_class().
+
+2013-11-27  Pádraig Brady  <P@draigBrady.com>
+
+	build: avoid build failure on non selinux systems
+	* src/selinux.c: This module introduced in commit v8.21-159-gd8e27ab
+	doesn't need to include <selinux/flask.h>.  That header file
+	isn't catered for by gnulib, but is not needed as we're not
+	explicitly referencing any class IDs.
+	Prompted by the continuous integration build failure at:
+	http://hydra.nixos.org/build/6920020
+
+2013-11-27  Pádraig Brady  <P@draigBrady.com>
+
+	selinux: adjust utils to run restorecon with -Z
+	cp, mv, install, mkdir, mkfifo, mknod are adjusted so that:
+	 -Z no longer accepts an argument.
+	 -Z or --context without an argument do not warn without SELinux.
+	 --context with an argument will warn without SELinux.
+
+	* src/local.mk: Reference the new selinux module where required.
+	* src/system.h: Make the argument to --context optional.
+	* src/mkdir.c: Likewise.  Also handle the SMACK case for --context.
+	Note we currently silently ignore -Z with SMACK.
+	* src/mkfifo.c: Likewise.
+	* src/mknod.c: Likewise.
+	* src/install.c: Likewise.  Note install(1) by default already
+	set the context for target files to their system default,
+	albeit with an older method.  Use the -Z option to select between
+	the old and new context restoration behavior, and document
+	the differences and details for how context restoration
+	is done in new and old methods, with a view disabling the
+	old method entirely in future.
+	* src/cp.c: Make the argument to --context optional.
+	Note -Z implies --no-preserve=context.  I.E. -Z overrides
+	that aspect of -a no matter what order specified.
+	(struct cp_options): Document the context handling options.
+	(main): Check/adjust option combinations after all
+	options are processed, to both simplify processing
+	and to make handling independent of order of options
+	on the command line.  Also improve the diagnostics
+	from a failed call to setfscreatecon().
+	(set_process_security_ctx): A new function,
+	refactored to set the default context from the source file,
+	or with the type adjusted as per the system default for
+	the destination path.
+	(set_file_security_ctx): A new function refactored to
+	set the security context of an existing file, either based on
+	the process context or the default system context for a path.
+	(copy_internal): Use the refactored functions to simplify
+	error handling and consistently fail or warn as needed.
+	(copy_reg): Likewise.
+	(copy_internal): With --preserve=context, also copy
+	context from non regular files.  Note for directories this may
+	impact the copying of subsequent files to that directory?
+	(copy_attr): If we're handling SELinux explicitly,
+	then exclude to avoid the redudant copy with --preserve=context,
+	and the problematic copy with -Z.  Note SELinux attribute exclusion
+	also now honors cp -a --no-preserve=context.  Note there was a
+	very small window over 10 years ago, where attr_copy_file was
+	available, while attr_copy_check_permissions was not, so we
+	don't bother adding an explicit m4 check for the latter function.
+	* src/mv.c: Support --context, but don't allow specifying an argument.
+	* src/chcon.c: Adjust a comment to be specific to SELinux.
+	* src/runcon.c: Likewise.
+	* src/copy.c: Honor the context settings to "restorecon" as appropriate.
+	* src/copy.h: Add a new setting to select "restorecon" functionality.
+	* tests/mkdir/selinux.sh: s/-Z/--context=/
+	* tests/cp/cp-a-selinux.sh: Augment this test with cases
+	testing basic -Z functionality, and also test the various
+	invalid option combinations and option precedence.
+	* tests/mkdir/restorecon.sh: Add a new test for the
+	more involved mkdir -Z handling, since the directory changing
+	and non existent directories need to be specially handled.
+	Also check the similar but simpler handling of -Z by mk{nod,fifo}.
+	* tests/local.mk: Reference the new test.
+	* doc/coreutils.texi (cp invocation): Update as per interface changes.
+	(mv invocation): Likewise.
+	(install invocation): Likewise.
+	(mkfifo invocation): Likewise.
+	(mknod invocation): Likewise.
+	(mkdir invocation): Likewise.
+	* NEWS: Mention the new feature and change in behavior.
+
+2013-11-27  Daniel J Walsh  <dwalsh@redhat.com>
+
+	selinux: a new module implementing "restorecon" functionality
+	* src/selinux.c: A new module implementing "restorecon" functionality.
+	There are two main functions to adjust the type of the referenced
+	file system item.  defaultcon() will setup the process context so
+	that new items will have the required context without races.  This is
+	the preferred method.  For existing files, the equivalent restorecon()
+	is available which has two modes.  With the "local" parameter set to
+	false, restorecon() will adjust the type according to the system
+	configuration for that file, and set to true will update the context
+	as per the context for the current process (disregarding type).
+	* src/selinux.h: Likewise.
+	* po/POTFILES.in: Reference the new module.
+
+2013-11-27  Pádraig Brady  <P@draigBrady.com>
+
+	shred: provide --remove methods to avoid excessive syncing
+	A sync operation is very often expensive.  For illustration
+	I timed the following python script which indicated that
+	each ext4 dir sync was taking about 2ms and 12ms, on an
+	SSD and traditional disk respectively.
+
+	  import os
+	  d=os.open(".", os.O_DIRECTORY|os.O_RDONLY)
+	  for i in range(1000):
+	     os.fdatasync(d)
+
+	So syncing for each character for each file can result
+	in significant delays.  Often this overhead is redundant,
+	as only the data is sensitive and not the file name.
+	Even if the names are sensitive, your file system may
+	employ synchronous metadata updates, which also makes
+	explicit syncing redundant.
+
+	* tests/misc/shred-remove.sh: Ensure all the new parameters
+	actually unlink the file.
+	* doc/coreutils.texi (shred invocation): Describe the new
+	parameters to the --remove option.
+	* src/shred.c (Usage): Likewise.
+	(main): Parse the new options.
+	(wipename): Inspect the new enum to see which of
+	the now optional tasks to perform.
+	* NEWS: Mention the new feature.
+	* THANKS.in: Add reporter Joseph D. Wagner
+
+2013-11-27  Pádraig Brady  <P@draigBrady.com>
+
+	tail: improve inotify handling of symlinks
+	Previous behavior failed to read contents of a (re)appearing file,
+	when symlinked by tail's watched file.  Also we now diagnose other
+	edge cases when running in inotify mode, where an initially
+	missing or regular file changes to a symlink.
+
+	* src/tail.c (main): If any arg is a symlink, use polling mode.
+	(recheck): Diagnose the edge case where a symlink appears during
+	inotify processing.
+	* tests/tail-2/symlink.sh: Test the fix. Mention the edge cases.
+	* tests/local.mk: Reference the new test.
+	* NEWS: Mention the fix.
+	Reported by: Ondrej Oprala
+
+2013-11-27  Pádraig Brady  <P@draigBrady.com>
+
+	df: add --output=file to directly output specified arguments
+	* src/df.c (usage): Document the new 'file' --output field.
+	(get_dev): Add a new parameter to pass the specified
+	argument from the command line through.  Use '-' if a
+	command line parameter is not being used.
+	* doc/coreutils.texi (df invocation): Describe the new 'file' field.
+	* tests/df/df-output.sh: Adjust all fields test, and
+	add a specific test for --output=file.
+	* NEWS: Mention the new feature.
+
+	timeout: avoid unlikely issues with --kill-after
+	* src/timeout.c (cleanup): When calling settimeout() from
+	this signal handler, ensure we don't call out to error()
+	or gettext(), which are not async-signal-safe.
+	Also reset the errno which may be cleared by settimeout().
+
+	tests: ensure factor tests can be regenerated
+	* tests/local.mk (factor-tests:) Add -f to the mv command that
+	replaces any existing generated tests.  This is required to avoid
+	prompts when root initially generates the tests, and they subsequently
+	need to be regenerated by a non root user.
+
+	sort: avoid issues when issuing diagnostics from child processes
+	* src/sort.c: (async_safe_die): A new limited version of error(),
+	that outputs fixed strings and unconverted errnos to stderr.
+	This is safe to call in the limited context of a signal handler,
+	or in this particular case, between the fork() and exec() of
+	a multithreaded process.
+	(move_fd_or_die): Use the async_safe_die() rather than error().
+	(maybe_create_temp): Likewise.
+	(open_temp): Likewise.
+	Fixes http://bugs.gnu.org/15970
+
+2013-11-26  Pádraig Brady  <P@draigBrady.com>
+
+	doc: clarify the operation of ls -k
+	* src/ls.c (usage): Mention -k only changes the display
+	for disk usage (directory total, and ls -s), and imply
+	that it can be overridden (by --block-size, and -h).
+	* doc/coreutils.texi (block size): Mention that ls -k
+	handling is different to other utilities.
+	Addresses http://bugs.gnu.org/14525
+
+2013-11-23  John  <da_audiophile@yahoo.com>
+
+	dircolors: add a new entry to colorize 'lz4' files
+	* src/dircolors.hin: Add entry for the speed optimized 'lz4' compressor.
+
+2013-11-22  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	tests: enhance rm test regarding "." and ".."
+	Recent commit 2da7009d changed the error diagnostic of rm(1) trying
+	to remove "." or "..".  Enhance the corresponding test.
+
+	* tests/rm/r-4.sh: Ensure rm(1) outputs the expected error diagnostic.
+
+2013-11-21  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	maint: avoid perl warning in sc_check-AUTHORS
+	With newer perl, "make syntax-check" issues many warnings like:
+	  -i used with no filenames on the command line, reading from STDIN.
+
+	* cfg.mk (sc_check-AUTHORS): Remove the -i flag in the perl
+	invocation as it is reading from a pipe.
+
+2013-11-21  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	doc: enhance diagnostic when rm skips "." or ".." arguments
+	The error diagnostic
+	  "rm: cannot remove directory: '.'"
+	does not give the user a hint for the reason.
+	Issue a clearer error message.
+
+	* src/remove.c (rm_fts): Enhance the error diagnostic in the above
+	case to emphasize that skipping is done deliberately.
+	In the corresponding comment, mention that POSIX mandates this
+	behavior.  Likewise in the subsequent comment for skipping "/".
+	* doc/coreutils.texi (rm invocation): In the paragraph describing
+	the above behavior, mention that POSIX mandates it.
+
+2013-11-18  Pádraig Brady  <P@draigBrady.com>
+
+	tests: fix false rm -I test failure when run as root
+	Fix a recent regression introduced in commit v8.21-127-g5ee7d8f
+
+	Also related to this is the recent query about root run `rm -I`
+	ignoring the mode bits of a file: https://bugzilla.redhat.com/1013171
+
+	* tests/rm/interactive-once.sh: Avoid the messages and
+	corresponding file presence checks with write protected files
+	when running as root.
+
+2013-11-17  Colin Leitner  <colin.leitner@googlemail.com>
+
+	stty: add support for mark/space parity
+	This adds support for using a constant or "stick" parity bit.
+
+	* src/stty.c (usage): Mention the new flag.
+	* tests/misc/stty.sh: Adjust for the new flag.
+	* NEWS: Mention the improvement.
+	* docs/coreutils.texi (stty invocation): Mention the new flag.
+
+2013-11-12  Pádraig Brady  <P@draigBrady.com>
+
+	base64: improve encoding I/O efficiency
+	Since the I/O overhead is significant to the relatively
+	simple processing done by this utility, use fputs() rather
+	than fputc() to output '\n'.
+	Time to process a 100MiB file was measured to
+	decrease from 0.417s to 0.383s, i.e. an 8% improvement.
+
+	Related to these changes, is a processing improvement in
+	gnulib, which increases throughput by 60% when processing
+	full buffers, which improves processing of a 100MiB file
+	with standard wrapped output, down to 0.256s.
+	http://git.sv.gnu.org/gitweb/?p=gnulib.git;a=commit;h=43fd1e7b
+
+	Also increase the encoding buffer size from 3 to 30KiB.
+	This was seen to give a further 8% improvement, taking
+	processing time down to 0.235s in the wrapped output case.
+	The decoding size buffer is not adjusted,
+	due to the noted caveat with --ignore-garbage.
+
+	* src/base64.c (BLOCKSIZE): Split into ENC_ and DEC_ variants,
+	with the former increased from 3KiB to 30KiB.
+	(wrap_write): Use the simpler fputc() rather than fputs()
+	to output the '\n' character.  Also check against EOF
+	rather than < 0 for errors.
+	(do_encode): Likewise.
+	* NEWS: Mention the large increase in performance, which
+	with the I/O improvements in coreutils and the processing
+	improvement in gnulib, amount to about a 60% throughput increase.
+
+2013-11-08  Pádraig Brady  <P@draigBrady.com>
+
+	shred: avoid data write pass with --size=0
+	* src/shred.c (dopass): Exit early to avoid redundant heap
+	allocation, and more importantly avoiding a file sync
+	when we're writting no data, as this can have side effects.
+	Also with --verbose, this avoids printing of "pass status"
+	which could be confusing as to whether data was actually written.
+	* tests/misc/shred-passes.sh: Ensure the status for data
+	passes are not written when not doing any data writes.
+
+	shred: increase I/O block size for periodic pattern case
+	* src/shred.c (dopass): In the periodic pattern case increase the
+	I/O block size from 12KiB to 60KiB (also a multiple of 3 and 4096).
+	* NEWS: Adjust accordingly.
+
+2013-11-08  Pádraig Brady  <P@draigBrady.com>
+
+	shred: fix direct I/O failures for last write to file
+	Since direct I/O is now enabled with commit v8.21-139-gebaf961
+	we must handle the case where we write an odd size at the
+	end of a file (with --exact), or we specify an odd --size that
+	is larger than 64KiB, or in the very unlikely case of a device
+	with an odd size.  This issue was present since direct I/O
+	support was first added in v5.3.0, but latent since v6.0.
+	Theoretically this could have also been an issue after that on
+	systems which didn't have alignment constraints, but did have
+	size constraints for direct I/O.
+
+	* src/shred.c (dopass): On the first pass for a file, always
+	retry a write that fails with EINVAL, so we handle direct I/O
+	failure at either the start or end of the file.  Adjust the comment
+	as the original case is out of date and implicitly handled
+	by this more general fix.
+	* tests/misc/shred-exact.sh: Add a test case.
+	* NEWS: Add a "bug fix" entry for shred since there are
+	two related issues now fixed.
+
+2013-11-08  Gian Piero Carrubba  <gpiero@rm-rf.it>
+	    Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	cp: fix --link regarding the dereferencing of symbolic links
+	* src/copy.c (create_hard_link): Add a bool 'dereference' parameter,
+	and pass AT_SYMLINK_FOLLOW as 'flags' to linkat() when dereference
+	is true.
+	(should_dereference): Add new 'bool' function to determine if a
+	file should be dereferenced or not.
+	(copy_internal): Use the above new should_dereference() and remember
+	its return value in a new local bool 'dereference' variable.  Use that
+	in all three calls to create_hard_link().
+	* src/cp.c (main): after parsing the options, if x.dereference is
+	still DEFEF_UNDEFINED and the x.recursive is true, then only set
+	x.dereference to DEREF_NEVER iff --link was not specified.
+	* doc/coreutils.texi (cp invocation): Mention that cp(1) does not
+	follow symbolic links in the source when --link is specified.
+	Likewise in the description of the -R option when used together with
+	that option.
+	* tests/cp/same-file.sh: Adapt the expected results for the -fl,
+	the -bl and the -bfl tests.
+	* tests/cp/link-deref.sh: Add a new test.
+	* tests/local.mk (all_tests): Reference the above new test.
+	* NEWS (Changes in behavior): Mention the change.
+
+	This fixes http://bugs.gnu.org/15173
+
+2013-11-06  Pádraig Brady  <P@draigBrady.com>
+
+	shred: write larger chunks when possible
+	* src/shred.c (dopass): When not needing to write periodic patterns,
+	use a 64KiB block size to reduce the number of write system calls.
+
+2013-11-05  Pádraig Brady  <P@draigBrady.com>
+
+	shred: enable direct I/O when possible
+	Commit v5.92-1057-g43d487b introduced a regression
+	in coreutils 6.0 where it removed the page alignment
+	of the buffer to write, thus disabling direct I/O.
+	We want to use direct I/O when possible to avoid
+	impacting the page cache at least, as we know we don't
+	want to cache the data we're writing.
+
+	* src/shred.c (dopass): Allocate the buffer on the heap,
+	while using a more general calculation to allow to have
+	the output size independent from the fillpattern() size
+	constraint of a multiple of 3.  Also we dispense with the
+	union as it's no longer needed given we're aligning on
+	a page boundary and thus don't need to explicitly handle
+	uint32_t alignment.
+
+2013-11-02  Pádraig Brady  <P@draigBrady.com>
+
+	md5sum, sha*sum: improve help for --check related options
+	* src/md5sum.c (usage): s/three/four/ in the message pertaining
+	to the --check related options.  Also clarify that --strict
+	is just significant for the formatting of the checksum lines.
+	Also since we're changing both strings, move the --strict description
+	in with the description of the other options and order alphabetically.
+	* THANKS.in: Added reporter: Daniel Mach
+
+	maint: simplify printing of md5sum file names
+	* src/md5sum.c (main): Add a comment as to why we continue
+	to escape names that do not have '\n' but do have '\\' chars.
+	(print_filename): Use the predetermined boolean to decide
+	whether to escape or not, so that in the common case we
+	can output the file name directly, rather than inspecting each char.
+	* tests/misc/md5sum.pl: Add case to show '\\' chars cause escaping.
+	* tests/misc/sha1sum.pl: Likewise.
+
+2013-11-01  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	build: fix dependencies of man/sha*sum.1
+	Although the above man pages depend on src/md5sum.c as a shared
+	source, the build of the man pages directly requires their own
+	executables to exist.
+
+	* man/local.mk (man/sha1sum.1): Change the dependency from
+	'src/md5sum' to 'src/sha1sum'.
+	(man/sha224sum.1): s/md5sum/sha224sum/
+	(man/sha256sum.1): s/md5sum/sha256sum/
+	(man/sha384sum.1): s/md5sum/sha384sum/
+	(man/sha512sum.1): s/md5sum/sha512sum/
+
+	Reported by Pádraig Brady in
+	http://lists.gnu.org/archive/html/coreutils/2013-11/msg00006.html
+
+2013-10-16  Mike Frysinger  <vapier@gentoo.org>
+
+	dircolors: add putty-256color terminal type
+	* src/dircolors.hin: Add putty-256color
+	Reported-by: Thomas D. <whissi@whissi.de>, via
+	http://bugs.gentoo.org/486786
+	Fixes http://bugs.gnu.org/15624
+
+2013-10-15  Pádraig Brady  <P@draigBrady.com>
+
+	maint: update the instructions for building prerequisites
+	* README-prereq: Update as per the latest required versions
+	in bootstrap.conf.  Also add a missing cd command.
+	Reported by Aaron Davies
+	Fixes http://bugs.gnu.org/15612
+
+2013-10-11  Ondřej Vašík  <ovasik@redhat.com>
+
+	cp: correct error message for invalid arguments of '--no-preserve'
+	* src/cp.c (decode_preserve_arg):
+	Correct error message for invalid arguments of '--no-preserve'.
+	Reported by M.Vadkerti in http://bugzilla.redhat.com/1018206
+	Fixes http://bugs.gnu.org/15588
+
+2013-10-10  Pádraig Brady  <P@draigBrady.com>
+
+	doc: clarify the example for cp --preserve=links
+	* doc/coreutils.texi (cp invocation): Give more detail about what's
+	happening in the example, explicitly calling out the --no-dereference
+	option required to make the -H and -L options significant.
+	Also mention the option order significance of the -H and -L options.
+	Fixes http://bugs.gnu.org/15579
+
+2013-10-07  Pádraig Brady  <P@draigBrady.com>
+
+	mktemp: fix incorrect exit status from previous commit
+	* src/mktemp.c (main): Use an exit() strategy consistent with the
+	previous clauses dealing with optional error messages to ensure
+	we exit with the correct status in all cases.
+	Prompted by the continuous integration build failure at:
+	http://hydra.nixos.org/build/6412979
+
+2013-10-06  Pádraig Brady  <P@draigBrady.com>
+
+	mktemp: with --quiet, only suppress I/O errors
+	The reason for having a --quiet option is to
+	suppress only some subset of possible errors.
+	The most useful separation here is with usage/internal errors,
+	and errors due to file creation etc. (i.e. I/O errors).
+
+	* src/mktemp.c (main): Match the --help and info docs and
+	only suppress the file/dir creation error messages.
+	* tests/misc/mktemp.pl: Adjust accordingly.
+
+2013-10-06  Pádraig Brady  <P@draigBrady.com>
+
+	mktemp: synchronize the -p option with docs
+	* src/mktemp.c (usage): Synchronize the -p option description with
+	the logic and info docs.  I.E. that -p is just an alias of --tmpdir.
+	Also for consistency treat --tmpdir='' the same with or without -t.
+	I.E. always ignore the --tmpdir option if the param is empty.
+	Fixes http://bugs.gnu.org/15425
+
+2013-10-06  Karl Berry  <karl@freefriends.org>
+
+	doc: expand the texinfo examples for the paste command
+	* doc/coreutils.texi (paste invocation): Move the synopsis to the top.
+	Provide examples for the different type of operations possible.
+	Add a specific common example to join consecutive lines with a space.
+
+2013-09-26  Sergio Durigan Junior  <sergiodj@sergiodj.net>
+
+	rm: with -I, prompt before deleting a write protected file
+	This regression was introduced in commit v6.7-71-g0928c24
+
+	* src/rm.c (main): Make the -I option behave like --interactive=once.
+	* tests/rm/interactive-once.sh: Add cases for single and multiple files.
+	* NEWS: Mention the bug fix.
+	Fixes http://bugs.gnu.org/9308
+
+2013-09-22  Pádraig Brady  <P@draigBrady.com>
+
+	maint: move all id(1) tests to the same directory
+	* tests/misc/id-context.sh -> tests/id/context.sh
+	* tests/misc/id-setgid.sh -> tests/id/setgid.sh
+	* tests/misc/id-uid.sh -> tests/id/uid.sh
+	* tests/misc/id-zero.sh -> tests/id/zero.sh
+	* tests/local.mk: Reference the renamed tests
+
+	tests: parameterize the "root" username
+	* tests/misc/chroot-credentials.sh: Don't assume uid 0
+	has the "root" name, nor any name for that matter.
+
+	maint: remove unused parameters to parse_user_spec()
+	* src/chown.c (main): Since "name" parameters to parse_user_spec()
+	are now optional, just pass NULL for those unused parameters.
+	* src/chroot.c (main): Likewise.
+
+	id: support specifying the user by user ID
+	* src/id.c (usage): Remove 'name' from the synopsis,
+	implying that one can also specify by user ID.
+	(main): Like chown(1), call parse_user_spec() to implement
+	user name or ID lookup with appropriate precedence.
+	* doc/coreutils.texi (id invocation): Mention that
+	a user ID is supported and how '+' affects lookup order.
+	* tests/misc/id-groups.sh: Remove test now subsumed into...
+	* tests/misc/id-uid.sh: New test covering new interface.
+	* tests/local.mk: Rename the test.
+	* NEWS: Mention the new feature.
+	Addresses http://bugs.gnu.org/15421
+
+2013-09-22  Pádraig Brady  <P@draigBrady.com>
+
+	build: update gnulib submodule to latest; also bootstrap to latest
+	Notes tests/init.sh is still in sync with gnulib.
+
+	* bootstrap: Update to latest.
+	* gnulib: Sync many fixes/changes, including:
+	a fix for http://bugs.gnu.org/15066
+	and preparation for http://bugs.gnu.org/15421
+
+2013-09-22  Pádraig Brady  <P@draigBrady.com>
+
+	tests: avoid a failure when there isn't a name for all user IDs
+	* tests/misc/id-zero.sh: Don't check exit status when in -n mode.
+
+	Prompted by the continuous integration build failure at:
+	http://hydra.nixos.org/build/6196762
+
+2013-09-21  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	id: add -z, --zero option
+	* src/group-list.h (print_group_list): Add a parameter for the
+	delimiter of type char.
+	* src/group-list.c (print_group_list): Likewise, and use it instead
+	of a white space character to delimit the group entries.
+	* src/groups.c (main): Pass white space character to print_group_list().
+	* src/id.c (longopts):  Add array element for the new long option.
+	(usage): Document the new option.  While at it, fix the alignment
+	of the descriptions to match that of HELP_OPTION_DESCRIPTION.
+	(main): Define the bool flag opt_zero indicating the use of the
+	new option.  In the getopt_long loop, handle it.
+	Output an error diagnostic in the case the --zero option has been
+	specified together with the default format.
+	In the case of -gG, pass either a NUL or a white space character to
+	print_group_list() - depending on the above new flag.
+	Likewise change the printing of the final newline character: output
+	a NUL instead if the --zero option has been specified.
+	* doc/coreutils.texi (id invocation): Document the new option.
+	While at it, move the @exitstatus macro down after the macro
+	@primaryAndSupplementaryGroups in order to be consistent with
+	other texinfo documents.
+	(groups invocation): Move @exitstatus down after the macro
+	@primaryAndSupplementaryGroups here, too.
+	* tests/misc/id-zero.sh: Add new test exercising the new option.
+	* tests/local.mk (all_tests): Reference it.
+	* NEWS (New features): Mention the new option.
+	Fixes http://bugs.gnu.org/9987
+
+2013-09-12  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	maint: avoid patching help2man
+	Commit cde1ea0e separated the coreutils-specific patches from help2man.
+	Most changes had been made to accommodate to the coreutils style guide,
+	i.e., to avoid syntax-check failures like sc_long_lines.
+	Yet 2 changes had to be put into the patch help2man.diff.
+	But this added the dependency to patch(1) in distribution builds.
+	Incidentally, the 2 remaining parts of the patch can easily be
+	done outside of help2man.  Therefore, this commit partly reverts
+	the recent separation of help2man into 'help2man.in' and
+	'help2man.diff', and instead uses the original help2man script.
+
+	* man/help2man.in: Rename to ...
+	* man/help2man: ... this file.
+	* man/help2man.diff: Remove.
+	* man/local.mk (mandeps): Remove man/help2man.
+	(man/help2man): Remove recipe.
+	(.x.1): Add the --info-page option when calling help2man in order
+	to change the name of the texinfo manual from the default, "info PRG",
+	to "info coreutils 'PRG invocation'".
+	Furthermore, use an sed pattern to remove the sentence starting
+	with "For complete documentation".
+	* .gitignore (/man/help2man): Remove entry.
+	* .x-update-copyright: Replace the entries for the files
+	'man/help2man.diff' and 'man/help2man.in' by 'man/help2man'.
+	* cfg.mk (sc_long_lines): Instead of 'man/help2man.in', exempt
+	'man/help2man' from this test.
+	(sc_po_check): Likewise.
+	(sc_space_tab): Instead of 'man/help2man.diff', exempt 'man/help2man'
+	from this test.
+	(sc_trailing_blank): Likewise.
+	(sc_prohibit_tab_based_indentation): Instead of 'man/help2man.in' and
+	'man/help2man.diff', exempt 'man/help2man'.
+	* man/dummy-man: Recognize the option --info-page=... as no-op.
+
+2013-09-12  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	maint: use help2man configured with --disable-nls
+	Prompted by the continuous integration build failure at:
+	http://hydra.nixos.org/build/6038769
+
+	The previously committed 'help2man' requires a Perl module
+	which does not seem to be installed everywhere - and which
+	is not needed for our purposes:
+
+	  Can't locate Locale/gettext.pm in @INC
+	  BEGIN failed--compilation aborted at ./man/help2man line 28.
+
+	This module was pulled in automatically by the default configure call.
+	Use the NLS-disabled version instead.
+
+	* man/help2man.in: Use help2man configured with the --disable-nls
+	option to avoid the dependency to the above Perl module.
+	* man/help2man.diff: Adapt the line numbers of the hunks in the
+	coreutils-specific patch for help2man to apply without fuzz.
+
+	Reported by Pádraig Brady.
+
+2013-09-10  Pádraig Brady  <P@draigBrady.com>
+
+	build: fix corrupted patch causing bootstrap failures
+	The patch was corrupted in commit v8.21-50-g7b65f8e
+
+	* gl/modules/tempname.diff: Fix the offsets so that the patch
+	applies cleanly.  Note that this was only apparent with patch < 2.6.
+	With patch >= 2.6, patch will not indicate an error applying
+	the second hunk of the patch and silently ignore it.
+	I double checked that all patches now apply cleanly by adjusting
+	gnulib-tool to run patch with --fuzz=0 which might be advisable
+	going forward, even on a per project basis.
+	The silent ignoring of hunks by newer patch(1) has been reported.
+	Fixes http://bugs.gnu.org/15255
+
+2013-09-09  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	maint: update help2man to 1.43.3
+	Instead of diverging further from the upstream GNU help2man project
+	(http://www.gnu.org/software/help2man/), hold a copy of the original
+	script and keep track of our changes in a separate patch file.
+
+	The man pages created with the new version show the following,
+	non-invasive differences:
+	a) command options in the EXAMPLE sections are no longer in bold format,
+	b) file names are underlined now consistently.
+
+	* man/help2man: Rename to ...
+	* man/help2man.in: ... this file, and update content from the
+	upstream GNU help2man project.
+	* man/help2man.diff: Add patch file for help2man to remove the
+	sentence "For complete documentation ..." (see commit 5d4f09d8),
+	and to emit "info coreutils 'PROG invocation'" into the man
+	pages (77abf69a).
+	* man/local.mk (mandeps): Add help2man to the dependencies of
+	the man pages.
+	(man/help2man): Add rule to generate this script from the upstream
+	help2man.in file and the help2man.diff patch.
+	* .gitignore: Add man/help2man as it is no longer version controlled.
+	* cfg.mk (sc_long_lines): Exempt help2man.in from this check.
+	(sc_po_check): Likewise.
+	(sc_space_tab): Likewise.
+	(sc_trailing_blank): Exempt man/help2man.diff from this check.
+	(sc_prohibit_tab_based_indentation): Instead of help2man, now exempt
+	both help2man.in and help2man.diff from this test.
+	* .x-update-copyright: Add new file and add the above new help2man
+	files as well as the COPYING file.
+
+2013-09-05  FUJIWARA Katsunori  <foozy@lares.dti.ne.jp>
+
+	ls: fix possible incorrect exit status when recursing directories
+	If there is an error reading a directory that was referenced
+	through recursion, rather than directly on the command line,
+	then exit with the "less serious" exit code, rather than the
+	"serious" exit code reserved for command line arguments.
+	This issue was introduced in commit v5.2.1-1908-gb58dea5
+
+	* src/ls.c (print_dir): Ensure that the command_line_arg param
+	is false for directories being recursed into.
+	* NEWS: Mention the bug fix.
+	Fixes http://bugs.gnu.org/15249
+
+2013-09-01  Pádraig Brady  <P@draigBrady.com>
+
+	maint: update out of date confusing comments
+	* src/copy.c (copy_internal): Change mention of the removed --reply=no
+	option, to the similar in this context --no-clobber.
+	* src/sort.c: SI and IEC suffixes can now be mixed when --human-numeric.
+
+2013-08-29  Pádraig Brady  <P@draigBrady.com>
+
+	df: fix "blocks" translation in header
+	* src/df.c (get_header): Get the translation of "blocks" here,
+	rather than just marking the string for translation.
+	Fixes http://bugs.gnu.org/15054
+
+2013-08-10  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	doc: clarify when seq ends
+	* doc/coreutils.texi (seq invocation): Add a sentence clarifying
+	that seq terminates when LAST becomes smaller than the current number
+	plus INCREMENT.
+	* src/seq.c (usage): Likewise.
+	Fixes http://bugs.gnu.org/15068
+
+2013-08-07  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	doc: use more modern file system type examples in df description
+	* doc/coreutils.texi (df invocation): In the example list of common
+	file system types, exchange the entries which are not so common
+	anymore (4.2, ufs, efs, hsfs, pcfs) by far more prominent ones
+	(ext2, ext3, ext4, xfs, btrfs, iso9660, ntfs, fat).
+
+2013-08-07  Filipus Klutiero  <chealer@gmail.com>
+
+	doc: fix typo in description of df
+	* doc/coreutils.texi (df invocation): s/pseude/pseudo/
+	* THANKS.in (Filipus Klutiero): Remove entry, now that it will be
+	automatically included in the generated THANKS file.
+	Fixes http://bugs.gnu.org/15041
+
+2013-08-05  Benno Schulenberg  <bensberg@justemail.net>
+
+	doc: more semicolons instead of periods in option descriptions
+	Also slightly rephrase some descriptions for extra clarity, and
+	add more consistent indentation.
+
+	* src/df.c (usage): Semicolon, no final period.
+	* src/du.c (usage): Likewise, plus indentation and clarifying words.
+	* src/ls.c (usage): Semicolon, rephrasings, added parentheses for
+	clarity, indentation.
+	* src/rm.c (usage): Semicolons.
+	* src/tail.c (usage): Adjust -f description to prefer explanatory
+	language instead of option syntax.
+
+2013-08-03  Pádraig Brady  <P@draigBrady.com>
+
+	doc: clarify that uniq -d outputs a single entry per group
+	* src/uniq.c (usage): Clarify the -d option.
+	Fixes http://bugs.gnu.org/14996
+
+2013-08-02  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	maint: update copyright year number ranges of numfmt sources
+	Run "make update-copyright".
+
+	* src/numfmt.c: Update copyright year number range.  This file has
+	obviously been added to coreutils after and without the annual update.
+	* tests/misc/numfmt.pl: Likewise.
+
+2013-08-01  Benno Schulenberg  <bensberg@justemail.net>
+
+	doc: use semicolon instead of period in option descriptions
+	Also do not end option descriptions with a period, properly indent
+	continuation lines, and make some tiny clarifications.
+
+	* src/du.c (usage): Lowercase after semicolon.
+	* src/ls.c (usage): Semicolons instead of periods, small rephrasing
+	and two hyphens for clarity, proper indentation.
+	* src/mktemp.c (usage): Semicolons and lowercase.
+	* src/od.c (usage): Semicolons.
+	* src/ptx.c (usage): Use the standard phrase, clarify default option.
+	* src/setuidgid.c (usage): Properly indent continuation line.
+	* src/split.c (usage): Semicolons, lowercase, no final period.
+	* src/stat.c (usage): Semicolons, lowercase.
+	* src/tail.c (usage): Proper indentation, one shorter rephrasing,
+	semicolons, no final periods.
+	* src/timeout.c (usage): Properly indent, semicolons, no final periods.
+	Fixes http://bugs.gnu.org/14976
+
+2013-08-01  Pádraig Brady  <P@draigBrady.com>
+
+	doc: clarify that cp by default doesn't adjust existing file perms
+	* doc/coreutils.texi (cp invocation): Mention explicitly what
+	happens to permissions of existing files when -p is not specified.
+	Fixes http://bugs.gnu.org/14972
+
+2013-07-29  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	tests: fix another test failure in test/du/inodes.sh
+	Prompted by the continuous integration build failure at:
+	http://hydra.nixos.org/build/5584121
+
+	du(1) uses the first file object of the two test files linked to the
+	same inode, 'd/f' and 'd/h', whatever the system returns first.
+	Use 'd/f' in both the expected and the actual output.
+
+	* test/du/inodes.sh: Change the expected output as described above
+	when returning the --all directory entries (without -l).  Also replace
+	the name of the hardlink 'd/h' by 'd/f' in the actual output.
+
+2013-07-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	doc: fix typo
+	* doc/coreutils.texi (du invocation): @itemx -> @item.
+
+2013-07-28  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	maint: cleanup compare calls in test/du/inodes.sh
+	* test/du/inodes.sh: In the cases where compare() fails, that function
+	would show the unified diff automatically.  Therefore, remove the
+	excess "cat out".
+	In the cases where expecting an empty file, use compare() again
+	rather than the simpler "test -s" because possible error reports
+	will then include the file's content for the same reason as above.
+
+2013-07-28  Pádraig Brady  <P@draigBrady.com>
+
+	maint: avoid clang static analysis issues in csplit
+	* src/csplit.c (find_lines): Assert that load_buffer() updates the
+	global buffers, thus "b" will be non NULL, thus suppressing subsequent
+	NULL pointer derefence warnings.
+	(process_regexp): Avoid a redundant assignment of the "line" pointer.
+	(process_line_count): Likewise.  Also reduce the "line" pointer scope.
+
+2013-07-28  Pádraig Brady  <P@draigBrady.com>
+
+	tests: fix intermittent failure in test/du/inodes.sh
+	Prompted by the continuous integration build failure at:
+	http://hydra.nixos.org/build/5582213
+
+	* test/du/inodes.sh: Due to undefined order in returned directory
+	entries, the expected output might not match, so sort both expected
+	and actual output when returning --all directory entries.
+	Also use a simpler test for ensuring no errors are output.
+
+2013-07-27  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	du: add --inodes option
+	This new option can be used to find directories with a huge
+	amount of files.  The GNU find utility has the printf format
+	"%h" which prints the number of entries in a directory, but
+	this is non-cumulative and doesn't handle hard links.
+
+	* src/du.c (struct duinfo): Add new member for counting inodes.
+	(duinfo_init): Initialize inodes member with Zero.
+	(duinfo_set): Set inodes counter to 1.
+	(duinfo_add): Sum up the 2 given inodes counters.
+	(opt_inodes): Add new boolean flag to remember if the --inodes
+	option has been specified.
+	(INODES_OPTION): Add new enum value to be used ...
+	(long_options): ... here.
+	(usage): Add description of the new option.
+	(print_size): Pass inodes counter or size to print_only_size,
+	depending on the inodes mode.
+	(process_file): Adapt threshold handling: with --inodes, print or
+	elide the entries according to the struct member inodes.
+	(main): Add a case for accepting the new INODES_OPTION.
+	Print a warning diagnostic when --inodes is used together with the
+	option --apparent-size or -b.
+	Reset the output_block_size to 1 ... and thus ignoring the
+	options -m and -k.
+	* tests/du/inodes.sh: Add a new test.
+	* tests/local.mk (all_tests): Mention it.
+	* doc/coreutils.texi (du invocation): Document the new option.
+	* NEWS: Mention the new option.
+
+2013-07-25  Ken Booth  <ken@booths.org.uk>
+
+	mv: replace empty directories in cross file system move
+	src/copy.c (copy_internal): Use rmdir() rather than unlink()
+	when the source is a directory, so that empty directories
+	are replaced in the destination as per POSIX.
+	* tests/mv/part-rename.sh: Augment with various combinations.
+	* NEWS: Mention the bug fix.
+	Fixes http://bugs.gnu.org/14763
+
+2013-07-22  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	maint: use new gnulib function to free mount entries in du
+	* src/du.c (fill_mount_table): Use free_mount_entry() instead
+	of freeing struct members manually.
+
+2013-07-22  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	maint: make some shell and perl scripts executable in 'tests/'
+	Some newer test scripts - partially ones from me - are not executable.
+	It does not seem to be a problem, but for consistency and to avoid
+	future problems on unusual platforms or shells change the permissions
+	by adding the executable bit.
+
+	* cfg.mk (sc_tests_executable): Add new syntax-check rule to ensure
+	that all test scripts are executable.
+	* tests/df/df-output.sh: Change file mode from 644 to 755.
+	* tests/du/threshold.sh: Likewise.
+	* tests/factor/run.sh: Likewise.
+	* tests/init.sh: Likewise.
+	* tests/misc/csplit-suppress-matched.pl: Likewise.
+	* tests/misc/numfmt.pl: Likewise.
+	* tests/tail-2/retry.sh: Likewise.
+
+2013-07-19  Rasmus Villemoes  <rv@rasmusvillemoes.dk>
+
+	rm: output number of arguments at the interactive prompt
+	Include the number of arguments which rm received in the "Remove all
+	arguments?" prompt.  This is useful in the, presumably, common case
+	where the arguments were not provided by hand, but instead were the
+	result of various shell expansions.  A simple, if somewhat contrived,
+	example (assuming rm is aliased to rm -I) could be:
+
+	  rm * .o
+
+	where the prompt "Remove 120 arguments?" is more likely to make
+	the user catch the problem.
+
+	* src/rm.c (main): Include correctly pluralized n_files
+	in the output message.  Also remove the now redudant "all".
+	* tests/rm/interactive-always.sh: Adjust to the new prompt.
+	* tests/rm/interactive-once.sh: Likewise.
+
+2013-07-19  Pádraig Brady  <P@draigBrady.com>
+
+	dd: make status=none suppress all diagnostics
+	* src/dd.c (STATUS_NONE): Simplify the enum so that
+	it's more general than just suppressing transfer counts.
+	Then test this in all locations where non fatal diagnostics
+	are output.
+	* tests/dd/misc.sh: Ensure the diagnostic about
+	being unable to skip past the end of input is suppressed.
+	* NEWS: Mention the change in behavior.
+	Fixes http://bugs.gnu.org/14897
+
+2013-07-12  Pádraig Brady  <P@draigBrady.com>
+
+	head: avoid redundant allocations when reading empty files
+	* src/head.c (elide_tail_lines_file): For seekable empty files,
+	or seekable files where the current offset is after the
+	end of the file, return immediately.  Previously the short
+	circuit code could not be reached due to logic error.
+	Spotted by coverity.
+
+2013-07-12  Pádraig Brady  <P@draigBrady.com>
+
+	maint: avoid a valgrind memory leak warning from pinky
+	Similarly to commit v8.21-84-g8d2da3f in src/uptime.c
+	avoid a "definitely lost" error from valgrind.  Note this
+	only happens with pinky when compiled without optimization,
+	in which case certain paths aren't eliminated casuing
+	valgrind to trigger the message.  Note also that coverity
+	flags this "resource leak" too.
+
+	* src/pinky.c (short_pinky): free utmp_buf for developer builds.
+
+2013-07-11  Anton Ovchinnikov  <revolver112@gmail.com>
+
+	df: reduce memory usage when filtering mount entries
+	Avoid Valgrind reports of "definitely lost" items
+	and while at it, free all discarded mount entries
+	to minimize the amount of memory used.
+
+	* src/df.c (filter_mount_list): Use the newly exported
+	free_mount_entry() from gnulib to free all mount entries
+	as they're discarded.
+
+2013-07-11  Pádraig Brady  <P@draigBrady.com>
+
+	build: update gnulib submodule to latest
+
+2013-07-11  Pádraig Brady  <P@draigBrady.com>
+
+	build: fix a build warning on 32 bit systems in shuf.c
+	Prompted by the continuous integration build failure at:
+	http://hydra.nixos.org/build/5508873
+
+	* src/shuf.c (write_random_numbers): Convert to an int type
+	that matches the prinft format spec.
+
+2013-07-11  Assaf Gordon  <assafgordon@gmail.com>
+
+	shuf: add --repetition to support repetition in output
+	main(): Process new option.  Replace input_numbers_option_used()
+	with a local variable.  Re-organize argument processing.
+	usage(): Describe the new option.
+	(write_random_numbers): A new function to generate a
+	permutation of the specified input range with repetition.
+	(write_random_lines): Likewise for stdin and --echo.
+	(write_permuted_numbers):  New function refactored from
+	write_permuted_output().
+	(write_permuted_lines): Likewise.
+	* tests/misc/shuf.sh: Add tests for --repetitions option.
+	* doc/coreutils.texi: Mention --repetitions, add examples.
+	* TODO: Mention an optimization to avoid needing to
+	read all of the input into memory with --repetitions.
+	* NEWS: Mention new shuf option.
+
+	tests: add more tests for shuf option combinations
+	* test/misc/shuf.sh: Add tests for erroneous conditions
+	like multiple '-o' and '--random-source'.
+
+2013-07-11  Pádraig Brady  <P@draigBrady.com>
+
+	maint: adjust indentation in df.c
+	* src/df.c: Adjust indentation and spacing with has
+	gotten quite out of line in a couple of places.
+
+2013-07-09  Pádraig Brady  <P@draigBrady.com>
+
+	df: fix mount list processing with unstatable mount dirs
+	* src/df.c (filter_mount_list): Initialize devlist->dev_num correctly
+	when unable to stat() a mount point.  This will avoid possible invalid
+	deduplication done on the list due to use of uninitialized memory.
+	* tests/df/skip-duplicates.sh: Ensure this code path is exercised.
+	Also refactor the test to be table driven.
+	* NEWS: Mention the bug fix.
+
+2013-07-07  Anton Ovchinnikov  <revolver112@gmail.com>
+
+	maint: avoid a valgrind memory leak warning from uptime
+	* src/uptime.c (uptime): Free utmp_buf returned from read_utmp,
+	to avoid a "definitely lost" warning from valgrind.
+
+2013-07-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	build: update gnulib submodule to latest
+
+2013-07-05  Pádraig Brady  <P@draigBrady.com>
+
+	tests: fix "shuf unreadable" test to work when run as root
+	* tests/misc/shuf.sh: Restrict the test to the significant
+	case where we can't in fact read the "unreadable" file.
+
+2013-07-02  Pádraig Brady  <P@draigBrady.com>
+
+	stat: ensure --context emits an "unrecognized option" diagnostic
+	* src/stat.c (long_options): Remove the "context" option as it's
+	no longer referenced since commit v8.5-65-g13f3237
+
+2013-07-02  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	mkdir,mkfifo,mknod: give scontext-related variable a better scope
+	* src/mkdir.c (main): Move the variable ret and issuing the error
+	message into the body of the scontext-related if-block.
+	* src/mkfifo.c (main): Likewise.
+	* src/mknod.c (main): Likewise.
+
+2013-07-02  Pádraig Brady  <P@draigBrady.com>
+
+	maint: refactor SMACK interface to a separate module
+	Consolidate all smack routines and checks in a module.
+	We replace and wrap the most commonly used smack routines,
+	which allows removing ifdefs throughout the code.
+
+	* gl/lib/smack.h: A new header containing the implementation
+	of the wrapped and replacement routines.  Note the is_smack_enabled()
+	routine should be optimized out at compile time when compiled
+	on a system without libsmack.
+	* gl/modules/smack: Describe the new module and move the
+	configure time code here from ...
+	* m4/jm-macros.m4: ... here.
+	* bootstrap.conf: Reference the new module.
+	* src/id.c: Use the routines without ifdefs where possible.
+	* src/ls.c: Likewise.
+	* src/mkdir.c: Likewise.
+	* src/mkfifo.c: Likewise.
+	* src/mknod.c: Likewise.
+
+2013-07-02  Pádraig Brady  <P@draigBrady.com>
+
+	id: don't show SMACK errors unless -Z is specified
+	* src/id.c (main): Be consistent with the SELinux case,
+	and only show errors in getting the security context
+	when -Z is specified.
+
+2013-07-01  Jarkko Sakkinen  <jarkko.sakkinen@linux.intel.com>
+
+	mkdir,mkfifo,mknod: with -Z, create SMACK security context
+	Enable creation of SMACK security context with -Z command-line switch
+	if SMACK is enabled.
+
+	* mkdir.c (main): Set process security context to given SMACK label.
+	* mkfifo.c (main): Likewise.
+	* mknod.c (main): Likewise.
+	* src/local.mk: link mk{dir, fifo, nod} with libsmack.
+	* NEWS: Mention the new feature.
+
+2013-06-27  D. Hugh Redelmeier  <hugh@mimosa.com>
+
+	doc: fix details on the interaction of df with device nodes
+	* man/df.x: Don't say that a dev node is always on the root file system.
+	* doc/coreutils.texi (df invocation): Likewise.  Also state that the
+	device node to mounted file system interpretation is only done when
+	passed absolute paths to device nodes.
+
+2013-06-24  Jarkko Sakkinen  <jarkko.sakkinen@iki.fi>
+
+	ls: with -Z, show SMACK security context
+	Enable showing of file SMACK security with '-Z' command-line switch
+	if SMACK is enabled.  Showing SMACK context of a file does not strictly
+	require SMACK to be enabled but this required to make choice whether to
+	show SELinux or SMACK security context.
+
+	* src/ls.c (getfilecon_cache): Retrieve SMACK context if available.
+	(gobble_file): Handle SMACK context similarly to SELinux context.
+	* src/local.mk: Link lsl with libsmack.
+	* NEWS: Mention the new feature.
+	* .mailmap: Merge the Author's 2 email addresses.
+
+2013-06-22  Pádraig Brady  <P@draigBrady.com>
+
+	stdbuf: make it mandatory to specify a buffering option
+	This is consistent with the documented interface and
+	avoids any ambiguity in a user thinking that stdbuf without options
+	might reset to a "standard" buffering setup.
+
+	* src/stdbuf.c (set_libstdbuf_options): Indicate with the return value
+	whether any env variables were actually set.
+	(main): Fail unless some env variables were set.
+	* tests/misc/stdbuf.sh: Ensure this constraint is enforced.
+	* NEWS: Mention the small change in behavior.
+
+2013-06-22  Pádraig Brady  <P@draigBrady.com>
+
+	doc: clarify that truncate --size represents bytes by default
+	* src/truncate.c (usage): Mention that --size is in bytes which
+	is by far the most common usage.
+	* doc/coreutils.texi (truncate invocation): Likewise. Also cross
+	reference the --io-blocks option.
+	Reported in http://bugs.gnu.org/14686
+
+2013-06-20  Jarkko Sakkinen  <jarkko.sakkinen@linux.intel.com>
+
+	id: adjust/restrict smack support to newer versions of libsmack
+	There was slight change to libsmack such that positive values are
+	reserved for returning length of the label for smack_new_label_from_*
+	functions.
+
+	* m4/jm-macros.m4: Set HAVE_SMACK when both smack_new_label_from_self()
+	and recently added smack_new_label_from_path() are present.
+	The latter's presence indicates the newer API of the former.
+	* src/id.c (main): Check that smack_new_label_from_self() < 0,
+	and not just non-zero.
+
+2013-06-18  Pádraig Brady  <P@draigBrady.com>
+
+	tests: use appropriate precision when printing float limits
+	* src/getlimits.c (print_float): Adjust to use the ftoastr module,
+	which uses the appropriate precision so that no info is lost.
+	* cfg.mk (sc_prohibit_continued_string_alpha_in_column_1): Exclude od.c
+	fixes http://bugs.gnu.org/14650
+
+2013-06-13  Pádraig Brady  <P@draigBrady.com>
+
+	maint: update gitignore entries
+	* .gitignore: Exclude the generated doc/manual directory,
+	and also the src/fs-latest-magic.h file referenced in README-release.
+
+2013-06-12  Pádraig Brady  <P@draigBrady.com>
+
+	doc: clarify the description of du --separate-dirs
+	* src/du.c (usage): Clarify that --separate-dirs doesn't exclude
+	all directories.
+	* doc/coreutils.texi (du invocation): Avoid implying that -S
+	excludes the size of any non directory entries for a directory.
+	Also don't mention st_size as it's dependent on --apparent-size.
+	Reported by C de-Avillez in <https://launchpad.net/bugs/1187044>
+
+2013-06-05  Eric Blake  <eblake@redhat.com>
+
+	doc: mention prior stat change
+	For a file of size 1234 bytes, commit ca9aa759 had the side effect
+	of changing 'stat -c "%'s" file' from outputting "?s" to the nicer
+	"1,234", depending on locale.  This is worth mentioning in the NEWS.
+
+	Resolves part of http://bugs.gnu.org/14556.
+
+	* NEWS: Mention 8.7 improvement in stat.
+	* cfg.mk (old_NEWS_hash): Adjust accordingly.
+
+2013-06-05  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	build: update gnulib submodule; also bootstrap to latest
+	Notes tests/init.sh is still in sync with gnulib.
+
+	* bootstrap: Update to latest.
+	* gnulib: Update avoiding gnulib-test failures.
+
+2013-06-03  Pádraig Brady  <P@draigBrady.com>
+
+	tests: avoid a race in tail --retry testing
+	Prompted by the continuous integration build failure at:
+	http://hydra.nixos.org/build/5221053
+
+	* tests/tail-2/retry.sh: Ensure the 'out' file is truncated,
+	as it's used to arbitrate the run order of commands.
+	Relying on the truncation in the background tail command
+	is racy because the truncation can occur after the fork
+	of the background shell and thus wait4lines would not wait
+	for output to occur in 'out', which would mean that the
+	'missing' file could be populated by the time tail(1)
+	gets to process it.
+
+2013-06-03  Andreas Mohr  <andi@lisas.de>
+
+	doc: mention 'UTC' in date --utc help
+	src/date.c (usage): Make -u apparent in searches for UTC.
+
+2013-06-02  Jim Meyering  <meyering@fb.com>
+
+	od: -wN, N>64K, avoid misbehavior on systems with 32-bit size_t
+	* src/od.c (PRINT_FIELDS): Declare "i" to be of type uintmax_t, so that
+	the numerator in the expression for "next_pad" does not overflow.
+	(print_named_ascii): Likewise.
+	(print_ascii): Likewise.
+	Bug introduced via commit v6.12-42-g20c0b87.
+	* tests/misc/od.pl: Exercise each of the three affected code paths.
+	* NEWS (Bug fixes): Mention it.
+	Reported by Rich Burridge.
+
+	tests: head-c: avoid spurious failure with a 32-bit size_t
+	* tests/misc/head-c.sh: Don't try to elide 1 exabytes, since on
+	32-bit systems, that number is not representable as a size_t.
+	This command would fail on 32-bit systems, where SIZE_MAX < 1E:
+	  head --bytes=-E < /dev/null
+	Instead of "E", use $SSIZE_MAX.
+	For discussion, see http://bugs.gnu.org/13530
+
+2013-05-28  Jim Meyering  <meyering@fb.com>
+
+	tests: avoid spurious failure when SIZE_MAX is 2^32-1
+	* tests/split/line-bytes.sh: Since we've limited virtual memory to
+	20MB, choose a smaller size, 1GiB (which is <= SIZE_MAX) rather than
+	1EiB, which is larger than SIZE_MAX on 32-bit systems.
+	I confirmed that this test still fails when the split.c-modifying
+	part of v8.21-58-gfec363c is backed out.
+
+2013-05-27  Jim Meyering  <meyering@fb.com>
+
+	tests: fix an ls test not to fail when user or group name contains SP
+	* tests/ls/block-size.sh (size_etc): The sed expression through which
+	we filtered the output of "ls -l ..." assumed that the user and group
+	name components of each line would not contain spaces.  Avoid the
+	problem by using -og instead of -l, thus not printing either of those
+	fields.  Adjust the sed expression accordingly.
+
+2013-05-27  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: numfmt: use the printf program, not the shell builtin
+	* tests/misc/numfmt.pl: Avoid a spurious failure when
+	/bin/sh is dash (as can happen on Debian systems).
+
+2013-05-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stat: tune for large-LDAP case
+	* src/stat.c (print_stat): Omit unnecessary calls to setpwent, setgrent.
+	Problem reported by Fridolín Pokorný in	<http://bugs.gnu.org/14462>.
+
+2013-05-23  Pádraig Brady  <P@draigBrady.com>
+
+	split: with --line-bytes only allocate memory as needed
+	* src/split.c (line_bytes_split): Rewrite to only buffer
+	when necessary.  I.E. only increase the buffer when we've
+	already lines output in a split and we encounter a line
+	larger than the input buffer size, in which case a hold
+	buffer will be increased in increments of the input buffer size.
+	(lines_rr): Use the more abstract xalloc_die() just like
+	we did in line_bytes_split(), rather than explicitly
+	printing the "memory exhausted" message and exiting.
+	* tests/split/line-bytes.sh: Add a new test for this
+	function which previously had no test coverage.
+	* tests/local.mk: Reference the new test.
+	* NEWS: Mention the improvement.
+	Fixes http://bugs.gnu.org/13537
+
+2013-05-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	maint: port --enable-gcc-warnings to clang
+	* configure.ac: If clang, add -Wno-format-extra-args and
+	-Wno-tautological-constant-out-of-range-compare.
+	* gl/lib/rand-isaac.c (ind):
+	* gl/lib/randread.c (readisaac):
+	* src/ls.c (dev_ino_push, dev_ino_pop):
+	* src/sort.c (buffer_linelim):
+	* src/system.h (is_nul):
+	* src/tail.c (tail_forever_inotify):
+	Rewrite to avoid casts that clang dislikes.
+	It's good to avoid casts anyway.
+	* src/expr.c (integer_overflow): Declare only if it exists.
+	(die): Remove; unused.
+	* src/ls.c (dev_ino_push): New function, replacing ...
+	(DEV_INO_PUSH): ... this removed macro.  All uses changed.
+	(decode_switches): Rewrite "str"+i to &str[i].
+
+	build: update gnulib submodule to latest
+
+	tests: don't assume expr was built with GMP
+	* tests/misc/cut-huge-range.sh (subtract_one): New string.
+	(CUT_MAX): Don't pass a too-large integer to 'expr'.
+
+2013-05-12  Pádraig Brady  <P@draigBrady.com>
+
+	doc: link to the list of rejected feature requests
+	* README: Update the email address best suited to discussing
+	feature requests, and also link to the list of previously
+	discussed and rejected requests.
+
+2013-05-12  Jim Meyering  <meyering@fb.com>
+
+	build: avoid new syntax-check failure
+	* po/POTFILES.in: Reflect renaming.
+
+2013-05-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	maint: add FIXME comment
+
+	mkdir: don't assume umask equals POSIX default ACL mask
+	This fixes Bug#14371, reported by Killer Bassist.
+	* NEWS: Document this.
+	* src/mkdir.c (struct mkdir_options): Remove member ancestor_mode.
+	New member umask_value.  All uses changed.
+	* src/mkdir.c (make_ancestor): Fix umask assumption.
+	* src/mkdir.c, src/mkfifo.c, src/mknod.c (main):
+	Leave umask alone.  This requires invoking lchmod after creating
+	the file, which introduces a race condition, but this can't be
+	avoided on hosts with "POSIX" default ACLs, and there's no easy
+	way with network file systems to tell what kind of host the
+	directory is on.
+	* tests/local.mk (all_tests): Add tests/mkdir/p-acl.sh.
+	* tests/mkdir/p-acl.sh: New file.
+
+	build: update gnulib submodule to latest
+
+2013-05-08  Jarkko Sakkinen  <jarkko.sakkinen@iki.fi>
+
+	id: with -Z, show SMACK security context
+	Adds an optional dependency on libsmack.
+
+	* m4/jm-macros.m4: Look for the smack library/header.
+	* src/id.c (main): Output the smack context if available.
+	* src/local.mk: Link with libsmack if available.
+	* NEWS: Mention the new feature.
+
+2013-05-08  Cojocaru Alexandru  <xojoc@gmx.com>
+
+	cut: improve performance, especially with --output-delimiter
+	Use a sentinel value that's checked implicitly, rather than
+	a bit array, to determine if an item should be output.
+
+	Benchmark results for this change are:
+
+	$ yes abcdfeg | head -n1MB > big-file
+
+	$ for c in orig sentinel; do
+	    src/cut-$c 2>/dev/null
+	    echo -ne "\n== $c =="
+	    time src/cut-$c -b1,3 big-file > /dev/null
+	  done
+	== orig ==
+	real    0m0.049s
+	user    0m0.044s
+	sys     0m0.005s
+
+	== sentinel ==
+	real    0m0.035s
+	user    0m0.032s
+	sys     0m0.002s
+
+	 ## Again with --output-delimiter ##
+	$ for c in orig sentinel; do
+	    src/cut-$c 2>/dev/null
+	    echo -ne "\n== $c =="
+	    time src/cut-$c -b1,3 --output-delimiter=: big-file > /dev/null
+	  done
+	== orig ==
+	real    0m0.106s
+	user    0m0.103s
+	sys     0m0.002s
+
+	== sentinel ==
+	real    0m0.055s
+	user    0m0.052s
+	sys     0m0.003s
+
+	eol_range_start: Removed. 'n-' is no longer treated specially,
+	and instead SIZE_MAX is set for the 'hi' limit, and tested implicitly.
+	complement_rp: Used to complement 'rp' when '--complement' is specified.
+	ADD_RANGE_PAIR: Macro renamed to 'add_range_pair' function.
+	* tests/misc/cut-huge-range.sh: Adjust to the SENTINEL value.
+	Also remove the overlapping range test as this is no longer
+	dependent on large ranges and also is already handled with
+	the EOL-subsumed-3 test in cut.pl.
+
+2013-05-07  Cojocaru Alexandru  <xojoc@gmx.com>
+
+	cut: fix handling of overlapping ranges
+	This issue was introduced in commit v8.21-43-g3e466ad
+
+	* src/cut.c (set_fields): Process all range pairs when merging.
+	* tests/misc/cut-huge-range.sh: Add a test for this edge case.
+	Also fix an issue where we could miss reported errors due
+	to truncation of the 'err' file.
+
+2013-04-30  Pádraig Brady  <P@draigBrady.com>
+
+	doc: correct a URL to older textutils source
+	* doc/coreutils.texi (Putting the tools together): Adjust the
+	textutils-1.22 URL, and add a URL for newer sources.
+
+2013-04-29  Pádraig Brady  <P@draigBrady.com>
+
+	cut: reduce CPU usage for the the common case
+	Ensure appropriate functions are inlined.  This was seen to
+	be required with gcc 4.6.0 with -O2 on x86_64 at least.
+	It was reported that gcc 4.8.0 did inline these functions though.
+
+	Also reinstate the bit vector for the common case,
+	to further improve performance.
+
+	Benchmark results for both aspects of this change are:
+
+	$ yes abcdfeg | head -n1MB > big-file
+	$ for c in orig inline inline-array; do
+	    src/cut-$c 2>/dev/null
+	    echo -ne "\n== $c =="
+	    time src/cut-$c -b1,3 big-file > /dev/null
+	  done
+
+	== orig ==
+	real    0m0.088s
+	user    0m0.081s
+	sys     0m0.007s
+
+	== inline ==
+	real    0m0.070s
+	user    0m0.060s
+	sys     0m0.009s
+
+	== inline-array ==
+	real    0m0.049s
+	user    0m0.044s
+	sys     0m0.005s
+
+	* src/cut.c (set_fields): Set up the printable_field bit vector
+	for performance, but only when it's appropriate.  I.E. not
+	when either --output-delimeter or huge ranges are specified.
+	(next_item): Ensure it's inlined and avoid unnecessary processing.
+	(print_kth): Ensure it's inlined and add a branch for the fast path.
+	Related to http://bugs.gnu.org/13127
+
+2013-04-29  Cojocaru Alexandru  <xojoc@gmx.com>
+
+	cut: reduce CPU overhead in determining item to output
+	print_kth() is the central function of cut used to
+	determine if an item is to be output or not,
+	so simplify it by moving some logic outside.
+	Benchmark results for this change are:
+
+	$ yes abcdfeg | head -n1MB > big-file
+	$ for c in orig split; do
+	    src/cut-$c 2>/dev/null
+	    echo -ne "\n== $c =="
+	    time src/cut-$c -b1,3 big-file > /dev/null
+	  done
+
+	== orig ==
+	real    0m0.111s
+	user    0m0.108s
+	sys     0m0.002s
+
+	== split ==
+	real    0m0.088s
+	user    0m0.081s
+	sys     0m0.007s
+
+	* src/cut.c (print_kth): Refactor a branch to outside the function.
+	Related to http://bugs.gnu.org/13127
+
+2013-04-29  Cojocaru Alexandru  <xojoc@gmx.com>
+
+	cut: make memory allocation independent of range width
+	The current implementation of cut, uses a bit array,
+	an array of `struct range_pair's, and (when --output-delimiter
+	is specified) a hash_table.  The new implementation will use
+	only an array of `struct range_pair's.
+	The old implementation is memory inefficient because:
+	 1. When -b with a big num is specified, it allocates a lot of
+	    memory for `printable_field'.
+	 2. When --output-delimiter is specified, it will allocate 31 buckets.
+	    Even if only a few ranges are specified.
+
+	Note CPU overhead is increased to determine if an item is to be printed,
+	as shown by:
+
+	$ yes abcdfeg | head -n1MB > big-file
+	$ for c in with-bitarray without-bitarray; do
+	    src/cut-$c 2>/dev/null
+	    echo -ne "\n== $c =="
+	    time src/cut-$c -b1,3 big-file > /dev/null
+	  done
+
+	== with-bitarray ==
+	real    0m0.084s
+	user    0m0.078s
+	sys     0m0.006s
+
+	== without-bitarray ==
+	real    0m0.111s
+	user    0m0.108s
+	sys     0m0.002s
+
+	Subsequent patches will reduce this overhead.
+
+	* src/cut.c (set_fields): Set and initialize RP
+	instead of printable_field.
+	* src/cut.c (is_range_start_index): Use CURRENT_RP rather than a hash.
+	* tests/misc/cut.pl: Check if `eol_range_start' is set correctly.
+	* tests/misc/cut-huge-range.sh: Rename from cut-huge-to-eol-range.sh,
+	and add a test to verify large amounts of mem aren't allocated.
+	Fixes http://bugs.gnu.org/13127
+
+2013-04-28  Pádraig Brady  <P@draigBrady.com>
+
+	stat,tail: improve support for snfs
+	The StorNext distributed file system was previously known as CVFS.
+
+	* src/stat.c (human_fstype): Add new file system ID definition.
+	* NEWS: Mention the improvement.
+	Fixes http://bugs.gnu.org/14251
+
+2013-04-25  Pádraig Brady  <P@draigBrady.com>
+
+	tests: fix usage of require_ulimit_
+	* init.cfg (require_ulimit_v_): Renamed from require_ulimit_
+	as this only checks for ulimit -v support.  Other uses of
+	ulimit -t and ulimit -n in tests shouldn't cause false failures
+	if not supported.
+	* cfg.mk (sc_prohibit_test_ulimit_without_require_): A new syntax check
+	to ensure that require_ulimit_v_() is used iff required.
+	* tests/misc/head-c.sh: Add missing call to require_ulimit_v_.
+	* tests/rm/many-dir-entries-vs-OOM.sh: Likewise.
+	* tests/split/r-chunk.sh: Remove non mandatory require_ulimit_ call.
+	* tests/misc/sort-merge-fdlimit.sh: Likewise.
+	* tests/cp/link-heap.sh: Adjust to renamed require_ulimit_v_.
+	* tests/dd/no-allocate.sh: Likewise.
+	* tests/misc/csplit-heap.sh: Likewise.
+	* tests/misc/cut-huge-to-eol-range.sh: Likewise.
+	* tests/misc/printf-surprise.sh: Likewise.
+
+2013-04-22  Jim Meyering  <meyering@fb.com>
+
+	scripts: tweak URLs in autotools-install
+	* scripts/autotools-install (tarballs): Use http:// URLs rather
+	than ftp:// ones.  The former are more likely to work, these days.
+	Update URLs to point to the latest versions.
+
+2013-04-20  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	tail: exit following by descriptor when no tailable file left
+	As a side effect of the previous commit which fixes 'tail -f --retry'
+	to wait for a file to appear, tail would not exit when the last file
+	appears untailable and gives up on this file.
+	This can happen, for example, when the argument file name appears
+	as directory.  Tail sets the 'ignore' flag of this file to true,
+	but instead of exiting the program, tail would continue the loop.
+
+	* src/tail.c (any_live_files): Change the function to return true
+	if any of the files is still tailable or if tail should continue to
+	try to check again.
+	(tail_forever): Change the condition to break the loop in the
+	"no files remaining" case, because now any_live_files() will care
+	about it, as mentioned above.
+	(parse_options): When --retry is used without any follow mode,
+	then reset reopen_inaccessible_files to false.
+	* tests/tail-2/retry.sh: Add test case.
+
+2013-04-20  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	tail: let -f --retry wait for inaccessible files
+	The --retry option is indeed useful for both following modes
+	by name and by file descriptor.  The difference is that in the
+	latter case, it is effective only during the initial open.
+
+	As a regression of the implementation of the inotify support,
+	tail -f --retry would immediately exit if the given file is
+	inaccessible.
+
+	* src/tail.c (usage): Change the description of the --retry option:
+	remove the note that this option would mainly be useful when
+	following by name.
+	(main): Change diagnosing dubios uses of --retry option:
+	when the --retry option is used without following, then issue
+	a warning that this option is ignored; when it is used together
+	with --follow=descriptor, then issue a warning that it is only
+	effective for the initial open.
+	Disable inotify also in the case when the initial open in tail_file()
+	failed (which is the actual bug fix).
+	* init.cfg (retry_delay_): Pass excess arguments to the test function.
+	* tests/tail-2/retry.sh: Add new tests.
+	* tests/local.mk (all_tests): Mention it.
+	* doc/coreutils.texi (tail invocation): Enhance the documentation
+	of the --retry option.  Clarify the difference in tail's behavior
+	regarding the --retry option when combined with the following modes
+	name versus descriptor.
+	* NEWS (Bug fixes): Mention the fix.
+
+	Reported by Noel Morrison in:
+	http://lists.gnu.org/archive/html/coreutils/2013-04/msg00003.html
+
+2013-04-14  Pádraig Brady  <P@draigBrady.com>
+
+	tests: avoid false failures with non default groups
+	On OS X it was seen that the group ID used for new files,
+	are set to a that of the directory rather than the current user.
+	It's not currently understood when this happens, but it was confirmed
+	that ACLs, extended attributes and setgid bits are _not_ involved.
+
+	* init.cfg (skip_if_nondefault_group_): A new function to detect
+	and avoid this situation.  Document with links to the discussions
+	for hopefully future clarification.
+	* tests/install/install-C-root.sh: Use the new function.
+	* tests/install/install-C-selinux.sh: Likewise.
+	* tests/install/install-C.sh: Likewise.
+
+2013-04-14  Pádraig Brady  <P@draigBrady.com>
+
+	doc: mention caveats with using install --compare
+	* doc/coreutils.texi (install invocation): Mention that install(1) may
+	not correctly determine the default user or permissions for installed
+	files, and so is best used with options specifying these attributes.
+
+	head: with --bytes=-N only allocate memory as needed
+	* src/head.c (elide_tail_bytes_pipe): Don't use calloc as that
+	bypasses memory overcommit due to the zeroing requirement.
+	Also realloc rather than malloc the pointer array to avoid
+	dependence on overcommit entirely.
+	* tests/misc/head-c.sh: Add a test case.
+	Fixes http://bugs.gnu.org/13530
+
+2013-04-14  Ondrej Oprala  <ooprala@redhat.com>
+
+	dd: avoid buffer allocations unless needed
+	* src/dd.c: Add new static global variable ibuf.
+	(alloc_ibuf, alloc_obuf): New functions factored from dd_copy().
+	(dd_copy): Call the new functions to allocate memory for
+	ibuf and obuf when necessary.
+	(skip): Likewise.
+	* tests/dd/no-allocate.sh: New test.
+	* tests/local.mk: Reference the test.
+
+2013-04-10  Assaf Gordon  <assafgordon@gmail.com>
+
+	csplit: add the --suppress-matched option
+	With --suppress-matched, the lines that match the pattern will not be
+	printed in the output files.  I.E. the first line from the second
+	and subsequent splits will be suppressed.
+
+	* src/csplit.c: process_regexp(),process_line_count(): Don't output the
+	matched lines.  Since csplit includes "up to but not including" matched
+	lines in each split, the first line (in the next group) is the matched
+	line - so just skip it.
+	main(): Handle new option.
+	usage(): Mention new option.
+	* doc/coreutils.texi (csplit invocation): Mention new option, examples.
+	* tests/misc/csplit-suppress-matched.pl: New test script.
+	* tests/local.mk: Reference the new test.
+	* NEWS: Mention new feature.
+
+2013-04-07  Enrico Scholz  <enrico.scholz@informatik.tu-chemnitz.de>
+
+	build: fix man page build failure with some permissions setups
+	Use the more portable 'chmod a-w', instead of the 'chmod -w' form.
+	The latter is not always supported.  Also its operation is
+	dependent on umask controlling the permissions bits for new files,
+	which is not the case in the presence of POSIX default ACLs for e.g.
+	In that case, chmod may print a warning like the following, and
+	exit with failure status:
+
+	chmod: man/hostid.1-t: new permissions are r--rw-r--, not r--r--r--
+
+	* man/local.mk: s/-w/a-w/
+
+2013-04-04  Pádraig Brady  <P@draigBrady.com>
+
+	tests: avoid shared lib tests on unsupported platforms
+	* init.cfg (require_gcc_shared_): A new function to check
+	that we can build shared libraries in the particular manner
+	we use in our tests.
+	* tests/cp/nfs-removal-race.sh: Use require_gcc_shared_.
+	Then fail rather than skip, if the actual shared lib build fails.
+	* tests/df/no-mtab-status.sh: Likewise.
+	* tests/df/skip-duplicates.sh: Likewise.
+	* tests/ls/getxattr-speedup.sh: Likewise.
+	Reported in http://bugs.gnu.org/14024
+
+	tail: exit without reading input if would never output
+	* src/tail.c (main): If -n0 or -c0 were specified without -f,
+	then no data would ever be output, so exit without reading input.
+	* tests/tail-2/tail-n0f.sh: Augment the related test with this case.
+
+	shuf: exit without reading if would never output
+	* src/shuf.c (main): If -n0 specified then no data would ever be output,
+	so exit without reading input.
+	* tests/misc/shuf.sh: Augment the related test with this case.
+
+	doc: add details on ln --relative symlink resolution
+	* doc/coreutils.texi (ln invocation): Describe how symlinks are
+	resolved with --relative, and give an example showing the greater
+	control available through realpath(1).
+	* tests/ln/relative.sh: Add a test to demonstrate full symlink
+	resolution, in a case where it might not be wanted.
+
+2013-04-04  Rémy Lefevre  <lefevreremy@gmail.com>
+
+	ln: --relative: fix updating of existing symlinks
+	Don't dereference an existing symlink being replaced.
+	I.E. generate the symlink relative to the symlink's containing dir,
+	rather than to some arbitrary place it points to.
+
+	* src/ln.c (convert_abs_rel): Don't consider the final component
+	of the symlink name when canonicalizing, as we want to avoid
+	dereferencing the final component.
+	* tests/ln/relative.sh: Add a test case.
+	* NEWS: Mention the fix.
+	Resolves http://bugs.gnu.org/14116
+
+2013-03-25  Assaf Gordon  <assafgordon@gmail.com>
+
+	shuf: use reservoir-sampling for large or unknown sized inputs
+	Reservoir sampling optimizes selecting K random lines from large or
+	unknown-sized input: http://en.wikipedia.org/wiki/Reservoir_sampling
+	Note this also avoids reading any input when -n0 is specified.
+
+	* src/shuf.c (main): Use reservoir-sampling when the number of output
+	lines is known, and the input size is large or unknown.
+	(input_size): A new function to get the input size for regular files.
+	(read_input_reservoir_sampling): New function to read lines from input,
+	keeping only K lines in memory, replacing lines with decreasing prob.
+	(write_permuted_output_reservoir): New function to output reservoir.
+	* tests/misc/shuf-reservoir.sh: An expensive_ test using valgrind to
+	exercise the reservoir-sampling code.
+	* tests/local.mk: Reference new test.
+	* NEWS: Mention the improvement.
+
+2013-03-24  Pádraig Brady  <P@draigBrady.com>
+
+	stat,tail: improve support for efivarfs, exofs, f2fs and ubifs
+	* src/stat.c (human_fstype): Add new file system ID definitions.
+	* NEWS: Mention the improvement.
+	Fixes http://bugs.gnu.org/14020
+
+	maint: improve make src/fs-magic-compare
+	* README-release: fix the `make` command, and mention how
+	to get the latest results without requring running a
+	system with the latest kernel.
+	* src/local.mk (src/fs-latest-magic.h): A new target to
+	document how/where to place the latest magic header.
+	(src/fs-kernel-magic): Adjust to include separately
+	downloaded header if available.
+	(src/fs-magic): Undefine MANPAGER as it may impact the
+	ability to pipe the output of man(1).
+	(fs-magic-compare): Don't echo the commands run as they're
+	distracting from the output which needs to be examined.
+
+	build: fix issues when building with GMP
+	* m4/gmp.m4 (cu_GMP): Add an extra check that gmp.h is available
+	which is required on one Mac OS X 10.5.8 system at least,
+	where the lib was available but the header wasn't.
+	Also enable our GMP code on systems where GMP is not in a separate lib.
+
+2013-03-22  Pádraig Brady  <P@draigBrady.com>
+
+	doc: clarify the printable characters output by od
+	* src/od.c (usage): Mention any printable character is output,
+	Not just ASCII.
+	* doc/coreutils.texi (od invocation): Further clarify that only
+	single byte characters are output (due to the alignment requirement).
+	Also mention the fact that 3 digit octal sequences are output
+	for non printable characters without a corresponding C escape.
+	Reported in http://bugs.gnu.org/13947
+
+	doc: clarify stat the meaning of --format="%t %T"
+	* src/stat.c (usage): Mention that the values are only
+	defined for character and block special files.
+	* doc/coreutils.texi (stat invocation): Likewise.
+	Also mention st_rdev.
+	Reported in http://bugs.gnu.org/13927
+
+2013-03-06  Pádraig Brady  <P@draigBrady.com>
+
+	doc: mention `numfmt` as an alternative to `sort -h`
+	* doc/coreutils.texi (sort invocation): Mention that numfmt
+	can achieve the same results with a possibly more accurate sort.
+
+	doc: remove a redundant numfmt heading from texinfo
+	* doc/coreutils.texi (detailmenu): Remove the redundant numfmt heading.
+
+	maint: ensure proper backslash quoting in texinfo macros
+	* doc/coreutils.texi (ambiguousGroupNote): Ensure '\' is escaped
+	appropriately within the macro.  This was verified to generate
+	a single '\' in both "info" and "pdf" outputs.
+
+2013-03-04  Torbjörn Granlund  <tg@gmplib.org>
+
+	build: fix factor build failure on aarch64
+	* src/longlong.h (__aarch64__): Make add_ssaaaa and sub_ddmmss work.
+	* NEWS: Mention the build fix.
+	Reported at https://bugzilla.redhat.com/917735
+
+2013-03-01  Assaf Gordon  <assafgordon@gmail.com>
+
+	tests: don't skip all uniq tests when locale is missing
+	* tests/misc/uniq.pl: Previously, if LOCALE_FR was not defined, all
+	tests would be skipped. Modified to skip only the relevant test.
+
+2013-02-28  Assaf Gordon  <assafgordon@gmail.com>
+
+	uniq: add the --group option
+	* src/uniq.c (usage): Summarize the new option,
+	and adjust the --all-repeated option to be more consistent.
+	(check_file): Merge the --group functionality into
+	the core loop for the default uniq operation since
+	it's very similar and can output lines immediately upon reading.
+	(main): Handle the new --group option and make it
+	mutually exclusive with other selection options.
+	* tests/misc/uniq.pl: Add tests.
+	* NEWS: Mention the new feature.
+	* doc/coreutils.texi (uniq invocation): Describe --group.
+
+2013-02-28  Pádraig Brady  <P@draigBrady.com>
+
+	doc: move some info from all --help messages, online
+	* src/system.h (emit_ancillary_info): Link to the bug report email
+	addresses and general help URLs online rather than specifying directly.
+	This give us greater scope to present better info like describing
+	the difference between bug-coreutils@gnu.org and coreutils@gnu.org etc.
+	* tests/misc/help-version.sh: Remove the check for bug-coreutils@gnu.org
+	* tests/local.mk: Remove the no longer needed PACKAGE_BUGREPORT.
+
+2013-02-28  Assaf Gordon  <assafgordon@gmail.com>
+
+	tests: add '--ignore-case' tests for uniq
+	* tests/misc/uniq.pl: add tests for --ignore-case.
+
+2013-02-28  Javier López  <chilicuil@ubuntu.com>
+
+	dircolors: add a new entry to colorize 'arc' files
+	* src/dircolors.hin: Add an entry for arc.  Suggested in:
+	https://bugs.launchpad.net/ubuntu/+source/coreutils/+bug/1088131
+
+2013-02-28  Assaf Gordon  <assafgordon@gmail.com>
+
+	join: Add the -z, --zero-terminated option
+	* NEWS: Mention join's new option: --zero-terminated (-z).
+	* src/join.c: Add new option, --zero-terminated (-z), to make
+	join use the NUL byte as separator/delimiter rather than newline.
+	(get_line): Use readlinebuffer_delim in place of readlinebuffer.
+	(main): Handle the new option.
+	(usage): Describe new option the same way sort does.
+	* doc/coreutils.texi (join invocation): Describe the new option.
+	* tests/misc/join.pl: add tests for -z option.
+
+2013-02-28  Ondřej Vašík  <ovasik@redhat.com>
+
+	dircolors: add new entries to colorized archive formats
+	* src/dircolors.hin:  Add .cab, .alz, .lzo, .lrz, .t7z, .tzo, .lha
+	to colorized archives.
+	Suggested by Ville Skyttä in https://bugzilla.redhat.com/868510
+
+2013-02-22  Ondrej Oprala  <ooprala@redhat.com>
+
+	install: cleanup properly if the strip program failed for any reason
+	* src/install.c (strip): Indicate failure with a return code instead
+	of terminating the program.
+	(install_file_in_file): Handle strip's return code and unlink the
+	created file if necessary.
+	* tests/install/strip-program.sh: Add a test to cover the changes.
+	* NEWS (Bug fixes): Mention the fix.
+	Reported by John Reiser in http://bugzilla.redhat.com/632444.
+
+2013-02-20  Joachim Schmitz  <jojo@schmitz-digital.de>
+
+	copy: ensure the correct root ID is checked on all platforms
+	* src/copy.c (copy_reg): Check ROOT_UID rather than 0,
+	which is significant on HP-NonStop.
+
+2013-02-20  Pádraig Brady  <P@draigBrady.com>
+
+	maint: cleanup up various uses of __attribute__
+	* src/cfg.mk (sc_prohibit-gl-attributes): Disallow the __attribute()
+	form without trailing underscores as that is not elided where required.
+	Also ensure we use gnulib macros rather than defining our own.
+	* src/system.h: Remove gnulib provided macros.
+	* src/chown-core.c: Likewise.
+	* src/chroot.c: Likewise.
+	* src/copy.c: Likewise.
+	* src/csplit.c: Likewise.
+	* src/dd.c: Likewise.
+	* src/expr.c: Likewise.
+	* src/extent-scan.c: Likewise.
+	* src/factor.c: Likewise.
+	* src/ls.c: Likewise.
+	* src/od.c: Likewise.
+	* src/paste.c: Likewise.
+	* src/ptx.c: Likewise.
+	* src/sort.c: Likewise.
+	* src/stat.c: Likewise.
+	* src/stty.c: Likewise.
+	* src/system.h: Likewise.
+	* src/tac.c: Likewise.
+	* src/test.c: Likewise.
+	* src/tsort.c: Likewise.
+
+2013-02-20  Joachim Schmitz  <jojo@schmitz-digital.de>
+
+	build: fix numfmt build error on compilers without __attribute
+	* src/numfmt.c (): Use the more standard _GL_ATTRIBUTE_PURE
+	which is elided where required.
+	Reported in http://bugs.gnu.org/10305
+
+2013-02-20  Pádraig Brady  <P@draigBrady.com>
+
+	tests: avoid false failures on file systems with smaller NAME_MAX
+	* tests/du/long-from-unreadable.sh: This test requires a NAME_MAX
+	of at least 200, so skip the test otherwise.
+	* tests/rm/deep-2.sh: Likewise.
+	Reported by C de-Avillez with ecryptfs where NAME_MAX = 143.
+
+2013-02-18  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	maint: choose editor in the commit-msg git hook the same way git does
+	Git honours the GIT_EDITOR environment variable, the "core.editor" Git
+	configuration variable, and the EDITOR environment variable (in that
+	order, and defaulting to "vi" if none of them is set) to decide which
+	editor should be invoked for the user when he has to or want to edit
+	his commit message.
+
+	However, our commit-msg hook, when invoking an editor on behalf of the
+	user to allow him to fix a non-policy-complaint commit message, only
+	honoured the EDITOR environment variable.  To avoid potential annoying
+	inconsistencies, we should really use the same logic used by Git in the
+	selection of the editor.  Luckily, we don't have to duplicate this
+	logic (that would be brittle in the long term), as we can rely on the
+	"git var" command, designed exactly to be used in situations like this.
+
+	* scripts/git-hooks ($editor): Adjust definition.
+
+2013-02-18  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	maint: don't reset PATH in the commit-msg git hook
+	I have a custom 'editor' script in ~/bin, and a system-provided
+	'editor' program in /usr/bin (on Debian, this is a link set up the
+	"debian alternatives" subsystem).  My '$EDITOR' and '$GIT_EDITOR'
+	variables are set simply to 'editor' (no absolute path), which I
+	expect should point to my 'editor' script, since ~/bin precedes
+	/usr/bin in my PATH definition.  But the 'commit-msg' hook used in
+	coreutils unconditionally resets its PATH to '/bin:/usr/bin', which
+	causes it to call the "wrong" editor (the one in /usr/bin, not the
+	one in ~/bin) when it makes me update a botched commit message.
+
+	* scripts/git-hooks: Don't reset $ENV{PATH} to '/bin:/usr/bin',
+	which was only done to avoid failure when enabling Perl's taint
+	checking.
+
+2013-02-15  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	maint: prevent trailing period at first line of a commit message
+	* scripts/git-hooks/commit-msg (bad_first_line): Return an error
+	message if the first line of a commit message ends with a period.
+
 2013-02-14  Pádraig Brady  <P@draigBrady.com>
+
+	maint: post-release administrivia
+	* NEWS: Add header line for next release.
+	* .prev-version: Record previous version.
+	* cfg.mk (old_NEWS_hash): Auto-update.
 
 	version 8.21
 	* NEWS: Record release date.

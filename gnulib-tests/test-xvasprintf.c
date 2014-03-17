@@ -16,6 +16,13 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
 
+/* Tell GCC not to warn about the specific edge cases tested here.  */
+#if (__GNUC__ == 4 && 3 <= __GNUC_MINOR__) || 4 < __GNUC__
+# pragma GCC diagnostic ignored "-Wformat-zero-length"
+# pragma GCC diagnostic ignored "-Wformat-nonliteral"
+# pragma GCC diagnostic ignored "-Wformat-security"
+#endif
+
 #include <config.h>
 
 #include "xvasprintf.h"
@@ -93,9 +100,11 @@ test_xasprintf (void)
     }
 
   {
-    /* Silence gcc warning about zero-length format string.  */
+    /* Silence gcc warning about zero-length format string,
+       and about "format not a string literal and no format"
+       (whatever that means) .  */
     const char *empty = "";
-    result = xasprintf (empty);
+    result = xasprintf (empty, empty);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "") == 0);
     free (result);
