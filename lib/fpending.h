@@ -20,11 +20,10 @@
 
 #include <stddef.h>
 #include <stdio.h>
+#if HAVE_STDIO_EXT_H
+# include <stdio_ext.h>
+#endif
 
-#if HAVE_DECL___FPENDING
-# if HAVE_STDIO_EXT_H
-#  include <stdio_ext.h>
-# endif
-#else
-size_t __fpending (FILE *);
+#if !HAVE_DECL___FPENDING
+size_t __fpending (FILE *) _GL_ATTRIBUTE_PURE;
 #endif

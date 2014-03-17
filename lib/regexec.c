@@ -230,9 +230,7 @@ regexec (preg, string, nmatch, pmatch, eflags)
 {
   reg_errcode_t err;
   Idx start, length;
-#ifdef _LIBC
   re_dfa_t *dfa = preg->buffer;
-#endif
 
   if (eflags & ~(REG_NOTBOL | REG_NOTEOL | REG_STARTEND))
     return REG_BADPAT;
@@ -248,14 +246,14 @@ regexec (preg, string, nmatch, pmatch, eflags)
       length = strlen (string);
     }
 
-  __libc_lock_lock (dfa->lock);
+  lock_lock (dfa->lock);
   if (preg->no_sub)
     err = re_search_internal (preg, string, length, start, length,
 			      length, 0, NULL, eflags);
   else
     err = re_search_internal (preg, string, length, start, length,
 			      length, nmatch, pmatch, eflags);
-  __libc_lock_unlock (dfa->lock);
+  lock_unlock (dfa->lock);
   return err != REG_NOERROR;
 }
 
@@ -426,9 +424,7 @@ re_search_stub (struct re_pattern_buffer *bufp,
   Idx nregs;
   regoff_t rval;
   int eflags = 0;
-#ifdef _LIBC
   re_dfa_t *dfa = bufp->buffer;
-#endif
   Idx last_start = start + range;
 
   /* Check for out-of-range.  */
@@ -442,7 +438,7 @@ re_search_stub (struct re_pattern_buffer *bufp,
   else if (BE (/* last_start < 0 || */ (range < 0 && start <= last_start), 0))
     last_start = 0;
 
-  __libc_lock_lock (dfa->lock);
+  lock_lock (dfa->lock);
 
   eflags |= (bufp->not_bol) ? REG_NOTBOL : 0;
   eflags |= (bufp->not_eol) ? REG_NOTEOL : 0;
@@ -506,7 +502,7 @@ re_search_stub (struct re_pattern_buffer *bufp,
     }
   re_free (pmatch);
  out:
-  __libc_lock_unlock (dfa->lock);
+  lock_unlock (dfa->lock);
   return rval;
 }
 
@@ -1072,7 +1068,7 @@ prune_impossible_nodes (re_match_context_t *mctx)
    since initial states may have constraints like "\<", "^", etc..  */
 
 static inline re_dfastate_t *
-__attribute ((always_inline)) internal_function
+__attribute__ ((always_inline)) internal_function
 acquire_init_state_context (reg_errcode_t *err, const re_match_context_t *mctx,
 			    Idx idx)
 {
