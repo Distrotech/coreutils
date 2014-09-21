@@ -1,1 +1,1 @@
-/usr/src/coreutils/gnulib/m4/printf-posix.m4
+/root/coreutils/gnulib/m4/printf-posix.m4

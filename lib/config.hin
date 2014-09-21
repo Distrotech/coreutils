@@ -271,10 +271,6 @@
    whether the gnulib module openat-safer shall be considered present. */
 #undef GNULIB_OPENAT_SAFER
 
-/* Define to a C preprocessor expression that evaluates to 1 or 0, depending
-   whether the gnulib module pipe2-safer shall be considered present. */
-#undef GNULIB_PIPE2_SAFER
-
 /* enable some gnulib portability checks */
 #undef GNULIB_PORTCHECK
 
@@ -570,56 +566,11 @@
 /* Define to 1 when the gnulib module pipe should be tested. */
 #undef GNULIB_TEST_PIPE
 
-/* Define to 1 when the gnulib module pipe2 should be tested. */
-#undef GNULIB_TEST_PIPE2
-
-/* Define to 1 when the gnulib module posix_spawnattr_destroy should be
-   tested. */
-#undef GNULIB_TEST_POSIX_SPAWNATTR_DESTROY
-
-/* Define to 1 when the gnulib module posix_spawnattr_init should be tested.
-   */
-#undef GNULIB_TEST_POSIX_SPAWNATTR_INIT
-
-/* Define to 1 when the gnulib module posix_spawnattr_setflags should be
-   tested. */
-#undef GNULIB_TEST_POSIX_SPAWNATTR_SETFLAGS
-
-/* Define to 1 when the gnulib module posix_spawnattr_setsigmask should be
-   tested. */
-#undef GNULIB_TEST_POSIX_SPAWNATTR_SETSIGMASK
-
-/* Define to 1 when the gnulib module posix_spawnp should be tested. */
-#undef GNULIB_TEST_POSIX_SPAWNP
-
-/* Define to 1 when the gnulib module posix_spawn_file_actions_addclose should
-   be tested. */
-#undef GNULIB_TEST_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE
-
-/* Define to 1 when the gnulib module posix_spawn_file_actions_adddup2 should
-   be tested. */
-#undef GNULIB_TEST_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2
-
-/* Define to 1 when the gnulib module posix_spawn_file_actions_addopen should
-   be tested. */
-#undef GNULIB_TEST_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN
-
-/* Define to 1 when the gnulib module posix_spawn_file_actions_destroy should
-   be tested. */
-#undef GNULIB_TEST_POSIX_SPAWN_FILE_ACTIONS_DESTROY
-
-/* Define to 1 when the gnulib module posix_spawn_file_actions_init should be
-   tested. */
-#undef GNULIB_TEST_POSIX_SPAWN_FILE_ACTIONS_INIT
-
 /* Define to 1 when the gnulib module putenv should be tested. */
 #undef GNULIB_TEST_PUTENV
 
 /* Define to 1 when the gnulib module raise should be tested. */
 #undef GNULIB_TEST_RAISE
-
-/* Define to 1 when the gnulib module rawmemchr should be tested. */
-#undef GNULIB_TEST_RAWMEMCHR
 
 /* Define to 1 when the gnulib module read should be tested. */
 #undef GNULIB_TEST_READ
@@ -693,9 +644,6 @@
 /* Define to 1 when the gnulib module stpncpy should be tested. */
 #undef GNULIB_TEST_STPNCPY
 
-/* Define to 1 when the gnulib module strchrnul should be tested. */
-#undef GNULIB_TEST_STRCHRNUL
-
 /* Define to 1 when the gnulib module strdup should be tested. */
 #undef GNULIB_TEST_STRDUP
 
@@ -761,9 +709,6 @@
 
 /* Define to 1 when the gnulib module vprintf-posix should be tested. */
 #undef GNULIB_TEST_VPRINTF_POSIX
-
-/* Define to 1 when the gnulib module waitpid should be tested. */
-#undef GNULIB_TEST_WAITPID
 
 /* Define to 1 when the gnulib module wcrtomb should be tested. */
 #undef GNULIB_TEST_WCRTOMB
@@ -952,9 +897,6 @@
 
 /* Define if you have compound literals. */
 #undef HAVE_COMPOUND_LITERALS
-
-/* Define to 1 if you have the `confstr' function. */
-#undef HAVE_CONFSTR
 
 /* Define if the copysignf function is declared in <math.h> and available in
    libc. */
@@ -1438,6 +1380,9 @@
 /* Define to 1 if you have the `getacl' function. */
 #undef HAVE_GETACL
 
+/* Define to 1 if you have the `getattrat' function. */
+#undef HAVE_GETATTRAT
+
 /* Define to 1 if you have the `getdelim' function. */
 #undef HAVE_GETDELIM
 
@@ -1818,20 +1763,8 @@
 /* Define to 1 if you have the `pipe' function. */
 #undef HAVE_PIPE
 
-/* Define to 1 if you have the `pipe2' function. */
-#undef HAVE_PIPE2
-
 /* Define to 1 if you have the `posix_fadvise' function. */
 #undef HAVE_POSIX_FADVISE
-
-/* Define to 1 if you have the `posix_spawn' function. */
-#undef HAVE_POSIX_SPAWN
-
-/* Define to 1 if the system has the type `posix_spawnattr_t'. */
-#undef HAVE_POSIX_SPAWNATTR_T
-
-/* Define to 1 if the system has the type `posix_spawn_file_actions_t'. */
-#undef HAVE_POSIX_SPAWN_FILE_ACTIONS_T
 
 /* Define to 1 if you have the `prctl' function. */
 #undef HAVE_PRCTL
@@ -1871,9 +1804,6 @@
 
 /* Define to 1 if you have the `raise' function. */
 #undef HAVE_RAISE
-
-/* Define to 1 if you have the `rawmemchr' function. */
-#undef HAVE_RAWMEMCHR
 
 /* Define to 1 if you have the `readdir' function. */
 #undef HAVE_READDIR
@@ -1921,12 +1851,6 @@
 /* Define to 1 if you have the <sched.h> header file. */
 #undef HAVE_SCHED_H
 
-/* Define to 1 if you have the `sched_setparam' function. */
-#undef HAVE_SCHED_SETPARAM
-
-/* Define to 1 if you have the `sched_setscheduler' function. */
-#undef HAVE_SCHED_SETSCHEDULER
-
 /* Define to 1 if you have the <search.h> header file. */
 #undef HAVE_SEARCH_H
 
@@ -1945,14 +1869,8 @@
 /* Define to 1 if you have the `setdtablesize' function. */
 #undef HAVE_SETDTABLESIZE
 
-/* Define to 1 if you have the `setegid' function. */
-#undef HAVE_SETEGID
-
 /* Define to 1 if you have the `setenv' function. */
 #undef HAVE_SETENV
-
-/* Define to 1 if you have the `seteuid' function. */
-#undef HAVE_SETEUID
 
 /* Define to 1 if you have the `setgroups' function. */
 #undef HAVE_SETGROUPS
@@ -1999,9 +1917,6 @@
 /* Define to 1 if the system has the type `sigset_t'. */
 #undef HAVE_SIGSET_T
 
-/* Define to 1 if the system has the type `sig_atomic_t'. */
-#undef HAVE_SIG_ATOMIC_T
-
 /* Define to 1 if you have the `sleep' function. */
 #undef HAVE_SLEEP
 
@@ -2015,9 +1930,6 @@
    bytes (excluding the terminating NUL) that would have been produced if the
    buffer had been large enough. */
 #undef HAVE_SNPRINTF_RETVAL_C99
-
-/* Define to 1 if you have the <spawn.h> header file. */
-#undef HAVE_SPAWN_H
 
 /* Define to 1 if you have the `statacl' function. */
 #undef HAVE_STATACL
@@ -2046,9 +1958,6 @@
 
 /* Define if you have the stpncpy() function and it works. */
 #undef HAVE_STPNCPY
-
-/* Define to 1 if you have the `strchrnul' function. */
-#undef HAVE_STRCHRNUL
 
 /* Define to 1 if you have the `strdup' function. */
 #undef HAVE_STRDUP
@@ -2176,6 +2085,9 @@
 
 /* Define to 1 if `st_blocks' is a member of `struct stat'. */
 #undef HAVE_STRUCT_STAT_ST_BLOCKS
+
+/* Define to 1 if `mem_unit' is a member of `struct sysinfo'. */
+#undef HAVE_STRUCT_SYSINFO_MEM_UNIT
 
 /* Define to 1 if `tm_zone' is a member of `struct tm'. */
 #undef HAVE_STRUCT_TM_TM_ZONE
@@ -2408,6 +2320,9 @@
 /* Define to 1 if you have the `tsearch' function. */
 #undef HAVE_TSEARCH
 
+/* Define to 1 if you have the `ttyname' function. */
+#undef HAVE_TTYNAME
+
 /* Define to 1 if you don't have `tm_zone' but do have the external array
    `tzname'. */
 #undef HAVE_TZNAME
@@ -2466,9 +2381,6 @@
 /* Define to 1 if you have the <vfork.h> header file. */
 #undef HAVE_VFORK_H
 
-/* Define to 1 if you have the `waitid' function. */
-#undef HAVE_WAITID
-
 /* Define to 1 if you have the <wchar.h> header file. */
 #undef HAVE_WCHAR_H
 
@@ -2523,10 +2435,6 @@
 
 /* Define to 1 if O_NOFOLLOW works. */
 #undef HAVE_WORKING_O_NOFOLLOW
-
-/* Define if you have the posix_spawn and posix_spawnp functions and they
-   work. */
-#undef HAVE_WORKING_POSIX_SPAWN
 
 /* Define if utimes works properly. */
 #undef HAVE_WORKING_UTIMES
@@ -2644,6 +2552,10 @@
 
 /* Define to a substitute value for mmap()'s MAP_ANONYMOUS flag. */
 #undef MAP_ANONYMOUS
+
+/* Define if the mbrtowc function does not return (size_t) -2 for empty input.
+   */
+#undef MBRTOWC_EMPTY_INPUT_BUG
 
 /* Define if the mbrtowc function has the NULL pwc argument bug. */
 #undef MBRTOWC_NULL_ARG1_BUG
@@ -3143,12 +3055,18 @@
 /* Define to 1 if you need to in order for 'stat' and other things to work. */
 #undef _POSIX_SOURCE
 
+/* For thread-safety on OSF/1, Solaris. */
+#undef _REENTRANT
+
 /* Define if you want <regex.h> to include <limits.h>, so that it consistently
    overrides <limits.h>'s RE_DUP_MAX. */
 #undef _REGEX_INCLUDE_LIMITS_H
 
 /* Define if you want regoff_t to be at least as wide POSIX requires. */
 #undef _REGEX_LARGE_OFFSETS
+
+/* For thread-safety on AIX, FreeBSD. */
+#undef _THREAD_SAFE
 
 /* Define to rpl_ if the getopt replacement functions and variables should be
    used. */
@@ -3246,9 +3164,6 @@
 /* A replacement for va_copy, if needed.  */
 #define gl_va_copy(a,b) ((a) = (b))
 
-/* Define to rpl_gmtime if the replacement function should be used. */
-#undef gmtime
-
 /* Define to `__inline__' or `__inline' if that's what the C compiler
    calls it, or to nothing if 'inline' is not supported under any name.  */
 #ifndef __cplusplus
@@ -3276,9 +3191,6 @@
 
 /* Define to 1 if the compiler is checking for lint. */
 #undef lint
-
-/* Define to rpl_localtime if the replacement function should be used. */
-#undef localtime
 
 /* Define to `unsigned int' if <sys/types.h> does not define. */
 #undef major_t
@@ -3367,10 +3279,6 @@
 # define __restrict__
 #endif
 
-/* Define as an integer type suitable for memory locations that can be
-   accessed atomically even in the presence of asynchronous signals. */
-#undef sig_atomic_t
-
 /* Define to `unsigned int' if <sys/types.h> does not define. */
 #undef size_t
 
@@ -3397,6 +3305,16 @@
 /* The name _UNUSED_PARAMETER_ is an earlier spelling, although the name
    is a misnomer outside of parameter lists.  */
 #define _UNUSED_PARAMETER_ _GL_UNUSED
+
+/* gcc supports the "unused" attribute on possibly unused labels, and
+   g++ has since version 4.5.  Note to support C++ as well as C,
+   _GL_UNUSED_LABEL should be used with a trailing ;  */
+#if !defined __cplusplus || __GNUC__ > 4 \
+    || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)
+# define _GL_UNUSED_LABEL _GL_UNUSED
+#else
+# define _GL_UNUSED_LABEL
+#endif
 
 /* The __pure__ attribute was added in gcc 2.96.  */
 #if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)

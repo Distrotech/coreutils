@@ -1,6 +1,6 @@
 /* mountlist.c -- return a list of mounted file systems
 
-   Copyright (C) 1991-1992, 1997-2013 Free Software Foundation, Inc.
+   Copyright (C) 1991-1992, 1997-2014 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -134,7 +134,13 @@
 
 #undef MNT_IGNORE
 #ifdef MNTOPT_IGNORE
-# define MNT_IGNORE(M) hasmntopt (M, MNTOPT_IGNORE)
+# if defined __sun && defined __SVR4
+/* Solaris defines hasmntopt(struct mnttab *, char *)
+   while it is otherwise hasmntopt(struct mnttab *, const char *).  */
+#  define MNT_IGNORE(M) hasmntopt (M, (char *) MNTOPT_IGNORE)
+# else
+#  define MNT_IGNORE(M) hasmntopt (M, MNTOPT_IGNORE)
+# endif
 #else
 # define MNT_IGNORE(M) 0
 #endif
@@ -142,11 +148,6 @@
 #if USE_UNLOCKED_IO
 # include "unlocked-io.h"
 #endif
-
-/* The results of open() in this file are not used with fchdir,
-   therefore save some unnecessary work in fchdir.c.  */
-#undef open
-#undef close
 
 /* The results of opendir() in this file are not used with dirfd and fchdir,
    therefore save some unnecessary work in fchdir.c.  */

@@ -1,1 +1,1 @@
-/usr/src/coreutils/gnulib/m4/glibc2.m4
+/root/coreutils/gnulib/m4/glibc2.m4

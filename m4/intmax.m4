@@ -1,1 +1,1 @@
-/usr/src/coreutils/gnulib/m4/intmax.m4
+/root/coreutils/gnulib/m4/intmax.m4

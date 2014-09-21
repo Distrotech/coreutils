@@ -1,1 +1,1 @@
-/usr/src/coreutils/gnulib/m4/intldir.m4
+/root/coreutils/gnulib/m4/intldir.m4

@@ -1,6 +1,6 @@
 ## DO NOT EDIT! GENERATED AUTOMATICALLY!
 ## Process this file with automake to produce Makefile.in.
-# Copyright (C) 2002-2013 Free Software Foundation, Inc.
+# Copyright (C) 2002-2014 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -168,6 +168,12 @@ check_PROGRAMS += test-base64
 EXTRA_DIST += test-base64.c macros.h
 
 ## end   gnulib module base64-tests
+
+## begin gnulib module binary-io
+
+libtests_a_SOURCES += binary-io.h binary-io.c
+
+## end   gnulib module binary-io
 
 ## begin gnulib module binary-io-tests
 
@@ -418,7 +424,7 @@ TESTS += \
  test-exclude8.sh
 
 check_PROGRAMS += test-exclude
-test_exclude_LDADD = $(LDADD) @LIBINTL@
+test_exclude_LDADD = $(LDADD) @LIBINTL@ $(LIBTHREAD)
 EXTRA_DIST += test-exclude.c test-exclude1.sh test-exclude2.sh test-exclude3.sh test-exclude4.sh test-exclude5.sh test-exclude6.sh test-exclude7.sh test-exclude8.sh
 
 ## end   gnulib module exclude-tests
@@ -1461,15 +1467,6 @@ EXTRA_DIST += macros.h signature.h test-perror.c test-perror2.c test-perror.sh
 
 ## end   gnulib module perror-tests
 
-## begin gnulib module pipe-posix
-
-
-EXTRA_DIST += pipe.c
-
-EXTRA_libtests_a_SOURCES += pipe.c
-
-## end   gnulib module pipe-posix
-
 ## begin gnulib module pipe-posix-tests
 
 TESTS += test-pipe
@@ -1477,63 +1474,6 @@ check_PROGRAMS += test-pipe
 EXTRA_DIST += test-pipe.c signature.h macros.h
 
 ## end   gnulib module pipe-posix-tests
-
-## begin gnulib module pipe2-tests
-
-TESTS += test-pipe2
-check_PROGRAMS += test-pipe2
-test_pipe2_LDADD = $(LDADD) $(LIBSOCKET)
-EXTRA_DIST += test-pipe2.c signature.h macros.h
-
-## end   gnulib module pipe2-tests
-
-## begin gnulib module posix_spawn_file_actions_addclose-tests
-
-TESTS += test-posix_spawn_file_actions_addclose
-check_PROGRAMS += test-posix_spawn_file_actions_addclose
-EXTRA_DIST += test-posix_spawn_file_actions_addclose.c signature.h macros.h
-
-## end   gnulib module posix_spawn_file_actions_addclose-tests
-
-## begin gnulib module posix_spawn_file_actions_adddup2-tests
-
-TESTS += test-posix_spawn_file_actions_adddup2
-check_PROGRAMS += test-posix_spawn_file_actions_adddup2
-EXTRA_DIST += test-posix_spawn_file_actions_adddup2.c signature.h macros.h
-
-## end   gnulib module posix_spawn_file_actions_adddup2-tests
-
-## begin gnulib module posix_spawn_file_actions_addopen-tests
-
-TESTS += test-posix_spawn_file_actions_addopen
-check_PROGRAMS += test-posix_spawn_file_actions_addopen
-EXTRA_DIST += test-posix_spawn_file_actions_addopen.c signature.h macros.h
-
-## end   gnulib module posix_spawn_file_actions_addopen-tests
-
-## begin gnulib module posix_spawnp-tests
-
-if POSIX_SPAWN_PORTED
-TESTS += test-posix_spawn1 test-posix_spawn2
-check_PROGRAMS += test-posix_spawn1 test-posix_spawn2
-
-BUILT_SOURCES += test-posix_spawn1.sh
-test-posix_spawn1.sh: test-posix_spawn1.in.sh
-	$(AM_V_GEN)rm -f $@-t $@ && \
-	cp $(srcdir)/test-posix_spawn1.in.sh $@-t && \
-	mv $@-t $@
-MOSTLYCLEANFILES += test-posix_spawn1.sh test-posix_spawn1.sh-t
-
-BUILT_SOURCES += test-posix_spawn2.sh
-test-posix_spawn2.sh: test-posix_spawn2.in.sh
-	$(AM_V_GEN)rm -f $@-t $@ && \
-	cp $(srcdir)/test-posix_spawn2.in.sh $@-t && \
-	mv $@-t $@
-MOSTLYCLEANFILES += test-posix_spawn2.sh test-posix_spawn2.sh-t
-endif
-EXTRA_DIST += test-posix_spawn1.c test-posix_spawn1.in.sh test-posix_spawn2.c test-posix_spawn2.in.sh signature.h
-
-## end   gnulib module posix_spawnp-tests
 
 ## begin gnulib module posixtm-tests
 
@@ -1591,14 +1531,6 @@ check_PROGRAMS += test-rand-isaac
 EXTRA_DIST += test-rand-isaac.c macros.h
 
 ## end   gnulib module randread-tests
-
-## begin gnulib module rawmemchr-tests
-
-TESTS += test-rawmemchr
-check_PROGRAMS += test-rawmemchr
-EXTRA_DIST += test-rawmemchr.c zerosize-ptr.h signature.h macros.h
-
-## end   gnulib module rawmemchr-tests
 
 ## begin gnulib module read-file-tests
 
@@ -1935,27 +1867,6 @@ EXTRA_DIST += test-sockets.c
 
 ## end   gnulib module sockets-tests
 
-## begin gnulib module spawn-pipe-tests
-
-TESTS += test-spawn-pipe.sh
-check_PROGRAMS += test-spawn-pipe-main test-spawn-pipe-child
-test_spawn_pipe_main_LDADD = $(LDADD) @LIBINTL@
-# The test-spawn-pipe-child program must be a real executable, not a libtool
-# wrapper script, and should link against as few libraries as possible.
-# Therefore don't link it against any libraries other than -lc.
-test_spawn_pipe_child_LDADD =
-EXTRA_DIST += test-spawn-pipe.sh test-spawn-pipe-main.c test-spawn-pipe-child.c macros.h
-
-## end   gnulib module spawn-pipe-tests
-
-## begin gnulib module spawn-tests
-
-TESTS += test-spawn
-check_PROGRAMS += test-spawn
-EXTRA_DIST += test-spawn.c
-
-## end   gnulib module spawn-tests
-
 ## begin gnulib module stat-tests
 
 TESTS += test-stat
@@ -2030,14 +1941,6 @@ check_PROGRAMS += test-stdlib
 EXTRA_DIST += test-stdlib.c test-sys_wait.h
 
 ## end   gnulib module stdlib-tests
-
-## begin gnulib module strchrnul-tests
-
-TESTS += test-strchrnul
-check_PROGRAMS += test-strchrnul
-EXTRA_DIST += test-strchrnul.c signature.h macros.h
-
-## end   gnulib module strchrnul-tests
 
 ## begin gnulib module strerror-tests
 

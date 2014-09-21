@@ -92,7 +92,7 @@ gl_ADD_PROG([optional_bin_progs], [vdir])
 gl_ADD_PROG([optional_bin_progs], [wc])
 gl_ADD_PROG([optional_bin_progs], [whoami])
 gl_ADD_PROG([optional_bin_progs], [yes])
-no_install_progs_default='arch hostname'
+no_install_progs_default='arch coreutils hostname'
 # Given the name of a variable containing a space-separated
 # list of install-by-default programs and the actual list of
 # do-not-install-by-default programs, modify the former variable
@@ -103,4 +103,4 @@ no_install_progs_default='arch hostname'
 # separators.  That is required due to the way the macro works,
 # and since the corresponding ./configure option argument is
 # comma-separated on input.
-gl_INCLUDE_EXCLUDE_PROG([optional_bin_progs], [arch,hostname])
+gl_INCLUDE_EXCLUDE_PROG([optional_bin_progs], [arch,coreutils,hostname])

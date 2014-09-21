@@ -14,7 +14,7 @@
 
 @SET_MAKE@
 
-# Copyright (C) 2002-2013 Free Software Foundation, Inc.
+# Copyright (C) 2002-2014 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -182,30 +182,25 @@ TESTS = test-accept$(EXEEXT) test-file-has-acl.sh \
 	test-openat-safer$(EXEEXT) test-openat$(EXEEXT) \
 	test-parse-datetime$(EXEEXT) test-pathmax$(EXEEXT) \
 	test-perror.sh test-perror2$(EXEEXT) test-pipe$(EXEEXT) \
-	test-pipe2$(EXEEXT) \
-	test-posix_spawn_file_actions_addclose$(EXEEXT) \
-	test-posix_spawn_file_actions_adddup2$(EXEEXT) \
-	test-posix_spawn_file_actions_addopen$(EXEEXT) $(am__EXEEXT_1) \
 	test-posixtm$(EXEEXT) test-printf-frexp$(EXEEXT) \
 	test-printf-frexpl$(EXEEXT) test-priv-set$(EXEEXT) \
 	test-quotearg-simple$(EXEEXT) test-raise$(EXEEXT) \
-	test-rand-isaac$(EXEEXT) test-rawmemchr$(EXEEXT) \
-	test-read-file$(EXEEXT) test-read$(EXEEXT) \
-	test-readlink$(EXEEXT) test-readlinkat$(EXEEXT) \
-	test-readtokens.sh test-realloc-gnu$(EXEEXT) \
-	test-regex$(EXEEXT) test-remove$(EXEEXT) test-rename$(EXEEXT) \
-	test-rmdir$(EXEEXT) test-sched$(EXEEXT) test-select$(EXEEXT) \
-	test-select-in.sh test-select-out.sh test-setenv$(EXEEXT) \
-	test-setlocale1.sh test-setlocale2.sh test-setsockopt$(EXEEXT) \
+	test-rand-isaac$(EXEEXT) test-read-file$(EXEEXT) \
+	test-read$(EXEEXT) test-readlink$(EXEEXT) \
+	test-readlinkat$(EXEEXT) test-readtokens.sh \
+	test-realloc-gnu$(EXEEXT) test-regex$(EXEEXT) \
+	test-remove$(EXEEXT) test-rename$(EXEEXT) test-rmdir$(EXEEXT) \
+	test-sched$(EXEEXT) test-select$(EXEEXT) test-select-in.sh \
+	test-select-out.sh test-setenv$(EXEEXT) test-setlocale1.sh \
+	test-setlocale2.sh test-setsockopt$(EXEEXT) \
 	test-sigaction$(EXEEXT) test-signal-h$(EXEEXT) \
 	test-signbit$(EXEEXT) test-sigprocmask$(EXEEXT) \
 	test-sleep$(EXEEXT) test-snprintf$(EXEEXT) \
-	test-sockets$(EXEEXT) test-spawn-pipe.sh test-spawn$(EXEEXT) \
-	test-stat$(EXEEXT) test-stat-time$(EXEEXT) \
-	test-statat$(EXEEXT) test-stdalign$(EXEEXT) \
-	test-stdbool$(EXEEXT) test-stddef$(EXEEXT) \
-	test-stdint$(EXEEXT) test-stdio$(EXEEXT) test-stdlib$(EXEEXT) \
-	test-strchrnul$(EXEEXT) test-strerror$(EXEEXT) \
+	test-sockets$(EXEEXT) test-stat$(EXEEXT) \
+	test-stat-time$(EXEEXT) test-statat$(EXEEXT) \
+	test-stdalign$(EXEEXT) test-stdbool$(EXEEXT) \
+	test-stddef$(EXEEXT) test-stdint$(EXEEXT) test-stdio$(EXEEXT) \
+	test-stdlib$(EXEEXT) test-strerror$(EXEEXT) \
 	test-strerror_r$(EXEEXT) test-strftime$(EXEEXT) \
 	test-striconv$(EXEEXT) test-string$(EXEEXT) \
 	test-strncat$(EXEEXT) test-strnlen$(EXEEXT) \
@@ -317,32 +312,26 @@ check_PROGRAMS = test-accept$(EXEEXT) test-file-has-acl$(EXEEXT) \
 	test-openat-safer$(EXEEXT) test-openat$(EXEEXT) \
 	test-parse-datetime$(EXEEXT) test-pathmax$(EXEEXT) \
 	test-perror$(EXEEXT) test-perror2$(EXEEXT) test-pipe$(EXEEXT) \
-	test-pipe2$(EXEEXT) \
-	test-posix_spawn_file_actions_addclose$(EXEEXT) \
-	test-posix_spawn_file_actions_adddup2$(EXEEXT) \
-	test-posix_spawn_file_actions_addopen$(EXEEXT) $(am__EXEEXT_1) \
 	test-posixtm$(EXEEXT) test-printf-frexp$(EXEEXT) \
 	test-printf-frexpl$(EXEEXT) test-priv-set$(EXEEXT) \
 	test-quotearg-simple$(EXEEXT) test-raise$(EXEEXT) \
-	test-rand-isaac$(EXEEXT) test-rawmemchr$(EXEEXT) \
-	test-read-file$(EXEEXT) test-read$(EXEEXT) \
-	test-readlink$(EXEEXT) test-readlinkat$(EXEEXT) \
-	test-readtokens$(EXEEXT) test-realloc-gnu$(EXEEXT) \
-	test-regex$(EXEEXT) test-remove$(EXEEXT) test-rename$(EXEEXT) \
-	test-rmdir$(EXEEXT) test-sched$(EXEEXT) test-select$(EXEEXT) \
+	test-rand-isaac$(EXEEXT) test-read-file$(EXEEXT) \
+	test-read$(EXEEXT) test-readlink$(EXEEXT) \
+	test-readlinkat$(EXEEXT) test-readtokens$(EXEEXT) \
+	test-realloc-gnu$(EXEEXT) test-regex$(EXEEXT) \
+	test-remove$(EXEEXT) test-rename$(EXEEXT) test-rmdir$(EXEEXT) \
+	test-sched$(EXEEXT) test-select$(EXEEXT) \
 	test-select-fd$(EXEEXT) test-select-stdin$(EXEEXT) \
 	test-setenv$(EXEEXT) test-setlocale1$(EXEEXT) \
 	test-setlocale2$(EXEEXT) test-setsockopt$(EXEEXT) \
 	test-sigaction$(EXEEXT) test-signal-h$(EXEEXT) \
 	test-signbit$(EXEEXT) test-sigprocmask$(EXEEXT) \
 	test-sleep$(EXEEXT) test-snprintf$(EXEEXT) \
-	test-sockets$(EXEEXT) test-spawn-pipe-main$(EXEEXT) \
-	test-spawn-pipe-child$(EXEEXT) test-spawn$(EXEEXT) \
-	test-stat$(EXEEXT) test-stat-time$(EXEEXT) \
-	test-statat$(EXEEXT) test-stdalign$(EXEEXT) \
-	test-stdbool$(EXEEXT) test-stddef$(EXEEXT) \
-	test-stdint$(EXEEXT) test-stdio$(EXEEXT) test-stdlib$(EXEEXT) \
-	test-strchrnul$(EXEEXT) test-strerror$(EXEEXT) \
+	test-sockets$(EXEEXT) test-stat$(EXEEXT) \
+	test-stat-time$(EXEEXT) test-statat$(EXEEXT) \
+	test-stdalign$(EXEEXT) test-stdbool$(EXEEXT) \
+	test-stddef$(EXEEXT) test-stdint$(EXEEXT) test-stdio$(EXEEXT) \
+	test-stdlib$(EXEEXT) test-strerror$(EXEEXT) \
 	test-strerror_r$(EXEEXT) test-strftime$(EXEEXT) \
 	test-striconv$(EXEEXT) test-string$(EXEEXT) \
 	test-strncat$(EXEEXT) test-strnlen$(EXEEXT) \
@@ -375,14 +364,6 @@ check_PROGRAMS = test-accept$(EXEEXT) test-file-has-acl$(EXEEXT) \
 	test-xstrtoimax$(EXEEXT) test-xstrtol$(EXEEXT) \
 	test-xstrtoul$(EXEEXT) test-xstrtoumax$(EXEEXT) \
 	test-xvasprintf$(EXEEXT) test-yesno$(EXEEXT)
-@POSIX_SPAWN_PORTED_TRUE@am__append_1 = test-posix_spawn1 test-posix_spawn2
-@POSIX_SPAWN_PORTED_TRUE@am__append_2 = test-posix_spawn1 test-posix_spawn2
-@POSIX_SPAWN_PORTED_TRUE@am__append_3 = test-posix_spawn1.sh \
-@POSIX_SPAWN_PORTED_TRUE@	test-posix_spawn2.sh
-@POSIX_SPAWN_PORTED_TRUE@am__append_4 = test-posix_spawn1.sh \
-@POSIX_SPAWN_PORTED_TRUE@	test-posix_spawn1.sh-t \
-@POSIX_SPAWN_PORTED_TRUE@	test-posix_spawn2.sh \
-@POSIX_SPAWN_PORTED_TRUE@	test-posix_spawn2.sh-t
 subdir = gnulib-tests
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/00gnulib.m4 \
@@ -411,29 +392,28 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/00gnulib.m4 \
 	$(top_srcdir)/m4/exponentd.m4 $(top_srcdir)/m4/exponentf.m4 \
 	$(top_srcdir)/m4/exponentl.m4 $(top_srcdir)/m4/extensions.m4 \
 	$(top_srcdir)/m4/extern-inline.m4 \
-	$(top_srcdir)/m4/faccessat.m4 $(top_srcdir)/m4/fatal-signal.m4 \
-	$(top_srcdir)/m4/fchdir.m4 $(top_srcdir)/m4/fchmodat.m4 \
-	$(top_srcdir)/m4/fchownat.m4 $(top_srcdir)/m4/fclose.m4 \
-	$(top_srcdir)/m4/fcntl-o.m4 $(top_srcdir)/m4/fcntl-safer.m4 \
-	$(top_srcdir)/m4/fcntl.m4 $(top_srcdir)/m4/fcntl_h.m4 \
-	$(top_srcdir)/m4/fdatasync.m4 $(top_srcdir)/m4/fdopen.m4 \
-	$(top_srcdir)/m4/fdopendir.m4 $(top_srcdir)/m4/fflush.m4 \
-	$(top_srcdir)/m4/fileblocks.m4 $(top_srcdir)/m4/filemode.m4 \
-	$(top_srcdir)/m4/filenamecat.m4 $(top_srcdir)/m4/flexmember.m4 \
-	$(top_srcdir)/m4/float_h.m4 $(top_srcdir)/m4/fnmatch.m4 \
-	$(top_srcdir)/m4/fopen.m4 $(top_srcdir)/m4/fpending.m4 \
-	$(top_srcdir)/m4/fpieee.m4 $(top_srcdir)/m4/fpurge.m4 \
-	$(top_srcdir)/m4/freadahead.m4 $(top_srcdir)/m4/freading.m4 \
-	$(top_srcdir)/m4/freadptr.m4 $(top_srcdir)/m4/freadseek.m4 \
-	$(top_srcdir)/m4/freopen.m4 $(top_srcdir)/m4/frexp.m4 \
-	$(top_srcdir)/m4/frexpl.m4 $(top_srcdir)/m4/fseek.m4 \
-	$(top_srcdir)/m4/fseeko.m4 $(top_srcdir)/m4/fseterr.m4 \
-	$(top_srcdir)/m4/fstat.m4 $(top_srcdir)/m4/fstatat.m4 \
-	$(top_srcdir)/m4/fstypename.m4 $(top_srcdir)/m4/fsusage.m4 \
-	$(top_srcdir)/m4/fsync.m4 $(top_srcdir)/m4/ftell.m4 \
-	$(top_srcdir)/m4/ftello.m4 $(top_srcdir)/m4/ftruncate.m4 \
-	$(top_srcdir)/m4/fts.m4 $(top_srcdir)/m4/futimens.m4 \
-	$(top_srcdir)/m4/getaddrinfo.m4 \
+	$(top_srcdir)/m4/faccessat.m4 $(top_srcdir)/m4/fchdir.m4 \
+	$(top_srcdir)/m4/fchmodat.m4 $(top_srcdir)/m4/fchownat.m4 \
+	$(top_srcdir)/m4/fclose.m4 $(top_srcdir)/m4/fcntl-o.m4 \
+	$(top_srcdir)/m4/fcntl-safer.m4 $(top_srcdir)/m4/fcntl.m4 \
+	$(top_srcdir)/m4/fcntl_h.m4 $(top_srcdir)/m4/fdatasync.m4 \
+	$(top_srcdir)/m4/fdopen.m4 $(top_srcdir)/m4/fdopendir.m4 \
+	$(top_srcdir)/m4/fflush.m4 $(top_srcdir)/m4/fileblocks.m4 \
+	$(top_srcdir)/m4/filemode.m4 $(top_srcdir)/m4/filenamecat.m4 \
+	$(top_srcdir)/m4/flexmember.m4 $(top_srcdir)/m4/float_h.m4 \
+	$(top_srcdir)/m4/fnmatch.m4 $(top_srcdir)/m4/fopen.m4 \
+	$(top_srcdir)/m4/fpending.m4 $(top_srcdir)/m4/fpieee.m4 \
+	$(top_srcdir)/m4/fpurge.m4 $(top_srcdir)/m4/freadahead.m4 \
+	$(top_srcdir)/m4/freading.m4 $(top_srcdir)/m4/freadptr.m4 \
+	$(top_srcdir)/m4/freadseek.m4 $(top_srcdir)/m4/freopen.m4 \
+	$(top_srcdir)/m4/frexp.m4 $(top_srcdir)/m4/frexpl.m4 \
+	$(top_srcdir)/m4/fseek.m4 $(top_srcdir)/m4/fseeko.m4 \
+	$(top_srcdir)/m4/fseterr.m4 $(top_srcdir)/m4/fstat.m4 \
+	$(top_srcdir)/m4/fstatat.m4 $(top_srcdir)/m4/fstypename.m4 \
+	$(top_srcdir)/m4/fsusage.m4 $(top_srcdir)/m4/fsync.m4 \
+	$(top_srcdir)/m4/ftell.m4 $(top_srcdir)/m4/ftello.m4 \
+	$(top_srcdir)/m4/ftruncate.m4 $(top_srcdir)/m4/fts.m4 \
+	$(top_srcdir)/m4/futimens.m4 $(top_srcdir)/m4/getaddrinfo.m4 \
 	$(top_srcdir)/m4/getcwd-abort-bug.m4 \
 	$(top_srcdir)/m4/getcwd-path-max.m4 $(top_srcdir)/m4/getcwd.m4 \
 	$(top_srcdir)/m4/getdelim.m4 $(top_srcdir)/m4/getdtablesize.m4 \
@@ -510,42 +490,38 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/00gnulib.m4 \
 	$(top_srcdir)/m4/opendir.m4 $(top_srcdir)/m4/parse-datetime.m4 \
 	$(top_srcdir)/m4/pathmax.m4 $(top_srcdir)/m4/perl.m4 \
 	$(top_srcdir)/m4/perror.m4 $(top_srcdir)/m4/physmem.m4 \
-	$(top_srcdir)/m4/pipe.m4 $(top_srcdir)/m4/pipe2.m4 \
-	$(top_srcdir)/m4/po.m4 $(top_srcdir)/m4/posix-shell.m4 \
-	$(top_srcdir)/m4/posix_spawn.m4 $(top_srcdir)/m4/posixtm.m4 \
+	$(top_srcdir)/m4/pipe.m4 $(top_srcdir)/m4/po.m4 \
+	$(top_srcdir)/m4/posix-shell.m4 $(top_srcdir)/m4/posixtm.m4 \
 	$(top_srcdir)/m4/posixver.m4 $(top_srcdir)/m4/prereq.m4 \
 	$(top_srcdir)/m4/printf-frexp.m4 \
 	$(top_srcdir)/m4/printf-frexpl.m4 $(top_srcdir)/m4/printf.m4 \
 	$(top_srcdir)/m4/priv-set.m4 $(top_srcdir)/m4/progtest.m4 \
 	$(top_srcdir)/m4/pthread.m4 $(top_srcdir)/m4/putenv.m4 \
 	$(top_srcdir)/m4/quote.m4 $(top_srcdir)/m4/quotearg.m4 \
-	$(top_srcdir)/m4/raise.m4 $(top_srcdir)/m4/rawmemchr.m4 \
-	$(top_srcdir)/m4/read-file.m4 $(top_srcdir)/m4/read.m4 \
-	$(top_srcdir)/m4/readdir.m4 $(top_srcdir)/m4/readlink.m4 \
-	$(top_srcdir)/m4/readlinkat.m4 $(top_srcdir)/m4/readtokens.m4 \
-	$(top_srcdir)/m4/readutmp.m4 $(top_srcdir)/m4/realloc.m4 \
-	$(top_srcdir)/m4/regex.m4 $(top_srcdir)/m4/remove.m4 \
-	$(top_srcdir)/m4/rename.m4 $(top_srcdir)/m4/rewinddir.m4 \
-	$(top_srcdir)/m4/rmdir.m4 $(top_srcdir)/m4/rpmatch.m4 \
-	$(top_srcdir)/m4/safe-read.m4 $(top_srcdir)/m4/safe-write.m4 \
-	$(top_srcdir)/m4/same.m4 $(top_srcdir)/m4/save-cwd.m4 \
-	$(top_srcdir)/m4/savedir.m4 $(top_srcdir)/m4/savewd.m4 \
-	$(top_srcdir)/m4/sched_h.m4 $(top_srcdir)/m4/secure_getenv.m4 \
-	$(top_srcdir)/m4/select.m4 \
+	$(top_srcdir)/m4/raise.m4 $(top_srcdir)/m4/read-file.m4 \
+	$(top_srcdir)/m4/read.m4 $(top_srcdir)/m4/readdir.m4 \
+	$(top_srcdir)/m4/readlink.m4 $(top_srcdir)/m4/readlinkat.m4 \
+	$(top_srcdir)/m4/readtokens.m4 $(top_srcdir)/m4/readutmp.m4 \
+	$(top_srcdir)/m4/realloc.m4 $(top_srcdir)/m4/regex.m4 \
+	$(top_srcdir)/m4/remove.m4 $(top_srcdir)/m4/rename.m4 \
+	$(top_srcdir)/m4/rewinddir.m4 $(top_srcdir)/m4/rmdir.m4 \
+	$(top_srcdir)/m4/rpmatch.m4 $(top_srcdir)/m4/safe-read.m4 \
+	$(top_srcdir)/m4/safe-write.m4 $(top_srcdir)/m4/same.m4 \
+	$(top_srcdir)/m4/save-cwd.m4 $(top_srcdir)/m4/savedir.m4 \
+	$(top_srcdir)/m4/savewd.m4 $(top_srcdir)/m4/sched_h.m4 \
+	$(top_srcdir)/m4/secure_getenv.m4 $(top_srcdir)/m4/select.m4 \
 	$(top_srcdir)/m4/selinux-context-h.m4 \
 	$(top_srcdir)/m4/selinux-selinux-h.m4 \
 	$(top_srcdir)/m4/servent.m4 $(top_srcdir)/m4/setenv.m4 \
 	$(top_srcdir)/m4/setlocale.m4 $(top_srcdir)/m4/settime.m4 \
 	$(top_srcdir)/m4/sha1.m4 $(top_srcdir)/m4/sha256.m4 \
 	$(top_srcdir)/m4/sha512.m4 $(top_srcdir)/m4/sig2str.m4 \
-	$(top_srcdir)/m4/sig_atomic_t.m4 $(top_srcdir)/m4/sigaction.m4 \
-	$(top_srcdir)/m4/signal_h.m4 \
+	$(top_srcdir)/m4/sigaction.m4 $(top_srcdir)/m4/signal_h.m4 \
 	$(top_srcdir)/m4/signalblocking.m4 $(top_srcdir)/m4/signbit.m4 \
 	$(top_srcdir)/m4/size_max.m4 $(top_srcdir)/m4/sleep.m4 \
 	$(top_srcdir)/m4/snprintf.m4 $(top_srcdir)/m4/socketlib.m4 \
 	$(top_srcdir)/m4/sockets.m4 $(top_srcdir)/m4/socklen.m4 \
-	$(top_srcdir)/m4/sockpfaf.m4 $(top_srcdir)/m4/spawn-pipe.m4 \
-	$(top_srcdir)/m4/spawn_h.m4 $(top_srcdir)/m4/ssize_t.m4 \
+	$(top_srcdir)/m4/sockpfaf.m4 $(top_srcdir)/m4/ssize_t.m4 \
 	$(top_srcdir)/m4/st_dm_mode.m4 $(top_srcdir)/m4/stat-prog.m4 \
 	$(top_srcdir)/m4/stat-size.m4 $(top_srcdir)/m4/stat-time.m4 \
 	$(top_srcdir)/m4/stat.m4 $(top_srcdir)/m4/stdalign.m4 \
@@ -553,17 +529,16 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/00gnulib.m4 \
 	$(top_srcdir)/m4/stddef_h.m4 $(top_srcdir)/m4/stdint.m4 \
 	$(top_srcdir)/m4/stdint_h.m4 $(top_srcdir)/m4/stdio_h.m4 \
 	$(top_srcdir)/m4/stdlib_h.m4 $(top_srcdir)/m4/stpcpy.m4 \
-	$(top_srcdir)/m4/stpncpy.m4 $(top_srcdir)/m4/strchrnul.m4 \
-	$(top_srcdir)/m4/strdup.m4 $(top_srcdir)/m4/strerror.m4 \
-	$(top_srcdir)/m4/strerror_r.m4 $(top_srcdir)/m4/strftime.m4 \
-	$(top_srcdir)/m4/string_h.m4 $(top_srcdir)/m4/strncat.m4 \
-	$(top_srcdir)/m4/strndup.m4 $(top_srcdir)/m4/strnlen.m4 \
-	$(top_srcdir)/m4/strpbrk.m4 $(top_srcdir)/m4/strsignal.m4 \
-	$(top_srcdir)/m4/strstr.m4 $(top_srcdir)/m4/strtod.m4 \
-	$(top_srcdir)/m4/strtoimax.m4 $(top_srcdir)/m4/strtoll.m4 \
-	$(top_srcdir)/m4/strtoull.m4 $(top_srcdir)/m4/strtoumax.m4 \
-	$(top_srcdir)/m4/symlink.m4 $(top_srcdir)/m4/symlinkat.m4 \
-	$(top_srcdir)/m4/sys_ioctl_h.m4 \
+	$(top_srcdir)/m4/stpncpy.m4 $(top_srcdir)/m4/strdup.m4 \
+	$(top_srcdir)/m4/strerror.m4 $(top_srcdir)/m4/strerror_r.m4 \
+	$(top_srcdir)/m4/strftime.m4 $(top_srcdir)/m4/string_h.m4 \
+	$(top_srcdir)/m4/strncat.m4 $(top_srcdir)/m4/strndup.m4 \
+	$(top_srcdir)/m4/strnlen.m4 $(top_srcdir)/m4/strpbrk.m4 \
+	$(top_srcdir)/m4/strsignal.m4 $(top_srcdir)/m4/strstr.m4 \
+	$(top_srcdir)/m4/strtod.m4 $(top_srcdir)/m4/strtoimax.m4 \
+	$(top_srcdir)/m4/strtoll.m4 $(top_srcdir)/m4/strtoull.m4 \
+	$(top_srcdir)/m4/strtoumax.m4 $(top_srcdir)/m4/symlink.m4 \
+	$(top_srcdir)/m4/symlinkat.m4 $(top_srcdir)/m4/sys_ioctl_h.m4 \
 	$(top_srcdir)/m4/sys_resource_h.m4 \
 	$(top_srcdir)/m4/sys_select_h.m4 \
 	$(top_srcdir)/m4/sys_socket_h.m4 \
@@ -588,21 +563,19 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/00gnulib.m4 \
 	$(top_srcdir)/m4/vasprintf-posix.m4 \
 	$(top_srcdir)/m4/vasprintf.m4 $(top_srcdir)/m4/version-etc.m4 \
 	$(top_srcdir)/m4/vfprintf-posix.m4 \
-	$(top_srcdir)/m4/vprintf-posix.m4 \
-	$(top_srcdir)/m4/wait-process.m4 $(top_srcdir)/m4/waitpid.m4 \
-	$(top_srcdir)/m4/warnings.m4 $(top_srcdir)/m4/wchar_h.m4 \
-	$(top_srcdir)/m4/wchar_t.m4 $(top_srcdir)/m4/wcrtomb.m4 \
-	$(top_srcdir)/m4/wcswidth.m4 $(top_srcdir)/m4/wctob.m4 \
-	$(top_srcdir)/m4/wctomb.m4 $(top_srcdir)/m4/wctype_h.m4 \
-	$(top_srcdir)/m4/wcwidth.m4 $(top_srcdir)/m4/wint_t.m4 \
-	$(top_srcdir)/m4/write-any-file.m4 $(top_srcdir)/m4/write.m4 \
-	$(top_srcdir)/m4/xalloc.m4 $(top_srcdir)/m4/xattr.m4 \
-	$(top_srcdir)/m4/xgetcwd.m4 $(top_srcdir)/m4/xnanosleep.m4 \
-	$(top_srcdir)/m4/xsize.m4 $(top_srcdir)/m4/xstrndup.m4 \
-	$(top_srcdir)/m4/xstrtod.m4 $(top_srcdir)/m4/xstrtol.m4 \
-	$(top_srcdir)/m4/xvasprintf.m4 $(top_srcdir)/m4/yesno.m4 \
-	$(top_srcdir)/m4/yield.m4 $(top_srcdir)/m4/cu-progs.m4 \
-	$(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/vprintf-posix.m4 $(top_srcdir)/m4/warnings.m4 \
+	$(top_srcdir)/m4/wchar_h.m4 $(top_srcdir)/m4/wchar_t.m4 \
+	$(top_srcdir)/m4/wcrtomb.m4 $(top_srcdir)/m4/wcswidth.m4 \
+	$(top_srcdir)/m4/wctob.m4 $(top_srcdir)/m4/wctomb.m4 \
+	$(top_srcdir)/m4/wctype_h.m4 $(top_srcdir)/m4/wcwidth.m4 \
+	$(top_srcdir)/m4/wint_t.m4 $(top_srcdir)/m4/write-any-file.m4 \
+	$(top_srcdir)/m4/write.m4 $(top_srcdir)/m4/xalloc.m4 \
+	$(top_srcdir)/m4/xattr.m4 $(top_srcdir)/m4/xgetcwd.m4 \
+	$(top_srcdir)/m4/xnanosleep.m4 $(top_srcdir)/m4/xsize.m4 \
+	$(top_srcdir)/m4/xstrndup.m4 $(top_srcdir)/m4/xstrtod.m4 \
+	$(top_srcdir)/m4/xstrtol.m4 $(top_srcdir)/m4/xvasprintf.m4 \
+	$(top_srcdir)/m4/yesno.m4 $(top_srcdir)/m4/yield.m4 \
+	$(top_srcdir)/m4/cu-progs.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
@@ -617,13 +590,11 @@ am__v_AR_1 =
 libtests_a_AR = $(AR) $(ARFLAGS)
 am__DEPENDENCIES_1 =
 am__dirstamp = $(am__leading_dot)dirstamp
-am_libtests_a_OBJECTS = localename.$(OBJEXT) glthread/thread.$(OBJEXT) \
-	unlinkdir.$(OBJEXT)
+am_libtests_a_OBJECTS = binary-io.$(OBJEXT) localename.$(OBJEXT) \
+	glthread/thread.$(OBJEXT) unlinkdir.$(OBJEXT)
 libtests_a_OBJECTS = $(am_libtests_a_OBJECTS)
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkglibexecdir)" \
 	"$(DESTDIR)$(man1dir)"
-@POSIX_SPAWN_PORTED_TRUE@am__EXEEXT_1 = test-posix_spawn1$(EXEEXT) \
-@POSIX_SPAWN_PORTED_TRUE@	test-posix_spawn2$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS) $(noinst_PROGRAMS) $(pkglibexec_PROGRAMS)
 test_accept_SOURCES = test-accept.c
 test_accept_OBJECTS = test-accept.$(OBJEXT)
@@ -790,7 +761,8 @@ test_errno_DEPENDENCIES = libtests.a ../lib/libcoreutils.a libtests.a \
 	$(am__DEPENDENCIES_1)
 test_exclude_SOURCES = test-exclude.c
 test_exclude_OBJECTS = test-exclude.$(OBJEXT)
-test_exclude_DEPENDENCIES = $(am__DEPENDENCIES_2)
+test_exclude_DEPENDENCIES = $(am__DEPENDENCIES_2) \
+	$(am__DEPENDENCIES_1)
 test_faccessat_SOURCES = test-faccessat.c
 test_faccessat_OBJECTS = test-faccessat.$(OBJEXT)
 test_faccessat_DEPENDENCIES = $(am__DEPENDENCIES_2) \
@@ -1377,40 +1349,6 @@ test_pipe_OBJECTS = test-pipe.$(OBJEXT)
 test_pipe_LDADD = $(LDADD)
 test_pipe_DEPENDENCIES = libtests.a ../lib/libcoreutils.a libtests.a \
 	$(am__DEPENDENCIES_1)
-test_pipe2_SOURCES = test-pipe2.c
-test_pipe2_OBJECTS = test-pipe2.$(OBJEXT)
-test_pipe2_DEPENDENCIES = $(am__DEPENDENCIES_2) $(am__DEPENDENCIES_1)
-test_posix_spawn1_SOURCES = test-posix_spawn1.c
-test_posix_spawn1_OBJECTS = test-posix_spawn1.$(OBJEXT)
-test_posix_spawn1_LDADD = $(LDADD)
-test_posix_spawn1_DEPENDENCIES = libtests.a ../lib/libcoreutils.a \
-	libtests.a $(am__DEPENDENCIES_1)
-test_posix_spawn2_SOURCES = test-posix_spawn2.c
-test_posix_spawn2_OBJECTS = test-posix_spawn2.$(OBJEXT)
-test_posix_spawn2_LDADD = $(LDADD)
-test_posix_spawn2_DEPENDENCIES = libtests.a ../lib/libcoreutils.a \
-	libtests.a $(am__DEPENDENCIES_1)
-test_posix_spawn_file_actions_addclose_SOURCES =  \
-	test-posix_spawn_file_actions_addclose.c
-test_posix_spawn_file_actions_addclose_OBJECTS =  \
-	test-posix_spawn_file_actions_addclose.$(OBJEXT)
-test_posix_spawn_file_actions_addclose_LDADD = $(LDADD)
-test_posix_spawn_file_actions_addclose_DEPENDENCIES = libtests.a \
-	../lib/libcoreutils.a libtests.a $(am__DEPENDENCIES_1)
-test_posix_spawn_file_actions_adddup2_SOURCES =  \
-	test-posix_spawn_file_actions_adddup2.c
-test_posix_spawn_file_actions_adddup2_OBJECTS =  \
-	test-posix_spawn_file_actions_adddup2.$(OBJEXT)
-test_posix_spawn_file_actions_adddup2_LDADD = $(LDADD)
-test_posix_spawn_file_actions_adddup2_DEPENDENCIES = libtests.a \
-	../lib/libcoreutils.a libtests.a $(am__DEPENDENCIES_1)
-test_posix_spawn_file_actions_addopen_SOURCES =  \
-	test-posix_spawn_file_actions_addopen.c
-test_posix_spawn_file_actions_addopen_OBJECTS =  \
-	test-posix_spawn_file_actions_addopen.$(OBJEXT)
-test_posix_spawn_file_actions_addopen_LDADD = $(LDADD)
-test_posix_spawn_file_actions_addopen_DEPENDENCIES = libtests.a \
-	../lib/libcoreutils.a libtests.a $(am__DEPENDENCIES_1)
 test_posixtm_SOURCES = test-posixtm.c
 test_posixtm_OBJECTS = test-posixtm.$(OBJEXT)
 test_posixtm_LDADD = $(LDADD)
@@ -1443,11 +1381,6 @@ test_rand_isaac_SOURCES = test-rand-isaac.c
 test_rand_isaac_OBJECTS = test-rand-isaac.$(OBJEXT)
 test_rand_isaac_LDADD = $(LDADD)
 test_rand_isaac_DEPENDENCIES = libtests.a ../lib/libcoreutils.a \
-	libtests.a $(am__DEPENDENCIES_1)
-test_rawmemchr_SOURCES = test-rawmemchr.c
-test_rawmemchr_OBJECTS = test-rawmemchr.$(OBJEXT)
-test_rawmemchr_LDADD = $(LDADD)
-test_rawmemchr_DEPENDENCIES = libtests.a ../lib/libcoreutils.a \
 	libtests.a $(am__DEPENDENCIES_1)
 test_read_SOURCES = test-read.c
 test_read_OBJECTS = test-read.$(OBJEXT)
@@ -1568,17 +1501,6 @@ test_snprintf_DEPENDENCIES = libtests.a ../lib/libcoreutils.a \
 test_sockets_SOURCES = test-sockets.c
 test_sockets_OBJECTS = test-sockets.$(OBJEXT)
 test_sockets_DEPENDENCIES = $(am__DEPENDENCIES_2)
-test_spawn_SOURCES = test-spawn.c
-test_spawn_OBJECTS = test-spawn.$(OBJEXT)
-test_spawn_LDADD = $(LDADD)
-test_spawn_DEPENDENCIES = libtests.a ../lib/libcoreutils.a libtests.a \
-	$(am__DEPENDENCIES_1)
-test_spawn_pipe_child_SOURCES = test-spawn-pipe-child.c
-test_spawn_pipe_child_OBJECTS = test-spawn-pipe-child.$(OBJEXT)
-test_spawn_pipe_child_DEPENDENCIES =
-test_spawn_pipe_main_SOURCES = test-spawn-pipe-main.c
-test_spawn_pipe_main_OBJECTS = test-spawn-pipe-main.$(OBJEXT)
-test_spawn_pipe_main_DEPENDENCIES = $(am__DEPENDENCIES_2)
 test_stat_SOURCES = test-stat.c
 test_stat_OBJECTS = test-stat.$(OBJEXT)
 test_stat_DEPENDENCIES = $(am__DEPENDENCIES_2) $(am__DEPENDENCIES_1)
@@ -1619,11 +1541,6 @@ test_stdlib_OBJECTS = test-stdlib.$(OBJEXT)
 test_stdlib_LDADD = $(LDADD)
 test_stdlib_DEPENDENCIES = libtests.a ../lib/libcoreutils.a libtests.a \
 	$(am__DEPENDENCIES_1)
-test_strchrnul_SOURCES = test-strchrnul.c
-test_strchrnul_OBJECTS = test-strchrnul.$(OBJEXT)
-test_strchrnul_LDADD = $(LDADD)
-test_strchrnul_DEPENDENCIES = libtests.a ../lib/libcoreutils.a \
-	libtests.a $(am__DEPENDENCIES_1)
 test_strerror_SOURCES = test-strerror.c
 test_strerror_OBJECTS = test-strerror.$(OBJEXT)
 test_strerror_LDADD = $(LDADD)
@@ -1985,42 +1902,36 @@ SOURCES = $(libtests_a_SOURCES) $(EXTRA_libtests_a_SOURCES) \
 	test-mkfifo.c test-mknod.c test-nanosleep.c test-netdb.c \
 	test-netinet_in.c test-nl_langinfo.c test-open.c test-openat.c \
 	test-openat-safer.c test-parse-datetime.c test-pathmax.c \
-	test-perror.c test-perror2.c test-pipe.c test-pipe2.c \
-	test-posix_spawn1.c test-posix_spawn2.c \
-	test-posix_spawn_file_actions_addclose.c \
-	test-posix_spawn_file_actions_adddup2.c \
-	test-posix_spawn_file_actions_addopen.c test-posixtm.c \
+	test-perror.c test-perror2.c test-pipe.c test-posixtm.c \
 	test-printf-frexp.c test-printf-frexpl.c test-priv-set.c \
 	test-quotearg-simple.c test-raise.c test-rand-isaac.c \
-	test-rawmemchr.c test-read.c test-read-file.c test-readlink.c \
-	test-readlinkat.c test-readtokens.c test-realloc-gnu.c \
-	test-regex.c test-remove.c test-rename.c test-rmdir.c \
-	test-sameacls.c test-sched.c test-select.c test-select-fd.c \
+	test-read.c test-read-file.c test-readlink.c test-readlinkat.c \
+	test-readtokens.c test-realloc-gnu.c test-regex.c \
+	test-remove.c test-rename.c test-rmdir.c test-sameacls.c \
+	test-sched.c test-select.c test-select-fd.c \
 	test-select-stdin.c test-set-mode-acl.c test-setenv.c \
 	test-setlocale1.c test-setlocale2.c test-setsockopt.c \
 	test-sha1.c test-sigaction.c test-signal-h.c test-signbit.c \
 	test-sigprocmask.c test-sleep.c test-snprintf.c test-sockets.c \
-	test-spawn.c test-spawn-pipe-child.c test-spawn-pipe-main.c \
 	test-stat.c test-stat-time.c test-statat.c test-stdalign.c \
 	test-stdbool.c test-stddef.c test-stdint.c test-stdio.c \
-	test-stdlib.c test-strchrnul.c test-strerror.c \
-	test-strerror_r.c test-strftime.c test-striconv.c \
-	test-string.c test-strncat.c test-strnlen.c test-strsignal.c \
-	test-strtod.c test-strtoimax.c test-strtoll.c test-strtoull.c \
-	test-strtoumax.c test-symlink.c test-symlinkat.c \
-	test-sys_ioctl.c test-sys_resource.c test-sys_select.c \
-	test-sys_socket.c test-sys_stat.c test-sys_time.c \
-	test-sys_types.c test-sys_uio.c test-sys_utsname.c \
-	test-sys_wait.c test-termios.c test-thread_create.c \
-	test-thread_self.c test-time.c test-tls.c test-u64.c \
-	$(test_u8_mbtoucr_SOURCES) $(test_u8_uctomb_SOURCES) \
-	$(test_uc_width_SOURCES) $(test_uc_width2_SOURCES) \
-	test-uname.c test-unistd.c test-unlink.c test-unlinkat.c \
-	test-unsetenv.c test-userspec.c test-utimens.c \
-	test-utimensat.c test-vasnprintf.c test-vasprintf.c \
-	test-vasprintf-posix.c test-verify.c test-version-etc.c \
-	test-vfprintf-posix.c test-vprintf-posix.c test-wchar.c \
-	test-wcrtomb.c test-wcrtomb-w32.c test-wctype-h.c \
+	test-stdlib.c test-strerror.c test-strerror_r.c \
+	test-strftime.c test-striconv.c test-string.c test-strncat.c \
+	test-strnlen.c test-strsignal.c test-strtod.c test-strtoimax.c \
+	test-strtoll.c test-strtoull.c test-strtoumax.c test-symlink.c \
+	test-symlinkat.c test-sys_ioctl.c test-sys_resource.c \
+	test-sys_select.c test-sys_socket.c test-sys_stat.c \
+	test-sys_time.c test-sys_types.c test-sys_uio.c \
+	test-sys_utsname.c test-sys_wait.c test-termios.c \
+	test-thread_create.c test-thread_self.c test-time.c test-tls.c \
+	test-u64.c $(test_u8_mbtoucr_SOURCES) \
+	$(test_u8_uctomb_SOURCES) $(test_uc_width_SOURCES) \
+	$(test_uc_width2_SOURCES) test-uname.c test-unistd.c \
+	test-unlink.c test-unlinkat.c test-unsetenv.c test-userspec.c \
+	test-utimens.c test-utimensat.c test-vasnprintf.c \
+	test-vasprintf.c test-vasprintf-posix.c test-verify.c \
+	test-version-etc.c test-vfprintf-posix.c test-vprintf-posix.c \
+	test-wchar.c test-wcrtomb.c test-wcrtomb-w32.c test-wctype-h.c \
 	test-wcwidth.c test-write.c test-xalloc-die.c \
 	test-xfprintf-posix.c test-xprintf-posix.c test-xstrtoimax.c \
 	test-xstrtol.c test-xstrtoul.c test-xstrtoumax.c \
@@ -2072,42 +1983,36 @@ DIST_SOURCES = $(libtests_a_SOURCES) $(EXTRA_libtests_a_SOURCES) \
 	test-mkfifo.c test-mknod.c test-nanosleep.c test-netdb.c \
 	test-netinet_in.c test-nl_langinfo.c test-open.c test-openat.c \
 	test-openat-safer.c test-parse-datetime.c test-pathmax.c \
-	test-perror.c test-perror2.c test-pipe.c test-pipe2.c \
-	test-posix_spawn1.c test-posix_spawn2.c \
-	test-posix_spawn_file_actions_addclose.c \
-	test-posix_spawn_file_actions_adddup2.c \
-	test-posix_spawn_file_actions_addopen.c test-posixtm.c \
+	test-perror.c test-perror2.c test-pipe.c test-posixtm.c \
 	test-printf-frexp.c test-printf-frexpl.c test-priv-set.c \
 	test-quotearg-simple.c test-raise.c test-rand-isaac.c \
-	test-rawmemchr.c test-read.c test-read-file.c test-readlink.c \
-	test-readlinkat.c test-readtokens.c test-realloc-gnu.c \
-	test-regex.c test-remove.c test-rename.c test-rmdir.c \
-	test-sameacls.c test-sched.c test-select.c test-select-fd.c \
+	test-read.c test-read-file.c test-readlink.c test-readlinkat.c \
+	test-readtokens.c test-realloc-gnu.c test-regex.c \
+	test-remove.c test-rename.c test-rmdir.c test-sameacls.c \
+	test-sched.c test-select.c test-select-fd.c \
 	test-select-stdin.c test-set-mode-acl.c test-setenv.c \
 	test-setlocale1.c test-setlocale2.c test-setsockopt.c \
 	test-sha1.c test-sigaction.c test-signal-h.c test-signbit.c \
 	test-sigprocmask.c test-sleep.c test-snprintf.c test-sockets.c \
-	test-spawn.c test-spawn-pipe-child.c test-spawn-pipe-main.c \
 	test-stat.c test-stat-time.c test-statat.c test-stdalign.c \
 	test-stdbool.c test-stddef.c test-stdint.c test-stdio.c \
-	test-stdlib.c test-strchrnul.c test-strerror.c \
-	test-strerror_r.c test-strftime.c test-striconv.c \
-	test-string.c test-strncat.c test-strnlen.c test-strsignal.c \
-	test-strtod.c test-strtoimax.c test-strtoll.c test-strtoull.c \
-	test-strtoumax.c test-symlink.c test-symlinkat.c \
-	test-sys_ioctl.c test-sys_resource.c test-sys_select.c \
-	test-sys_socket.c test-sys_stat.c test-sys_time.c \
-	test-sys_types.c test-sys_uio.c test-sys_utsname.c \
-	test-sys_wait.c test-termios.c test-thread_create.c \
-	test-thread_self.c test-time.c test-tls.c test-u64.c \
-	$(test_u8_mbtoucr_SOURCES) $(test_u8_uctomb_SOURCES) \
-	$(test_uc_width_SOURCES) $(test_uc_width2_SOURCES) \
-	test-uname.c test-unistd.c test-unlink.c test-unlinkat.c \
-	test-unsetenv.c test-userspec.c test-utimens.c \
-	test-utimensat.c test-vasnprintf.c test-vasprintf.c \
-	test-vasprintf-posix.c test-verify.c test-version-etc.c \
-	test-vfprintf-posix.c test-vprintf-posix.c test-wchar.c \
-	test-wcrtomb.c test-wcrtomb-w32.c test-wctype-h.c \
+	test-stdlib.c test-strerror.c test-strerror_r.c \
+	test-strftime.c test-striconv.c test-string.c test-strncat.c \
+	test-strnlen.c test-strsignal.c test-strtod.c test-strtoimax.c \
+	test-strtoll.c test-strtoull.c test-strtoumax.c test-symlink.c \
+	test-symlinkat.c test-sys_ioctl.c test-sys_resource.c \
+	test-sys_select.c test-sys_socket.c test-sys_stat.c \
+	test-sys_time.c test-sys_types.c test-sys_uio.c \
+	test-sys_utsname.c test-sys_wait.c test-termios.c \
+	test-thread_create.c test-thread_self.c test-time.c test-tls.c \
+	test-u64.c $(test_u8_mbtoucr_SOURCES) \
+	$(test_u8_uctomb_SOURCES) $(test_uc_width_SOURCES) \
+	$(test_uc_width2_SOURCES) test-uname.c test-unistd.c \
+	test-unlink.c test-unlinkat.c test-unsetenv.c test-userspec.c \
+	test-utimens.c test-utimensat.c test-vasnprintf.c \
+	test-vasprintf.c test-vasprintf-posix.c test-verify.c \
+	test-version-etc.c test-vfprintf-posix.c test-vprintf-posix.c \
+	test-wchar.c test-wcrtomb.c test-wcrtomb-w32.c test-wctype-h.c \
 	test-wcwidth.c test-write.c test-xalloc-die.c \
 	test-xfprintf-posix.c test-xprintf-posix.c test-xstrtoimax.c \
 	test-xstrtol.c test-xstrtoul.c test-xstrtoumax.c \
@@ -2655,27 +2560,6 @@ GNULIB_PIPE = @GNULIB_PIPE@
 GNULIB_PIPE2 = @GNULIB_PIPE2@
 GNULIB_POPEN = @GNULIB_POPEN@
 GNULIB_POSIX_OPENPT = @GNULIB_POSIX_OPENPT@
-GNULIB_POSIX_SPAWN = @GNULIB_POSIX_SPAWN@
-GNULIB_POSIX_SPAWNATTR_DESTROY = @GNULIB_POSIX_SPAWNATTR_DESTROY@
-GNULIB_POSIX_SPAWNATTR_GETFLAGS = @GNULIB_POSIX_SPAWNATTR_GETFLAGS@
-GNULIB_POSIX_SPAWNATTR_GETPGROUP = @GNULIB_POSIX_SPAWNATTR_GETPGROUP@
-GNULIB_POSIX_SPAWNATTR_GETSCHEDPARAM = @GNULIB_POSIX_SPAWNATTR_GETSCHEDPARAM@
-GNULIB_POSIX_SPAWNATTR_GETSCHEDPOLICY = @GNULIB_POSIX_SPAWNATTR_GETSCHEDPOLICY@
-GNULIB_POSIX_SPAWNATTR_GETSIGDEFAULT = @GNULIB_POSIX_SPAWNATTR_GETSIGDEFAULT@
-GNULIB_POSIX_SPAWNATTR_GETSIGMASK = @GNULIB_POSIX_SPAWNATTR_GETSIGMASK@
-GNULIB_POSIX_SPAWNATTR_INIT = @GNULIB_POSIX_SPAWNATTR_INIT@
-GNULIB_POSIX_SPAWNATTR_SETFLAGS = @GNULIB_POSIX_SPAWNATTR_SETFLAGS@
-GNULIB_POSIX_SPAWNATTR_SETPGROUP = @GNULIB_POSIX_SPAWNATTR_SETPGROUP@
-GNULIB_POSIX_SPAWNATTR_SETSCHEDPARAM = @GNULIB_POSIX_SPAWNATTR_SETSCHEDPARAM@
-GNULIB_POSIX_SPAWNATTR_SETSCHEDPOLICY = @GNULIB_POSIX_SPAWNATTR_SETSCHEDPOLICY@
-GNULIB_POSIX_SPAWNATTR_SETSIGDEFAULT = @GNULIB_POSIX_SPAWNATTR_SETSIGDEFAULT@
-GNULIB_POSIX_SPAWNATTR_SETSIGMASK = @GNULIB_POSIX_SPAWNATTR_SETSIGMASK@
-GNULIB_POSIX_SPAWNP = @GNULIB_POSIX_SPAWNP@
-GNULIB_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE = @GNULIB_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE@
-GNULIB_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2 = @GNULIB_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2@
-GNULIB_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN = @GNULIB_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN@
-GNULIB_POSIX_SPAWN_FILE_ACTIONS_DESTROY = @GNULIB_POSIX_SPAWN_FILE_ACTIONS_DESTROY@
-GNULIB_POSIX_SPAWN_FILE_ACTIONS_INIT = @GNULIB_POSIX_SPAWN_FILE_ACTIONS_INIT@
 GNULIB_POWF = @GNULIB_POWF@
 GNULIB_PREAD = @GNULIB_PREAD@
 GNULIB_PRINTF = @GNULIB_PRINTF@
@@ -3056,9 +2940,6 @@ HAVE_PIPE2 = @HAVE_PIPE2@
 HAVE_POPEN = @HAVE_POPEN@
 HAVE_POSIX_OPENPT = @HAVE_POSIX_OPENPT@
 HAVE_POSIX_SIGNALBLOCKING = @HAVE_POSIX_SIGNALBLOCKING@
-HAVE_POSIX_SPAWN = @HAVE_POSIX_SPAWN@
-HAVE_POSIX_SPAWNATTR_T = @HAVE_POSIX_SPAWNATTR_T@
-HAVE_POSIX_SPAWN_FILE_ACTIONS_T = @HAVE_POSIX_SPAWN_FILE_ACTIONS_T@
 HAVE_POWF = @HAVE_POWF@
 HAVE_PREAD = @HAVE_PREAD@
 HAVE_PSELECT = @HAVE_PSELECT@
@@ -3103,7 +2984,6 @@ HAVE_SINF = @HAVE_SINF@
 HAVE_SINHF = @HAVE_SINHF@
 HAVE_SINL = @HAVE_SINL@
 HAVE_SLEEP = @HAVE_SLEEP@
-HAVE_SPAWN_H = @HAVE_SPAWN_H@
 HAVE_SQRTF = @HAVE_SQRTF@
 HAVE_SQRTL = @HAVE_SQRTL@
 HAVE_STDINT_H = @HAVE_STDINT_H@
@@ -3240,6 +3120,7 @@ LIB_FDATASYNC = @LIB_FDATASYNC@
 LIB_GETHRXTIME = @LIB_GETHRXTIME@
 LIB_GMP = @LIB_GMP@
 LIB_NANOSLEEP = @LIB_NANOSLEEP@
+LIB_NVPAIR = @LIB_NVPAIR@
 LIB_PTHREAD = @LIB_PTHREAD@
 LIB_SELECT = @LIB_SELECT@
 LIB_SELINUX = @LIB_SELINUX@
@@ -3285,7 +3166,6 @@ NEXT_AS_FIRST_DIRECTIVE_PTHREAD_H = @NEXT_AS_FIRST_DIRECTIVE_PTHREAD_H@
 NEXT_AS_FIRST_DIRECTIVE_SCHED_H = @NEXT_AS_FIRST_DIRECTIVE_SCHED_H@
 NEXT_AS_FIRST_DIRECTIVE_SELINUX_SELINUX_H = @NEXT_AS_FIRST_DIRECTIVE_SELINUX_SELINUX_H@
 NEXT_AS_FIRST_DIRECTIVE_SIGNAL_H = @NEXT_AS_FIRST_DIRECTIVE_SIGNAL_H@
-NEXT_AS_FIRST_DIRECTIVE_SPAWN_H = @NEXT_AS_FIRST_DIRECTIVE_SPAWN_H@
 NEXT_AS_FIRST_DIRECTIVE_STDARG_H = @NEXT_AS_FIRST_DIRECTIVE_STDARG_H@
 NEXT_AS_FIRST_DIRECTIVE_STDDEF_H = @NEXT_AS_FIRST_DIRECTIVE_STDDEF_H@
 NEXT_AS_FIRST_DIRECTIVE_STDINT_H = @NEXT_AS_FIRST_DIRECTIVE_STDINT_H@
@@ -3324,7 +3204,6 @@ NEXT_PTHREAD_H = @NEXT_PTHREAD_H@
 NEXT_SCHED_H = @NEXT_SCHED_H@
 NEXT_SELINUX_SELINUX_H = @NEXT_SELINUX_SELINUX_H@
 NEXT_SIGNAL_H = @NEXT_SIGNAL_H@
-NEXT_SPAWN_H = @NEXT_SPAWN_H@
 NEXT_STDARG_H = @NEXT_STDARG_H@
 NEXT_STDDEF_H = @NEXT_STDDEF_H@
 NEXT_STDINT_H = @NEXT_STDINT_H@
@@ -3428,6 +3307,7 @@ REPLACE_GETLINE = @REPLACE_GETLINE@
 REPLACE_GETLOGIN_R = @REPLACE_GETLOGIN_R@
 REPLACE_GETPAGESIZE = @REPLACE_GETPAGESIZE@
 REPLACE_GETTIMEOFDAY = @REPLACE_GETTIMEOFDAY@
+REPLACE_GMTIME = @REPLACE_GMTIME@
 REPLACE_HUGE_VAL = @REPLACE_HUGE_VAL@
 REPLACE_HYPOT = @REPLACE_HYPOT@
 REPLACE_HYPOTF = @REPLACE_HYPOTF@
@@ -3452,6 +3332,7 @@ REPLACE_LDEXPL = @REPLACE_LDEXPL@
 REPLACE_LINK = @REPLACE_LINK@
 REPLACE_LINKAT = @REPLACE_LINKAT@
 REPLACE_LOCALECONV = @REPLACE_LOCALECONV@
+REPLACE_LOCALTIME = @REPLACE_LOCALTIME@
 REPLACE_LOCALTIME_R = @REPLACE_LOCALTIME_R@
 REPLACE_LOG = @REPLACE_LOG@
 REPLACE_LOG10 = @REPLACE_LOG10@
@@ -3498,10 +3379,6 @@ REPLACE_OPENAT = @REPLACE_OPENAT@
 REPLACE_OPENDIR = @REPLACE_OPENDIR@
 REPLACE_PERROR = @REPLACE_PERROR@
 REPLACE_POPEN = @REPLACE_POPEN@
-REPLACE_POSIX_SPAWN = @REPLACE_POSIX_SPAWN@
-REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE = @REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE@
-REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2 = @REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2@
-REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN = @REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN@
 REPLACE_PREAD = @REPLACE_PREAD@
 REPLACE_PRINTF = @REPLACE_PRINTF@
 REPLACE_PSELECT = @REPLACE_PSELECT@
@@ -3674,6 +3551,10 @@ psdir = @psdir@
 runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
+single_binary_deps = @single_binary_deps@
+single_binary_install_type = @single_binary_install_type@
+single_binary_libs = @single_binary_libs@
+single_binary_progs = @single_binary_progs@
 srcdir = @srcdir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
@@ -3830,18 +3711,11 @@ EXTRA_DIST = accept.c w32sock.h test-accept.c signature.h macros.h \
 	test-openat.c test-open.h signature.h macros.h \
 	test-parse-datetime.c macros.h test-pathmax.c perror.c \
 	macros.h signature.h test-perror.c test-perror2.c \
-	test-perror.sh pipe.c test-pipe.c signature.h macros.h \
-	test-pipe2.c signature.h macros.h \
-	test-posix_spawn_file_actions_addclose.c signature.h macros.h \
-	test-posix_spawn_file_actions_adddup2.c signature.h macros.h \
-	test-posix_spawn_file_actions_addopen.c signature.h macros.h \
-	test-posix_spawn1.c test-posix_spawn1.in.sh \
-	test-posix_spawn2.c test-posix_spawn2.in.sh signature.h \
-	test-posixtm.c macros.h test-printf-frexp.c macros.h \
-	test-printf-frexpl.c macros.h test-priv-set.c macros.h \
-	test-quotearg-simple.c test-quotearg.h macros.h zerosize-ptr.h \
-	test-raise.c signature.h macros.h test-rand-isaac.c macros.h \
-	test-rawmemchr.c zerosize-ptr.h signature.h macros.h \
+	test-perror.sh test-pipe.c signature.h macros.h test-posixtm.c \
+	macros.h test-printf-frexp.c macros.h test-printf-frexpl.c \
+	macros.h test-priv-set.c macros.h test-quotearg-simple.c \
+	test-quotearg.h macros.h zerosize-ptr.h test-raise.c \
+	signature.h macros.h test-rand-isaac.c macros.h \
 	test-read-file.c test-read.c signature.h macros.h \
 	test-readlink.h test-readlink.c signature.h macros.h \
 	test-readlink.h test-readlinkat.c signature.h macros.h \
@@ -3865,31 +3739,28 @@ EXTRA_DIST = accept.c w32sock.h test-accept.c signature.h macros.h \
 	$(top_srcdir)/build-aux/snippet/unused-parameter.h \
 	$(top_srcdir)/build-aux/snippet/warn-on-use.h test-snprintf.c \
 	signature.h macros.h socket.c w32sock.h test-sockets.c \
-	test-spawn-pipe.sh test-spawn-pipe-main.c \
-	test-spawn-pipe-child.c macros.h test-spawn.c test-stat.h \
-	test-stat.c signature.h macros.h test-stat-time.c macros.h \
-	nap.h test-statat.c test-stdalign.c macros.h test-stdbool.c \
-	test-stddef.c test-stdint.c test-stdio.c test-stdlib.c \
-	test-sys_wait.h test-strchrnul.c signature.h macros.h \
-	test-strerror.c signature.h macros.h strerror_r.c \
-	test-strerror_r.c signature.h macros.h test-strftime.c \
-	macros.h test-striconv.c macros.h test-string.c test-strncat.c \
-	unistr/test-strncat.h zerosize-ptr.h signature.h macros.h \
-	test-strnlen.c zerosize-ptr.h signature.h macros.h \
-	test-strsignal.c signature.h macros.h test-strtod.c \
-	signature.h minus-zero.h macros.h test-strtoimax.c signature.h \
-	macros.h test-strtoll.c signature.h macros.h test-strtoull.c \
-	signature.h macros.h test-strtoumax.c signature.h macros.h \
-	test-symlink.h test-symlink.c signature.h macros.h at-func.c \
-	symlinkat.c test-symlink.h test-symlinkat.c signature.h \
-	macros.h test-sys_ioctl.c test-sys_resource.c \
-	test-sys_select.c signature.h test-sys_socket.c \
-	test-sys_stat.c test-sys_time.c test-sys_types.c \
-	test-sys_uio.c test-sys_utsname.c test-sys_wait.c \
-	test-sys_wait.h test-termios.c init.sh test-init.sh \
-	test-thread_self.c test-thread_create.c macros.h test-time.c \
-	test-tls.c test-u64.c test-uname.c signature.h macros.h \
-	test-dup-safer.c macros.h test-unistd.c \
+	test-stat.h test-stat.c signature.h macros.h test-stat-time.c \
+	macros.h nap.h test-statat.c test-stdalign.c macros.h \
+	test-stdbool.c test-stddef.c test-stdint.c test-stdio.c \
+	test-stdlib.c test-sys_wait.h test-strerror.c signature.h \
+	macros.h strerror_r.c test-strerror_r.c signature.h macros.h \
+	test-strftime.c macros.h test-striconv.c macros.h \
+	test-string.c test-strncat.c unistr/test-strncat.h \
+	zerosize-ptr.h signature.h macros.h test-strnlen.c \
+	zerosize-ptr.h signature.h macros.h test-strsignal.c \
+	signature.h macros.h test-strtod.c signature.h minus-zero.h \
+	macros.h test-strtoimax.c signature.h macros.h test-strtoll.c \
+	signature.h macros.h test-strtoull.c signature.h macros.h \
+	test-strtoumax.c signature.h macros.h test-symlink.h \
+	test-symlink.c signature.h macros.h at-func.c symlinkat.c \
+	test-symlink.h test-symlinkat.c signature.h macros.h \
+	test-sys_ioctl.c test-sys_resource.c test-sys_select.c \
+	signature.h test-sys_socket.c test-sys_stat.c test-sys_time.c \
+	test-sys_types.c test-sys_uio.c test-sys_utsname.c \
+	test-sys_wait.c test-sys_wait.h test-termios.c init.sh \
+	test-init.sh test-thread_self.c test-thread_create.c macros.h \
+	test-time.c test-tls.c test-u64.c test-uname.c signature.h \
+	macros.h test-dup-safer.c macros.h test-unistd.c \
 	unistr/test-u8-mbtoucr.c macros.h unistr/test-u8-uctomb.c \
 	macros.h uniwidth/test-uc_width.c uniwidth/test-uc_width2.c \
 	uniwidth/test-uc_width2.sh macros.h test-unlink.h \
@@ -3937,15 +3808,15 @@ EXTRA_DIST = accept.c w32sock.h test-accept.c signature.h macros.h \
 # statements but through direct file reference. Therefore this snippet must be
 # present in all Makefile.am that need it. This is ensured by the applicability
 # 'all' defined above.
-BUILT_SOURCES = $(am__append_3) arg-nonnull.h c++defs.h \
-	unused-parameter.h warn-on-use.h
+BUILT_SOURCES = arg-nonnull.h c++defs.h unused-parameter.h \
+	warn-on-use.h
 SUFFIXES = 
 MOSTLYCLEANFILES = core *.stackdump test-fflush.txt test-fpending.t \
 	t-fpurge.tmp t-freading.tmp t-ftell3.tmp t-ftello3.tmp \
 	test-getdelim.txt test-getline.txt test-getndelim2.txt \
-	$(am__append_4) arg-nonnull.h arg-nonnull.h-t c++defs.h \
-	c++defs.h-t unused-parameter.h unused-parameter.h-t \
-	warn-on-use.h warn-on-use.h-t
+	arg-nonnull.h arg-nonnull.h-t c++defs.h c++defs.h-t \
+	unused-parameter.h unused-parameter.h-t warn-on-use.h \
+	warn-on-use.h-t
 MOSTLYCLEANDIRS = 
 CLEANFILES = 
 DISTCLEANFILES = 
@@ -3957,14 +3828,14 @@ AM_CPPFLAGS = \
   -I../lib -I$(srcdir)/../lib
 
 LDADD = libtests.a ../lib/libcoreutils.a libtests.a $(LIBTESTS_LIBDEPS)
-libtests_a_SOURCES = localename.c glthread/thread.h glthread/thread.c \
-	unlinkdir.c glthread/yield.h
+libtests_a_SOURCES = binary-io.h binary-io.c localename.c \
+	glthread/thread.h glthread/thread.c unlinkdir.c \
+	glthread/yield.h
 libtests_a_LIBADD = $(gltests_LIBOBJS)
 libtests_a_DEPENDENCIES = $(gltests_LIBOBJS)
 EXTRA_libtests_a_SOURCES = accept.c bind.c connect.c inet_pton.c \
-	ioctl.c listen.c perror.c pipe.c setlocale.c setsockopt.c \
-	sleep.c socket.c strerror_r.c at-func.c symlinkat.c wctob.c \
-	wctomb.c
+	ioctl.c listen.c perror.c setlocale.c setsockopt.c sleep.c \
+	socket.c strerror_r.c at-func.c symlinkat.c wctob.c wctomb.c
 AM_LIBTOOLFLAGS = --preserve-dup-deps
 test_accept_LDADD = $(LDADD) @LIBSOCKET@
 test_file_has_acl_LDADD = $(LDADD) $(LIB_ACL)
@@ -3984,7 +3855,7 @@ test_sha1_LDADD = $(LDADD) @LIB_CRYPTO@
 # and fdopendir indirectly depends on openat-die -> gettext-h.
 test_dirent_safer_LDADD = $(LDADD) $(LIBINTL)
 test_dirname_LDADD = $(LDADD) @LIBINTL@
-test_exclude_LDADD = $(LDADD) @LIBINTL@
+test_exclude_LDADD = $(LDADD) @LIBINTL@ $(LIBTHREAD)
 test_faccessat_LDADD = $(LDADD) $(LIB_EACCESS) @LIBINTL@
 test_fchdir_LDADD = $(LDADD) $(LIBINTL)
 test_fchmodat_LDADD = $(LDADD) @LIBINTL@
@@ -4018,7 +3889,6 @@ test_nanosleep_LDADD = $(LDADD) $(LIB_NANOSLEEP)
 test_openat_safer_LDADD = $(LDADD) @LIBINTL@
 test_openat_LDADD = $(LDADD) @LIBINTL@
 test_parse_datetime_LDADD = $(LDADD) @LIBINTL@ $(LIB_CLOCK_GETTIME)
-test_pipe2_LDADD = $(LDADD) $(LIBSOCKET)
 test_quotearg_simple_LDADD = $(LDADD) @LIBINTL@
 test_readlinkat_LDADD = $(LDADD) @LIBINTL@
 test_readtokens_LDADD = $(LDADD) @LIBINTL@
@@ -4038,11 +3908,6 @@ CXXDEFS_H = c++defs.h
 UNUSED_PARAMETER_H = unused-parameter.h
 WARN_ON_USE_H = warn-on-use.h
 test_sockets_LDADD = $(LDADD) @LIBSOCKET@
-test_spawn_pipe_main_LDADD = $(LDADD) @LIBINTL@
-# The test-spawn-pipe-child program must be a real executable, not a libtool
-# wrapper script, and should link against as few libraries as possible.
-# Therefore don't link it against any libraries other than -lc.
-test_spawn_pipe_child_LDADD = 
 test_stat_LDADD = $(LDADD) $(LIBINTL)
 test_stat_time_LDADD = $(LDADD) $(LIB_NANOSLEEP)
 test_statat_LDADD = $(LDADD) @LIBINTL@
@@ -4898,30 +4763,6 @@ test-pipe$(EXEEXT): $(test_pipe_OBJECTS) $(test_pipe_DEPENDENCIES) $(EXTRA_test_
 	@rm -f test-pipe$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(test_pipe_OBJECTS) $(test_pipe_LDADD) $(LIBS)
 
-test-pipe2$(EXEEXT): $(test_pipe2_OBJECTS) $(test_pipe2_DEPENDENCIES) $(EXTRA_test_pipe2_DEPENDENCIES) 
-	@rm -f test-pipe2$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(test_pipe2_OBJECTS) $(test_pipe2_LDADD) $(LIBS)
-
-test-posix_spawn1$(EXEEXT): $(test_posix_spawn1_OBJECTS) $(test_posix_spawn1_DEPENDENCIES) $(EXTRA_test_posix_spawn1_DEPENDENCIES) 
-	@rm -f test-posix_spawn1$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(test_posix_spawn1_OBJECTS) $(test_posix_spawn1_LDADD) $(LIBS)
-
-test-posix_spawn2$(EXEEXT): $(test_posix_spawn2_OBJECTS) $(test_posix_spawn2_DEPENDENCIES) $(EXTRA_test_posix_spawn2_DEPENDENCIES) 
-	@rm -f test-posix_spawn2$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(test_posix_spawn2_OBJECTS) $(test_posix_spawn2_LDADD) $(LIBS)
-
-test-posix_spawn_file_actions_addclose$(EXEEXT): $(test_posix_spawn_file_actions_addclose_OBJECTS) $(test_posix_spawn_file_actions_addclose_DEPENDENCIES) $(EXTRA_test_posix_spawn_file_actions_addclose_DEPENDENCIES) 
-	@rm -f test-posix_spawn_file_actions_addclose$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(test_posix_spawn_file_actions_addclose_OBJECTS) $(test_posix_spawn_file_actions_addclose_LDADD) $(LIBS)
-
-test-posix_spawn_file_actions_adddup2$(EXEEXT): $(test_posix_spawn_file_actions_adddup2_OBJECTS) $(test_posix_spawn_file_actions_adddup2_DEPENDENCIES) $(EXTRA_test_posix_spawn_file_actions_adddup2_DEPENDENCIES) 
-	@rm -f test-posix_spawn_file_actions_adddup2$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(test_posix_spawn_file_actions_adddup2_OBJECTS) $(test_posix_spawn_file_actions_adddup2_LDADD) $(LIBS)
-
-test-posix_spawn_file_actions_addopen$(EXEEXT): $(test_posix_spawn_file_actions_addopen_OBJECTS) $(test_posix_spawn_file_actions_addopen_DEPENDENCIES) $(EXTRA_test_posix_spawn_file_actions_addopen_DEPENDENCIES) 
-	@rm -f test-posix_spawn_file_actions_addopen$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(test_posix_spawn_file_actions_addopen_OBJECTS) $(test_posix_spawn_file_actions_addopen_LDADD) $(LIBS)
-
 test-posixtm$(EXEEXT): $(test_posixtm_OBJECTS) $(test_posixtm_DEPENDENCIES) $(EXTRA_test_posixtm_DEPENDENCIES) 
 	@rm -f test-posixtm$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(test_posixtm_OBJECTS) $(test_posixtm_LDADD) $(LIBS)
@@ -4949,10 +4790,6 @@ test-raise$(EXEEXT): $(test_raise_OBJECTS) $(test_raise_DEPENDENCIES) $(EXTRA_te
 test-rand-isaac$(EXEEXT): $(test_rand_isaac_OBJECTS) $(test_rand_isaac_DEPENDENCIES) $(EXTRA_test_rand_isaac_DEPENDENCIES) 
 	@rm -f test-rand-isaac$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(test_rand_isaac_OBJECTS) $(test_rand_isaac_LDADD) $(LIBS)
-
-test-rawmemchr$(EXEEXT): $(test_rawmemchr_OBJECTS) $(test_rawmemchr_DEPENDENCIES) $(EXTRA_test_rawmemchr_DEPENDENCIES) 
-	@rm -f test-rawmemchr$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(test_rawmemchr_OBJECTS) $(test_rawmemchr_LDADD) $(LIBS)
 
 test-read$(EXEEXT): $(test_read_OBJECTS) $(test_read_DEPENDENCIES) $(EXTRA_test_read_DEPENDENCIES) 
 	@rm -f test-read$(EXEEXT)
@@ -5066,18 +4903,6 @@ test-sockets$(EXEEXT): $(test_sockets_OBJECTS) $(test_sockets_DEPENDENCIES) $(EX
 	@rm -f test-sockets$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(test_sockets_OBJECTS) $(test_sockets_LDADD) $(LIBS)
 
-test-spawn$(EXEEXT): $(test_spawn_OBJECTS) $(test_spawn_DEPENDENCIES) $(EXTRA_test_spawn_DEPENDENCIES) 
-	@rm -f test-spawn$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(test_spawn_OBJECTS) $(test_spawn_LDADD) $(LIBS)
-
-test-spawn-pipe-child$(EXEEXT): $(test_spawn_pipe_child_OBJECTS) $(test_spawn_pipe_child_DEPENDENCIES) $(EXTRA_test_spawn_pipe_child_DEPENDENCIES) 
-	@rm -f test-spawn-pipe-child$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(test_spawn_pipe_child_OBJECTS) $(test_spawn_pipe_child_LDADD) $(LIBS)
-
-test-spawn-pipe-main$(EXEEXT): $(test_spawn_pipe_main_OBJECTS) $(test_spawn_pipe_main_DEPENDENCIES) $(EXTRA_test_spawn_pipe_main_DEPENDENCIES) 
-	@rm -f test-spawn-pipe-main$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(test_spawn_pipe_main_OBJECTS) $(test_spawn_pipe_main_LDADD) $(LIBS)
-
 test-stat$(EXEEXT): $(test_stat_OBJECTS) $(test_stat_DEPENDENCIES) $(EXTRA_test_stat_DEPENDENCIES) 
 	@rm -f test-stat$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(test_stat_OBJECTS) $(test_stat_LDADD) $(LIBS)
@@ -5113,10 +4938,6 @@ test-stdio$(EXEEXT): $(test_stdio_OBJECTS) $(test_stdio_DEPENDENCIES) $(EXTRA_te
 test-stdlib$(EXEEXT): $(test_stdlib_OBJECTS) $(test_stdlib_DEPENDENCIES) $(EXTRA_test_stdlib_DEPENDENCIES) 
 	@rm -f test-stdlib$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(test_stdlib_OBJECTS) $(test_stdlib_LDADD) $(LIBS)
-
-test-strchrnul$(EXEEXT): $(test_strchrnul_OBJECTS) $(test_strchrnul_DEPENDENCIES) $(EXTRA_test_strchrnul_DEPENDENCIES) 
-	@rm -f test-strchrnul$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(test_strchrnul_OBJECTS) $(test_strchrnul_LDADD) $(LIBS)
 
 test-strerror$(EXEEXT): $(test_strerror_OBJECTS) $(test_strerror_DEPENDENCIES) $(EXTRA_test_strerror_DEPENDENCIES) 
 	@rm -f test-strerror$(EXEEXT)
@@ -5409,6 +5230,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/accept.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/at-func.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/binary-io.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bind.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/connect.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inet_pton.Po@am__quote@
@@ -5416,7 +5238,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/listen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/localename.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/perror.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pipe.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/randomd.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/randoml.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/setlocale.Po@am__quote@
@@ -5588,12 +5409,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-perror.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-perror2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-pipe.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-pipe2.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-posix_spawn1.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-posix_spawn2.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-posix_spawn_file_actions_addclose.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-posix_spawn_file_actions_adddup2.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-posix_spawn_file_actions_addopen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-posixtm.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-printf-frexp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-printf-frexpl.Po@am__quote@
@@ -5601,7 +5416,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-quotearg-simple.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-raise.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-rand-isaac.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-rawmemchr.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-read-file.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-read.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-readlink.Po@am__quote@
@@ -5630,9 +5444,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-sleep.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-snprintf.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-sockets.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-spawn-pipe-child.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-spawn-pipe-main.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-spawn.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-stat-time.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-stat.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-statat.Po@am__quote@
@@ -5642,7 +5453,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-stdint.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-stdio.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-stdlib.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-strchrnul.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-strerror.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-strerror_r.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-strftime.Po@am__quote@
@@ -7397,48 +7207,6 @@ test-pipe.log: test-pipe$(EXEEXT)
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-test-pipe2.log: test-pipe2$(EXEEXT)
-	@p='test-pipe2$(EXEEXT)'; \
-	b='test-pipe2'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-test-posix_spawn_file_actions_addclose.log: test-posix_spawn_file_actions_addclose$(EXEEXT)
-	@p='test-posix_spawn_file_actions_addclose$(EXEEXT)'; \
-	b='test-posix_spawn_file_actions_addclose'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-test-posix_spawn_file_actions_adddup2.log: test-posix_spawn_file_actions_adddup2$(EXEEXT)
-	@p='test-posix_spawn_file_actions_adddup2$(EXEEXT)'; \
-	b='test-posix_spawn_file_actions_adddup2'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-test-posix_spawn_file_actions_addopen.log: test-posix_spawn_file_actions_addopen$(EXEEXT)
-	@p='test-posix_spawn_file_actions_addopen$(EXEEXT)'; \
-	b='test-posix_spawn_file_actions_addopen'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-test-posix_spawn1.log: test-posix_spawn1$(EXEEXT)
-	@p='test-posix_spawn1$(EXEEXT)'; \
-	b='test-posix_spawn1'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-test-posix_spawn2.log: test-posix_spawn2$(EXEEXT)
-	@p='test-posix_spawn2$(EXEEXT)'; \
-	b='test-posix_spawn2'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
 test-posixtm.log: test-posixtm$(EXEEXT)
 	@p='test-posixtm$(EXEEXT)'; \
 	b='test-posixtm'; \
@@ -7484,13 +7252,6 @@ test-raise.log: test-raise$(EXEEXT)
 test-rand-isaac.log: test-rand-isaac$(EXEEXT)
 	@p='test-rand-isaac$(EXEEXT)'; \
 	b='test-rand-isaac'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-test-rawmemchr.log: test-rawmemchr$(EXEEXT)
-	@p='test-rawmemchr$(EXEEXT)'; \
-	b='test-rawmemchr'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
@@ -7670,20 +7431,6 @@ test-sockets.log: test-sockets$(EXEEXT)
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-test-spawn-pipe.sh.log: test-spawn-pipe.sh
-	@p='test-spawn-pipe.sh'; \
-	b='test-spawn-pipe.sh'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-test-spawn.log: test-spawn$(EXEEXT)
-	@p='test-spawn$(EXEEXT)'; \
-	b='test-spawn'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
 test-stat.log: test-stat$(EXEEXT)
 	@p='test-stat$(EXEEXT)'; \
 	b='test-stat'; \
@@ -7743,13 +7490,6 @@ test-stdio.log: test-stdio$(EXEEXT)
 test-stdlib.log: test-stdlib$(EXEEXT)
 	@p='test-stdlib$(EXEEXT)'; \
 	b='test-stdlib'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-test-strchrnul.log: test-strchrnul$(EXEEXT)
-	@p='test-strchrnul$(EXEEXT)'; \
-	b='test-strchrnul'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
@@ -8488,14 +8228,6 @@ uninstall-man: uninstall-man1
 	uninstall uninstall-am uninstall-binPROGRAMS uninstall-man \
 	uninstall-man1 uninstall-pkglibexecPROGRAMS
 
-@POSIX_SPAWN_PORTED_TRUE@test-posix_spawn1.sh: test-posix_spawn1.in.sh
-@POSIX_SPAWN_PORTED_TRUE@	$(AM_V_GEN)rm -f $@-t $@ && \
-@POSIX_SPAWN_PORTED_TRUE@	cp $(srcdir)/test-posix_spawn1.in.sh $@-t && \
-@POSIX_SPAWN_PORTED_TRUE@	mv $@-t $@
-@POSIX_SPAWN_PORTED_TRUE@test-posix_spawn2.sh: test-posix_spawn2.in.sh
-@POSIX_SPAWN_PORTED_TRUE@	$(AM_V_GEN)rm -f $@-t $@ && \
-@POSIX_SPAWN_PORTED_TRUE@	cp $(srcdir)/test-posix_spawn2.in.sh $@-t && \
-@POSIX_SPAWN_PORTED_TRUE@	mv $@-t $@
 # The arg-nonnull.h that gets inserted into generated .h files is the same as
 # build-aux/snippet/arg-nonnull.h, except that it has the copyright header cut
 # off.

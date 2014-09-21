@@ -1,1 +1,1 @@
-/usr/src/coreutils/gnulib/m4/gnulib-tool.m4
+/root/coreutils/gnulib/m4/gnulib-tool.m4

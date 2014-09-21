@@ -1,0 +1,16 @@
+--- m4/selinux-selinux-h.m4
++++ m4/selinux-selinux-h.m4
+@@ -53,9 +53,12 @@
+   LIB_SELINUX=
+   if test "$with_selinux" != no; then
+     gl_save_LIBS=$LIBS
++    AC_CHECK_LIB([pthread], [pthread_create])
++    AC_CHECK_LIB([sepol], [sepol_check_contex])
++    AC_CHECK_LIB([pcre], [pcre_version])
+     AC_SEARCH_LIBS([setfilecon], [selinux],
+                    [test "$ac_cv_search_setfilecon" = "none required" ||
+-                    LIB_SELINUX="$ac_cv_search_setfilecon -lsepol -lpcre"])
++                    LIB_SELINUX="$ac_cv_search_setfilecon ${LIBS}"])
+     LIBS=$gl_save_LIBS
+   fi
+   AC_SUBST([LIB_SELINUX])

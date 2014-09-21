@@ -1,1 +1,1 @@
-/usr/src/coreutils/gnulib/m4/uintmax_t.m4
+/root/coreutils/gnulib/m4/uintmax_t.m4
